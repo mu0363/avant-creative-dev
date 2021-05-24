@@ -1,4 +1,7 @@
 import Head from 'next/head';
+import { Header } from 'src/components/Header';
+import { Sidebar } from 'src/components/Sidebar';
+import { Feed } from 'src/components/Feed';
 
 export default function Home() {
   return (
@@ -8,7 +11,11 @@ export default function Home() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <p>Welcome to Tailwind</p>
+      <Header />
+      <div className='flex'>
+        <Sidebar />
+        <Feed />
+      </div>
     </div>
   );
 }

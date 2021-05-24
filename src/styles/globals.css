@@ -4,6 +4,12 @@
 
 @layer base {
   body {
-    @apply text-xs;
+    @apply text-xs text-gray-700 bg-gray-100;
+  }
+}
+
+@layer components {
+  button {
+    @apply focus:outline-none;
   }
 }
