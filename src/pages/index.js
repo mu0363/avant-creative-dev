@@ -2,6 +2,7 @@ import Head from 'next/head';
 import { Header } from 'src/components/Header';
 import { Sidebar } from 'src/components/Sidebar';
 import { Feed } from 'src/components/Feed';
+import { InputBox } from 'src/components/InputBox';
 
 export default function Home() {
   return (
@@ -12,10 +13,11 @@ export default function Home() {
       </Head>
 
       <Header />
-      <div className='flex'>
+      <InputBox />
+      {/* <div className='flex flex-1'>
         <Sidebar />
         <Feed />
-      </div>
+      </div> */}
     </div>
   );
 }

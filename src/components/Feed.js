@@ -4,7 +4,7 @@ import { Stories } from './Stories';
 export const Feed = () => {
   return (
     <div>
-      <Stories />
+      {/* <Stories /> */}
       <InputBox />
     </div>
   );

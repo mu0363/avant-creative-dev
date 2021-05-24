@@ -3,7 +3,7 @@ import { StoryCard } from './StoryCard';
 
 export const Stories = () => {
   return (
-    <div className='flex items-center space-x-3 p-3 mt-5'>
+    <div className='flex items-center'>
       {stories.map((story) => (
         <StoryCard key={story.name} story={story} />
       ))}

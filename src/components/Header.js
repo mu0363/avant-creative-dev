@@ -15,7 +15,7 @@ import { HeaderRightIcon } from './HeaderRightIcon';
 
 export const Header = () => {
   return (
-    <header className='flex items-center justify-between p-3 bg-white shadow-md sticky top-0 z-50'>
+    <header className='flex items-center p-3 bg-white shadow-md sticky top-0 z-5'>
       <div className='flex items-center'>
         <img
           src='/facebook_logo.png'
@@ -27,18 +27,18 @@ export const Header = () => {
           <input
             type='text'
             placeholder='Search Facebook'
-            className='focus:outline-none bg-transparent'
+            className='focus:outline-none bg-transparent hidden'
           />
         </div>
       </div>
-      <div className='flex space-x-2 lg:space-x-10'>
+      <div className='flex flex-glow justify-center space-x-2 lg:space-x-10'>
         <HeaderCenterIcon Icon={HomeIcon} />
         <HeaderCenterIcon Icon={FlagIcon} />
         <HeaderCenterIcon Icon={PlayIcon} />
         <HeaderCenterIcon Icon={ShoppingCartIcon} />
         <HeaderCenterIcon Icon={UserGroupIcon} />
       </div>
-      <div className='items-center space-x-3 hidden md:inline-flex'>
+      <div className='items-center space-x-3 hidden md:inline-flex justify-end'>
         <p className='font-medium'>John Doe</p>
         <HeaderRightIcon Icon={ViewGridIcon} />
         <HeaderRightIcon Icon={ChatIcon} />
