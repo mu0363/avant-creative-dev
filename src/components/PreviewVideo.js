@@ -11,6 +11,7 @@ export const PreviewVideo = ({ video }) => {
           onMouseOut={(e) => e.target.pause()}
           src={videoSrc}
           muted
+          playsInline
         ></video>
         <div className='flex flex-col p-4'>
           <p className='text-base font-semibold truncate'>{name}</p>
