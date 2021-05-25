@@ -1,14 +1,31 @@
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { XIcon } from '@heroicons/react/solid';
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 
-export const ImageModal = ({ image, closeModal }) => {
-  const [crop, setCrop] = useState({ unit: '%', width: '80', aspect: 16 / 9 });
-  const [completedCrop, setCompletedCrop] = useState(null);
+export const ImageModal = ({
+  image,
+  closeModal,
+  getCropImage,
+  setCompletedCrop,
+}) => {
+  const [crop, setCrop] = useState({
+    unit: '%',
+    width: '80',
+    height: '80',
+    aspect: 16 / 9,
+  });
 
-  const onCrop = () => {
-    console.log('here we go');
+  const imgRef = useRef(null);
+
+  const onLoad = useCallback((img) => {
+    imgRef.current = img;
+  }, []);
+
+  const trimmingImage = async () => {
+    const image = imgRef.current;
+    await getCropImage(image);
+    closeModal();
   };
 
   return (
@@ -31,8 +48,10 @@ export const ImageModal = ({ image, closeModal }) => {
                 className='focus:outline-none'
                 src={image}
                 crop={crop}
+                onImageLoaded={onLoad}
                 onChange={(c) => setCrop(c)}
                 onComplete={(c) => setCompletedCrop(c)}
+                // onComplete={(c) => setCompletedCrop(c)}
               />
               <div className='flex justify-end space-x-2 border-t p-3 mt-2'>
                 <button
@@ -43,7 +62,7 @@ export const ImageModal = ({ image, closeModal }) => {
                 </button>
                 <button
                   className='bg-blue-400 text-white px-4 py-2 rounded-md'
-                  onClick={closeModal}
+                  onClick={trimmingImage}
                 >
                   Submit
                 </button>
