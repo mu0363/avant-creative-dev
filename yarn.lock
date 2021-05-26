@@ -1193,6 +1193,11 @@ etag@1.8.1:
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
   integrity sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=
 
+eventemitter3@^4.0.3:
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.7.tgz#2de9b68f6528d5644ef5c59526a1b4a07306169f"
+  integrity sha512-8guHBZCwKnFhYdHr2ysuRWErTwhoN2X8XELRlrRwpmfeY2jjuUN4taQMsULKUVo1K4DvZl+0pgfyoysHxvmvEw==
+
 events@^3.0.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/events/-/events-3.3.0.tgz#31a95ad0a924e2d2c419a813aeb2c4e878ea7400"
@@ -1450,6 +1455,19 @@ hey-listen@^1.0.8:
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/hey-listen/-/hey-listen-1.0.8.tgz#8e59561ff724908de1aa924ed6ecc84a56a9aa68"
   integrity sha512-COpmrF2NOg4TBWUJ5UVyaCU2A88wEMkUPK4hNqyCkqHbxT92BbvfjoSozkAIIm6XhicGlJHhFdullInrdhwU8Q==
+
+hls.js@^0.14.17:
+  version "0.14.17"
+  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-0.14.17.tgz#0127cff2ec2f994a54eb955fe669ef6153a8e317"
+  integrity sha512-25A7+m6qqp6UVkuzUQ//VVh2EEOPYlOBg32ypr34bcPO7liBMOkKFvbjbCBfiPAOTA/7BSx1Dujft3Th57WyFg==
+  dependencies:
+    eventemitter3 "^4.0.3"
+    url-toolkit "^2.1.6"
+
+hls.js@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-1.0.4.tgz#1b191f0f49c992e5c22d4a648ac73630d13d3c2e"
+  integrity sha512-sTea9L0ORE9u5dThUjEhDP4t9YzakEYRyMHEYQctaLZf2X9ihjmUbqKneExQWHXZz2cYQs5ihaKUe8QnrQDp7Q==
 
 hmac-drbg@^1.0.1:
   version "1.0.1"
@@ -2388,6 +2406,13 @@ react-dom@17.x:
     object-assign "^4.1.1"
     scheduler "^0.20.2"
 
+react-hls-player@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/react-hls-player/-/react-hls-player-3.0.1.tgz#0b3844df0c5b3a8316d65e8d557dcb9db8033821"
+  integrity sha512-AeunMCcx4z5x9SnnBrpsHIe3fqKRGRTbzrJIoIHNxSE4JE5bz4RoMsGs6kE/EOQizoNUCZICFwqypK5qOjhoQg==
+  dependencies:
+    hls.js "^0.14.17"
+
 react-image-crop@^8.6.9:
   version "8.6.9"
   resolved "https://registry.yarnpkg.com/react-image-crop/-/react-image-crop-8.6.9.tgz#35c6ef740493afd98e6143ddc244f64575acec75"
@@ -2851,6 +2876,11 @@ unpipe@1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/unpipe/-/unpipe-1.0.0.tgz#b2bf4ee8514aae6165b4817829d21b2ef49904ec"
   integrity sha1-sr9O6FFKrmFltIF4KdIbLvSZBOw=
+
+url-toolkit@^2.1.6:
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/url-toolkit/-/url-toolkit-2.2.2.tgz#51ef27b56d3187185f9ecf4a8ac7e8f55203c89d"
+  integrity sha512-l25w6Sy+Iy3/IbogunxhWwljPaDnqpiKvrQRoLBm6DfISco7NyRIS7Zf6+Oxhy1T8kHxWdwLND7ZZba6NjXMug==
 
 url@^0.11.0:
   version "0.11.0"
