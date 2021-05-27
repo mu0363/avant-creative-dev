@@ -8,7 +8,7 @@ export const PreviewVideo = ({ video }) => {
         <video
           poster={thumbnail}
           src={videoSrc}
-          onMouseOver={(e) => e.target.play()}
+          onClick={(e) => e.target.play()}
           onMouseOut={(e) => e.target.pause()}
           muted
           playsInline
