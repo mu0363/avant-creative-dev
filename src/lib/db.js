@@ -18,3 +18,24 @@ export const getAllPreviewVideos = async () => {
 
   return previewVideos;
 };
+
+export const getPreviewVideo = async (id) => {
+  const previewVideo = [];
+  const snapshot = await db
+    .collection('preview-videos')
+    .where('previewId', '==', id)
+    .get();
+  snapshot.forEach((doc) => {
+    previewVideo.push({
+      id: doc.id,
+      createdAt: format(doc.data().createdAt.toDate(), 'yyyy/MM/dd'),
+      name: doc.data().name,
+      videoSrc: doc.data().videoSrc,
+      thumbnail: doc.data().thumbnail,
+      length: doc.data().length,
+      resolution: doc.data().resolution,
+    });
+  });
+
+  return previewVideo;
+};

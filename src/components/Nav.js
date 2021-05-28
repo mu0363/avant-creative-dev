@@ -13,6 +13,7 @@ export const Nav = () => {
           <input
             type='text'
             className='focus:outline-none bg-transparent ml-1 flex-grow'
+            placeholder='Search Videos'
           />
         </div>
         <div className='flex items-center space-x-2 ml-4'>

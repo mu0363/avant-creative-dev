@@ -1,13 +1,15 @@
+import Link from 'next/link';
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import { FilmIcon, XIcon } from '@heroicons/react/outline';
-import { AiFillCloseCircle } from 'react-icons/ai';
+import { FilmIcon } from '@heroicons/react/outline';
+import { AiFillCloseCircle, AiFillYoutube } from 'react-icons/ai';
 
 export const PreviewVideoModal = ({
   children,
   cancelButtonRef,
   setIsOpen,
   isOpen,
+  id,
 }) => {
   return (
     <div>
@@ -30,7 +32,7 @@ export const PreviewVideoModal = ({
               leaveFrom='opacity-100'
               leaveTo='opacity-0'
             >
-              <Dialog.Overlay className='fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity' />
+              <Dialog.Overlay className='fixed inset-0 bg-gray-800 bg-opacity-75 transition-opacity' />
             </Transition.Child>
 
             {/* This element is to trick the browser into centering the modal contents. */}
@@ -52,13 +54,15 @@ export const PreviewVideoModal = ({
               <div className='static inline-block align-bottom text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full p-3 bg-transparent'>
                 {children}
                 <div className='bg-gray-100 rounded-b-lg px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse'>
-                  <div
-                    onClick={() => setIsOpen(false)}
-                    className='flex items-center w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#e47f5a] text-base font-medium text-white space-x-2 hover:bg-[#d36644] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 cursor-pointer'
-                  >
-                    <FilmIcon className='h-5' />
-                    <button type='button'>Create Video</button>
-                  </div>
+                  <Link href={`/video/[id]`} as={`/video/${id}`} passHref>
+                    <div
+                      onClick={() => setIsOpen(false)}
+                      className='flex items-center w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-ai text-base font-medium text-white space-x-2 hover:bg-ai-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 cursor-pointer'
+                    >
+                      <FilmIcon className='h-5' />
+                      <p>Create Video</p>
+                    </div>
+                  </Link>
                   <div
                     ref={cancelButtonRef}
                     className='absolute top-0 right-0 rounded-full bg-white cursor-pointer shadow-lg'

@@ -19,10 +19,10 @@ export const Header = () => {
   );
 
   return (
-    <header className='flex items-center justify-between py-1 px-4 md:p-4 sticky top-0 z-0 bg-[#3e3a39] shadow-md'>
+    <header className='flex items-center justify-between py-1 px-4 md:p-4 sticky top-0 z-0 bg-white shadow-md'>
       <div className='flex items-center'>
         <img
-          src='/avant_logo_white_ol.svg'
+          src='/avant_logo_black_ol.svg'
           alt='logo'
           className='h-8 mr-2 cursor-pointer'
           onClick={() => router.push('/')}
@@ -35,7 +35,7 @@ export const Header = () => {
           <HeaderRightIcon Icon={BellIcon} />
           <HeaderRightIcon Icon={ChevronDownIcon} />
           <p
-            className='font-bold hover:underline text-white cursor-pointer'
+            className='hover:underline cursor-pointer font-bold'
             onClick={() => router.push('/signin')}
           >
             サインイン

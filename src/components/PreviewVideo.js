@@ -20,12 +20,13 @@ export const PreviewVideo = ({ video }) => {
         // onMouseOver={(e) => e.target.play()}
         onClick={(e) => e.target.play()}
         onMouseOut={(e) => e.target.pause()}
+        preload='metadata'
         muted
         playsInline
       ></video>
       <div className='flex flex-col p-2'>
         <p
-          className='text-base font-semibold truncate hover:underline hover:text-[#e47f5a] mb-1 cursor-pointer'
+          className='text-base font-semibold truncate hover:underline hover:text-ai mb-1 cursor-pointer'
           onClick={openModal}
         >
           {name}
@@ -47,12 +48,14 @@ export const PreviewVideo = ({ video }) => {
         cancelButtonRef={cancelButtonRef}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
+        id={id}
       >
         <video
           className='rounded-t-lg'
           poster={thumbnail}
           src={videoSrc}
           controls
+          preload='metadata'
         ></video>
       </PreviewVideoModal>
     </div>
