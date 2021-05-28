@@ -1,6 +1,7 @@
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { FilmIcon, XIcon } from '@heroicons/react/outline';
+import { AiFillCloseCircle } from 'react-icons/ai';
 
 export const PreviewVideoModal = ({
   children,
@@ -60,12 +61,12 @@ export const PreviewVideoModal = ({
                   </div>
                   <div
                     ref={cancelButtonRef}
-                    className='absolute top-0 right-0 rounded-full bg-white border border-gray-400 shadow-md p-1 cursor-pointer'
+                    className='absolute top-0 right-0 rounded-full bg-white cursor-pointer shadow-lg'
                   >
-                    <XIcon
+                    <AiFillCloseCircle
                       type='button'
                       onClick={() => setIsOpen(false)}
-                      className='h-5'
+                      className='sm:h-8 sm:w-8 h-7 w-7'
                     />
                   </div>
                 </div>
@@ -77,27 +78,3 @@ export const PreviewVideoModal = ({
     </div>
   );
 };
-
-// <div className='sm:flex sm:items-start'>
-// <div className='mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10'>
-//   <ExclamationIcon
-//     className='h-6 w-6 text-red-600'
-//     aria-hidden='true'
-//   />
-// </div>
-// <div className='mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left'>
-//   <Dialog.Title
-//     as='h3'
-//     className='text-lg leading-6 font-medium text-gray-900'
-//   >
-//     Deactivate account
-//   </Dialog.Title>
-//   <div className='mt-2'>
-//     <p className='text-sm text-gray-500'>
-//       Are you sure you want to deactivate your account? All
-//       of your data will be permanently removed. This action
-//       cannot be undone.
-//     </p>
-//   </div>
-// </div>
-// </div>

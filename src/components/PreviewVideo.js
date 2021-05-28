@@ -13,6 +13,7 @@ export const PreviewVideo = ({ video }) => {
 
   return (
     <div className='bg-white rounded-md shadow-md'>
+      {/* 映像とサイズなどの情報 */}
       <video
         poster={thumbnail}
         src={videoSrc}
@@ -24,7 +25,7 @@ export const PreviewVideo = ({ video }) => {
       ></video>
       <div className='flex flex-col p-2'>
         <p
-          className='text-base font-semibold truncate  hover:text-[#e47f5a] mb-1 cursor-pointer'
+          className='text-base font-semibold truncate hover:underline hover:text-[#e47f5a] mb-1 cursor-pointer'
           onClick={openModal}
         >
           {name}
@@ -40,6 +41,8 @@ export const PreviewVideo = ({ video }) => {
           </p>
         </div>
       </div>
+
+      {/* こっからモーダルだぜ */}
       <PreviewVideoModal
         cancelButtonRef={cancelButtonRef}
         isOpen={isOpen}
