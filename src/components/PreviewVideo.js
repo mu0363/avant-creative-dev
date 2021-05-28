@@ -24,7 +24,7 @@ export const PreviewVideo = ({ video }) => {
       ></video>
       <div className='flex flex-col p-2'>
         <p
-          className='text-base font-semibold truncate hover:underline mb-1 cursor-pointer'
+          className='text-base font-semibold truncate  hover:text-[#e47f5a] mb-1 cursor-pointer'
           onClick={openModal}
         >
           {name}
@@ -32,7 +32,7 @@ export const PreviewVideo = ({ video }) => {
         <p className='text-xs text-gray-400'>{`createdAt: ${createdAt}`}</p>
 
         <div className='flex justify-end space-x-1'>
-          <p className='bg-red-400 rounded-md py-1/2 px-2 text-white text-xs'>
+          <p className='bg-green-400 rounded-md py-1/2 px-2 text-white text-xs'>
             {resolution}
           </p>
           <p className='bg-gray-400 rounded-md py-1/2 px-2 text-white text-xs'>

@@ -51,15 +51,16 @@ export const PreviewVideoModal = ({
               <div className='static inline-block align-bottom text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full p-3 bg-transparent'>
                 {children}
                 <div className='bg-gray-100 rounded-b-lg px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse'>
-                  <div className='flex items-center w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#e47f5a] text-base font-medium text-white space-x-2 hover:bg-[#d36644] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 cursor-pointer'>
+                  <div
+                    onClick={() => setIsOpen(false)}
+                    className='flex items-center w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-[#e47f5a] text-base font-medium text-white space-x-2 hover:bg-[#d36644] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 cursor-pointer'
+                  >
                     <FilmIcon className='h-5' />
-                    <button type='button' onClick={() => setIsOpen(false)}>
-                      Create Video
-                    </button>
+                    <button type='button'>Create Video</button>
                   </div>
                   <div
                     ref={cancelButtonRef}
-                    className='absolute top-0 right-0 rounded-full border border-gray-400 shadow-md bg-white p-1 cursor-pointer'
+                    className='absolute top-0 right-0 rounded-full bg-white border border-gray-400 shadow-md p-1 cursor-pointer'
                   >
                     <XIcon
                       type='button'
