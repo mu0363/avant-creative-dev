@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply text-xs text-gray-700 bg-gray-100;
+    @apply text-sm text-gray-600 bg-gray-100;
   }
 }
 

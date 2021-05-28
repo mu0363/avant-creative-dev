@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { SearchIcon } from '@heroicons/react/outline';
+import { useRouter } from 'next/router';
 import {
   ViewGridIcon,
   ChatIcon,
@@ -10,6 +10,7 @@ import { HeaderRightIcon } from './HeaderRightIcon';
 import { Sling as Hamburger } from 'hamburger-react';
 
 export const Header = () => {
+  const router = useRouter();
   const [isOpen, setOpen] = useState(false);
 
   const toggleBurger = useCallback(
@@ -18,20 +19,35 @@ export const Header = () => {
   );
 
   return (
-    <header className='flex items-center justify-between  p-3 bg-white shadow-md sticky top-0 z-5'>
+    <header className='flex items-center justify-between py-1 px-4 md:p-4 sticky top-0 z-0 bg-[#3e3a39] shadow-md'>
       <div className='flex items-center'>
-        <img src='/avant_logo_ol.svg' alt='logo' className='h-6 mr-2' />
+        <img
+          src='/avant_logo_white_ol.svg'
+          alt='logo'
+          className='h-8 mr-2 cursor-pointer'
+          onClick={() => router.push('/')}
+        />
       </div>
       <div className='flex items-center'>
-        <div className='items-center space-x-3 hidden md:inline-flex'>
-          <p className='font-medium'>John Doe</p>
+        <div className='items-center space-x-4 hidden md:inline-flex'>
           <HeaderRightIcon Icon={ViewGridIcon} />
           <HeaderRightIcon Icon={ChatIcon} />
           <HeaderRightIcon Icon={BellIcon} />
           <HeaderRightIcon Icon={ChevronDownIcon} />
+          <p
+            className='font-bold hover:underline text-white cursor-pointer'
+            onClick={() => router.push('/signin')}
+          >
+            サインイン
+          </p>
         </div>
         <div className='md:hidden bg-transparent'>
-          <Hamburger toggled={isOpen} toggle={setOpen} size={20} />
+          <Hamburger
+            toggled={isOpen}
+            toggle={setOpen}
+            size={20}
+            color='#ffffff'
+          />
         </div>
       </div>
     </header>

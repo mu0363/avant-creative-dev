@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useRef, useState, useCallback } from 'react';
 import { PhotographIcon } from '@heroicons/react/solid';
 import { XIcon } from '@heroicons/react/solid';
 import ReactCrop from 'react-image-crop';
