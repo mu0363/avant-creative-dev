@@ -1,5 +1,5 @@
 module.exports = {
   images: {
-    domains: ['links.papareact.com'],
+    domains: ['d2xa88l081gc75.cloudfront.net'],
   },
 };

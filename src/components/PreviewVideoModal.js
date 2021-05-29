@@ -53,14 +53,14 @@ export const PreviewVideoModal = ({
             >
               <div className='static inline-block align-bottom text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full p-3 bg-transparent'>
                 {children}
-                <div className='bg-gray-100 rounded-b-lg px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse'>
+                <div className='bg-gray-100 rounded-b-lg px-4 py-3 sm:px-3 sm:flex sm:flex-row-reverse'>
                   <Link href={`/video/[id]`} as={`/video/${id}`} passHref>
                     <div
                       onClick={() => setIsOpen(false)}
                       className='flex items-center w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-ai text-base font-medium text-white space-x-2 hover:bg-ai-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 cursor-pointer'
                     >
                       <FilmIcon className='h-5' />
-                      <p>Create Video</p>
+                      <p>wanna create this awesome video? just hit it!</p>
                     </div>
                   </Link>
                   <div

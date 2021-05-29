@@ -78,37 +78,29 @@ export const InputBox = () => {
   };
 
   return (
-    <div>
+    <div className='w-full'>
       <div className='bg-white p-3 rounded-lg mb-2'>
-        <div className='flex space-x-4'>
-          <div onClick={onFilePicker}>
-            <PhotographIcon className='h-10 text-green-500 hover:bg-gray-200 rounded-full p-2 cursor-pointer' />
-            <input
-              type='file'
-              accept='image/*'
-              hidden
-              ref={filePickerRef}
-              onChange={addImage}
-            />
-          </div>
-          <form className='flex flex-1'>
-            <input
-              type='text'
-              placeholder="What's on your mind?"
-              className='bg-gray-100 py-2 px-6 rounded-full focus:outline-none flex-grow'
-              ref={inputRef}
-            />
-            <button hidden onClick={onSubmit}>
-              Submit
-            </button>
-          </form>
-
-          {/* {image && (
-            <div className='relative h-56 mt-4'>
-              <Image src={image} objectFit='cover' layout='fill' />
-            </div>
-          )} */}
+        <div onClick={onFilePicker}>
+          <PhotographIcon className='h-10 text-green-500 hover:bg-gray-200 rounded-full p-2 cursor-pointer' />
+          <input
+            type='file'
+            accept='image/*'
+            hidden
+            ref={filePickerRef}
+            onChange={addImage}
+          />
         </div>
+        <form>
+          <input
+            type='text'
+            placeholder="What's on your mind next?"
+            className='bg-gray-100 py-2 px-6 rounded-full focus:outline-none w-full'
+            ref={inputRef}
+          />
+          <button hidden onClick={onSubmit}>
+            Submit
+          </button>
+        </form>
       </div>
       {image && (
         <div className='shadow-lg'>

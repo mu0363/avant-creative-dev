@@ -34,6 +34,7 @@ export const getPreviewVideo = async (id) => {
       thumbnail: doc.data().thumbnail,
       length: doc.data().length,
       resolution: doc.data().resolution,
+      previewSteps: doc.data().previewSteps,
     });
   });
 

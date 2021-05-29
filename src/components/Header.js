@@ -19,26 +19,34 @@ export const Header = () => {
   );
 
   return (
-    <header className='flex items-center justify-between py-1 px-4 md:p-4 sticky top-0 z-0 bg-white shadow-md'>
-      <div className='flex items-center'>
+    <header className='flex items-center justify-between py-1 px-4 md:p-4 sticky top-0 z-10 bg-white shadow-md'>
+      <div
+        className='flex items-center cursor-pointer'
+        onClick={() => router.push('/')}
+      >
         <img
-          src='/avant_logo_black_ol.svg'
+          src='/avant_creative_orange_logo.svg'
           alt='logo'
-          className='h-8 mr-2 cursor-pointer'
-          onClick={() => router.push('/')}
+          className='h-4 md:h-5 mr-2'
         />
       </div>
       <div className='flex items-center'>
-        <div className='items-center space-x-4 hidden md:inline-flex'>
+        <div className='items-center space-x-2 hidden md:inline-flex'>
           <HeaderRightIcon Icon={ViewGridIcon} />
           <HeaderRightIcon Icon={ChatIcon} />
           <HeaderRightIcon Icon={BellIcon} />
           <HeaderRightIcon Icon={ChevronDownIcon} />
           <p
-            className='hover:underline cursor-pointer font-bold'
-            onClick={() => router.push('/signin')}
+            className='cursor-pointer font-medium hover:bg-gray-100 py-2 px-5 rounded-sm'
+            onClick={() => router.push('/login')}
           >
-            サインイン
+            Login
+          </p>
+          <p
+            className='cursor-pointer font-medium border bg-white hover:bg-ai-light hover:text-white py-2 px-5 shadow-sm rounded-sm'
+            onClick={() => router.push('/signup')}
+          >
+            Sign up
           </p>
         </div>
         <div className='md:hidden bg-transparent'>
@@ -46,7 +54,7 @@ export const Header = () => {
             toggled={isOpen}
             toggle={setOpen}
             size={20}
-            color='#ffffff'
+            color='#3e3a39'
           />
         </div>
       </div>

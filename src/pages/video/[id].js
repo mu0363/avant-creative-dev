@@ -1,34 +1,56 @@
 import Head from 'next/head';
+import Image from 'next/image';
 import { getPreviewVideo } from 'src/lib/db';
 import { InputBox } from 'src/components/InputBox';
 import { Layout } from 'src/components/Layout';
-import { ProgressBar } from 'src/components/ProgressBar';
 import { StepBottom } from 'src/components/StepBottom';
+import { StepNav } from 'src/components/StepNav';
+import { previewSteps } from 'src/lib/previewSteps';
 
 export default function Video({ previewVideo }) {
-  const { id, name, videoSrc, thumbnail, length, resolution, createdAt } =
-    previewVideo;
+  const {
+    id,
+    name,
+    videoSrc,
+    thumbnail,
+    length,
+    resolution,
+    createdAt,
+    previewSteps,
+  } = previewVideo;
 
   return (
     <div>
       <Head>
         <title>Create Video</title>
-        <link rel='icon' href='/favicon.ico' />
+        <link rel='icon' href='/avant_creative_favicon.svg' />
       </Head>
 
       <Layout>
         <div className='m-2'>
-          <div className='max-w-2xl m-auto mt-10'>
-            {/* :style="'width: '+ parseInt(step / 3 * 100) +'%'" */}
-            <ProgressBar width={`1/1`} percent={30} />
-            <div className=' bg-white shadow-lg rounded-lg p-3 mt-10'>
-              <div className='max-w-2xl m-auto'>
-                <p className='font-semibold text-lg'>{name}</p>
-                <video poster={thumbnail} src={videoSrc} controls></video>
-                <InputBox />
-              </div>
-              <StepBottom />
+          <div className='max-w-4xl m-auto mt-10'>
+            <div className='flex items-center justify-evenly'>
+              <StepNav check={true} number={1} />
+              <div className='rounded bg-gray-200 h-1 w-1/4 mb-4 md:mb-6 md:h-2' />
+              <StepNav check={false} number={2} />
+              <div className='rounded bg-gray-200 h-1 w-1/4 mb-4 md:mb-6 md:h-2' />
+              <StepNav check={false} number={3} />
             </div>
+            <StepBottom />
+            {previewSteps.map((step, index) => (
+              <div key={index} className=' bg-white shadow-lg rounded-lg mt-10'>
+                <div className='flex'>
+                  <Image
+                    src={step.referenceImage}
+                    width={960}
+                    height={540}
+                    objectFit='contain'
+                    className='rounded-l-lg'
+                  />
+                  <InputBox />
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </Layout>
