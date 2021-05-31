@@ -29,14 +29,24 @@ export default function Video({ previewVideo }) {
       <Layout>
         <div className='m-2'>
           <div className='max-w-4xl m-auto mt-10'>
-            <div className='flex items-center justify-evenly'>
-              <StepNav check={true} number={1} />
+            {previewSteps.length > 1 && (
+              <div className='flex justify-evenly'>
+                {previewSteps.map((step, index) => (
+                  <StepNav
+                    key={index}
+                    stepNum={index + 1}
+                    check={true}
+                    number={1}
+                  />
+                ))}
+              </div>
+            )}
+
+            {/* <StepNav check={true} number={1} />
               <div className='rounded bg-gray-200 h-1 w-1/4 mb-4 md:mb-6 md:h-2' />
               <StepNav check={false} number={2} />
               <div className='rounded bg-gray-200 h-1 w-1/4 mb-4 md:mb-6 md:h-2' />
-              <StepNav check={false} number={3} />
-            </div>
-            <StepBottom />
+              <StepNav check={false} number={3} /> */}
             {previewSteps.map((step, index) => (
               <div key={index} className=' bg-white shadow-lg rounded-lg mt-10'>
                 <div className='flex'>
