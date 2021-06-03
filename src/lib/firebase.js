@@ -4,12 +4,12 @@ import 'firebase/firestore';
 import 'firebase/storage';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyCS3vwG1tGMOs-Oazrcufo12ja7BByG9AU',
-  authDomain: 'tailwind-facebook-2.firebaseapp.com',
-  projectId: 'tailwind-facebook-2',
-  storageBucket: 'tailwind-facebook-2.appspot.com',
-  messagingSenderId: '41211001450',
-  appId: '1:41211001450:web:47bd8bf34bb99f18ffe813',
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSEGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
 if (!firebase.apps.length) {
