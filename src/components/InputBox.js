@@ -93,7 +93,7 @@ export const InputBox = () => {
         <form>
           <input
             type='text'
-            placeholder="What's on your mind next?"
+            placeholder="What's on your mind next??"
             className='bg-gray-100 py-2 px-6 rounded-full focus:outline-none w-full'
             ref={inputRef}
           />
