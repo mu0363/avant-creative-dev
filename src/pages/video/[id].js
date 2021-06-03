@@ -6,24 +6,13 @@ import SwipeableViews from 'react-swipeable-views';
 
 import { InputBox } from 'src/components/InputBox';
 import { Layout } from 'src/components/Layout';
-import { StepBottom } from 'src/components/StepBottom';
-import { StepNav } from 'src/components/StepNav';
-import { previewSteps } from 'src/lib/previewSteps';
+import { Wizard } from 'src/components/Wizard';
 
 export default function Video({ previewVideo }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [status, setStatus] = useState(false);
 
-  const {
-    id,
-    name,
-    videoSrc,
-    thumbnail,
-    length,
-    resolution,
-    createdAt,
-    previewSteps,
-  } = previewVideo;
+  const { previewSteps } = previewVideo;
 
   const setComplete = () => {
     if (currentIndex === previewSteps.length - 2) {
@@ -56,49 +45,35 @@ export default function Video({ previewVideo }) {
 
       <Layout>
         <div className='m-2'>
-          <div className=' mt-10'>
-            {previewSteps.length > 1 && (
-              <div className='flex'>
-                {previewSteps.map((step, index) => (
-                  <StepNav
-                    key={index}
-                    stepNum={index}
-                    currentIndex={currentIndex}
-                    status={status}
-                  />
-                ))}
-              </div>
-            )}
-            <SwipeableViews enableMouseEvents index={currentIndex}>
-              {previewSteps.map((step, index) => (
-                <div
-                  key={index}
-                  className='max-w-4xl m-auto bg-white shadow-lg rounded-lg mt-10'
-                >
-                  <div className='flex flex-col sm:flex-row'>
-                    <Image
-                      src={step.referenceImage}
-                      width={960}
-                      height={540}
-                      objectFit='contain'
-                      className='rounded-l-lg'
-                    />
-                    <InputBox />
-                  </div>
-                </div>
-              ))}
-            </SwipeableViews>
-            <StepBottom
+          <div className='mt-10'>
+            <Wizard
               forwardSwipe={forwardSwipe}
               backwardSwipe={backwardSwipe}
               currentIndex={currentIndex}
-              length={previewSteps.length}
-            />
+              previewSteps={previewSteps}
+            >
+              <SwipeableViews enableMouseEvents index={currentIndex}>
+                {previewSteps.map((step, index) => (
+                  <div
+                    key={index}
+                    className='max-w-4xl m-auto bg-white shadow-lg rounded-lg mt-10'
+                  >
+                    <div className='flex flex-col sm:flex-row'>
+                      <Image
+                        src={step.referenceImage}
+                        width={960}
+                        height={540}
+                        objectFit='contain'
+                        className='rounded-l-lg'
+                      />
+                      <InputBox />
+                    </div>
+                  </div>
+                ))}
+              </SwipeableViews>
+            </Wizard>
           </div>
         </div>
-        <p>currentIndex: {currentIndex}</p>
-        <p>totalLength: {previewSteps.length - 1}</p>
-        <p>status: {status ? 'true' : 'false'}</p>
       </Layout>
     </div>
   );
