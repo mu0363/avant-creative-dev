@@ -12,7 +12,7 @@ export const Wizard = (props) => {
       )}
 
       {children}
-      <div className="flex justify-center my-8 space-x-4">
+      <div className="flex justify-center my-2 sm:my-8 space-x-4">
         <button
           onClick={backwardSwipe}
           className={`w-32 focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center bg-white hover:bg-gray-100 font-medium border ${
