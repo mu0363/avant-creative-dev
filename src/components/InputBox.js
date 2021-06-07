@@ -73,7 +73,7 @@ export const InputBox = () => {
     <div className="m-2">
       <div
         {...getRootProps()}
-        style={{ width: '340px', height: '193px' }}
+        style={{ width: '330px', height: '193px' }}
         className={`bg-white border-gray-300 cursor-pointer border border-dashed outline-none ${
           isDragActive && 'border-green-400'
         } ${modalResult && 'border'}`}
@@ -83,16 +83,16 @@ export const InputBox = () => {
           {modalResult.length ? (
             <div>
               <img
-                style={{ width: '340px', height: '193px' }}
+                style={{ width: '330px', height: '193px' }}
                 className="object-contain p-1"
                 src={modalResult}
                 alt="preview"
               />
             </div>
           ) : (
-            <div style={{ width: '340px', height: '193px' }} className="flex flex-col items-center justify-center">
+            <div style={{ width: '330px', height: '193px' }} className="flex flex-col items-center justify-center">
               <p className="text-gray-400">Drag and Drop a Image here</p>
-              <CloudUploadIcon className="h-6 mt-4 text-gray-400" />
+              <CloudUploadIcon className="h-8 mt-4 text-gray-400" />
             </div>
           )}
         </div>
@@ -100,7 +100,7 @@ export const InputBox = () => {
       <input
         type="text"
         placeholder="Type your text here"
-        className="bg-gray-100 py-2 px-6 rounded-full focus:outline-none w-full box-border mt-4 mb-2"
+        className="bg-gray-100 py-2 px-6 rounded-full focus:outline-none w-full box-border mt-4 mb-2 text-base"
         ref={inputRef}
       />
 
