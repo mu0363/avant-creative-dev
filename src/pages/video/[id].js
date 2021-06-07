@@ -40,12 +40,12 @@ export default function Video({ previewVideo }) {
     <div>
       <Head>
         <title>Create Video</title>
-        <link rel='icon' href='/avant_creative_favicon.svg' />
+        <link rel="icon" href="/avant_creative_favicon.svg" />
       </Head>
 
       <Layout>
-        <div className='m-2'>
-          <div className='mt-10'>
+        <div className="m-2">
+          <div className="mt-3 sm:mt-10">
             <Wizard
               forwardSwipe={forwardSwipe}
               backwardSwipe={backwardSwipe}
@@ -54,19 +54,18 @@ export default function Video({ previewVideo }) {
             >
               <SwipeableViews enableMouseEvents index={currentIndex}>
                 {previewSteps.map((step, index) => (
-                  <div
-                    key={index}
-                    className='max-w-4xl m-auto bg-white shadow-lg rounded-lg mt-10'
-                  >
-                    <div className='flex flex-col sm:flex-row'>
+                  <div key={index} className="max-w-4xl m-auto bg-white shadow-lg rounded-lg mt-3 sm:mt-10">
+                    <div className="flex flex-col sm:flex-row">
                       <Image
                         src={step.referenceImage}
                         width={960}
                         height={540}
-                        objectFit='contain'
-                        className='rounded-l-lg'
+                        objectFit="contain"
+                        className="rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none"
                       />
-                      <InputBox />
+                      <div className="m-auto sm:m-0">
+                        <InputBox />
+                      </div>
                     </div>
                   </div>
                 ))}
