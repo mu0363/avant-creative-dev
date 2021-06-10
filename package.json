@@ -10,6 +10,7 @@
     "dependencies": {
         "@headlessui/react": "^1.2.0-d0e27ff",
         "@heroicons/react": "^1.0.1",
+        "aws-sdk": "^2.923.0",
         "date-fns": "^2.21.3",
         "doka": "./local_modules/doka",
         "eslint-config-prettier": "^8.3.0",
@@ -21,9 +22,11 @@
         "react-doka": "./local_modules/react-doka",
         "react-dom": "17.x",
         "react-dropzone": "^11.3.2",
+        "react-hook-form": "^7.8.1",
         "react-icons": "^4.2.0",
         "react-image-crop": "^8.6.9",
-        "react-swipeable-views": "^0.14.0"
+        "react-swipeable-views": "^0.14.0",
+        "uuid": "^8.3.2"
     },
     "devDependencies": {
         "autoprefixer": "^10.2.5",

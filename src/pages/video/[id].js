@@ -10,24 +10,18 @@ import { Wizard } from 'src/components/Wizard';
 
 export default function Video({ previewVideo }) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [status, setStatus] = useState(false);
-
   const { previewSteps } = previewVideo;
 
-  const setComplete = () => {
-    if (currentIndex === previewSteps.length - 2) {
-      setStatus(true);
-    }
-  };
-
+  //前にすすむボタン
   const forwardSwipe = () => {
     if (currentIndex === previewSteps.length - 1) {
       setCurrentIndex(previewSteps.length - 1);
     } else {
       setCurrentIndex((currentIndex) => currentIndex + 1);
-      setComplete();
     }
   };
+
+  //後ろに戻るボタン
   const backwardSwipe = () => {
     if (currentIndex > 0) {
       setCurrentIndex((currentIndex) => currentIndex - 1);
@@ -56,14 +50,11 @@ export default function Video({ previewVideo }) {
                 {previewSteps.map((step, index) => (
                   <div key={index} className="max-w-4xl m-auto bg-white shadow-lg rounded-lg mt-3 sm:mt-10">
                     <div className="flex flex-col sm:flex-row">
-                      <Image
+                      <img
                         src={step.referenceImage}
-                        width={960}
-                        height={540}
-                        objectFit="contain"
-                        className="rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none"
+                        className="rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none flex-1 max-w-lg"
                       />
-                      <div className="m-auto sm:m-0">
+                      <div className="flex-1">
                         <InputBox />
                       </div>
                     </div>
