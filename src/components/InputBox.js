@@ -47,7 +47,9 @@ const editorDefaults = {
   },
 };
 
-export const InputBox = () => {
+export const InputBox = ({ stepNumber }) => {
+  const [text, setText] = useState('');
+
   //doka modal
   const [modalVisible, setModalVisible] = useState(false);
   const [modalResult, setModalResult] = useState('');
@@ -78,6 +80,7 @@ export const InputBox = () => {
     formState: { errors },
     reset,
   } = useForm();
+
   const onSubmitForm = (data) => {
     console.log(data);
     console.log(modalData);
@@ -109,7 +112,7 @@ export const InputBox = () => {
           type="text"
           placeholder="Type your text here"
           className="bg-gray-100 py-2 px-6 rounded-full focus:outline-none w-full box-border mt-4 mb-4 text-base"
-          {...register('caption', { required: false })}
+          {...register(`text${stepNumber}`, { required: false })}
         />
         {errors.caption?.type === 'required' && (
           <span className="text-white bg-ai rounded-lg py-1 px-3">You must enter text least 8 character</span>

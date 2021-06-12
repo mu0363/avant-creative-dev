@@ -1,7 +1,13 @@
 import aws from 'aws-sdk';
-import { v4 as uuidv4 } from 'uuid';
+import { format } from 'date-fns';
 
 export default async function handler(req, res) {
+  const extension = req.query.file.match(/\.[0-9a-z]+$/i)[0];
+  const avantName = req.query.avant;
+  const step = `step${req.query.step}`;
+  const id = req.query.id;
+  const date = format(new Date(), 'yyyyMMdd');
+
   aws.config.update({
     accessKeyId: process.env.ACCESS_KEY,
     secretAccessKey: process.env.SECRET_KEY,
@@ -13,7 +19,7 @@ export default async function handler(req, res) {
   const post = await s3.createPresignedPost({
     Bucket: process.env.BUCKET_NAME,
     Fields: {
-      key: uuidv4(),
+      key: `${avantName}/${date}/${id}/${step}${extension}`,
     },
     Expires: 60, // seconds
     Conditions: [

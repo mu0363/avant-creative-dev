@@ -55,7 +55,7 @@ export default function Video({ previewVideo }) {
                         className="rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none flex-1 max-w-lg"
                       />
                       <div className="flex-1">
-                        <InputBox />
+                        <InputBox stepNumber={index + 1} forwardSwipe={forwardSwipe} />
                       </div>
                     </div>
                   </div>
