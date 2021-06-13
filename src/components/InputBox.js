@@ -1,5 +1,6 @@
 import React, { useCallback, useState, useRef } from 'react';
-import { useForm } from 'react-hook-form';
+import { useDispatch, useSelector } from 'react-redux';
+import { addStep } from 'src/redux/counter';
 import { doka } from 'doka/doka.module.css';
 import { DokaImageEditorModal } from 'react-doka';
 import { useDropzone } from 'react-dropzone';
@@ -48,11 +49,13 @@ const editorDefaults = {
 };
 
 export const InputBox = ({ stepNumber }) => {
-  const [text, setText] = useState('');
+  //redux
+  const dispatch = useDispatch();
 
   //doka modal
   const [modalVisible, setModalVisible] = useState(false);
   const [modalResult, setModalResult] = useState('');
+  // 騙されないで！！modalDataが本体よ！！
   const [modalData, setModalData] = useState('');
   const [preview, setPreview] = useState(null);
   //ファイルがD&Dされたら発動! 画像表示するよ
@@ -73,51 +76,37 @@ export const InputBox = ({ stepNumber }) => {
     multiple: false,
   });
 
-  //react-hook-form
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm();
-
-  const onSubmitForm = (data) => {
-    console.log(data);
-    console.log(modalData);
-  };
-
   return (
     <div className="m-3">
-      <form onSubmit={handleSubmit(onSubmitForm)}>
-        <div
-          {...getRootProps()}
-          className={`bg-white border-gray-300 cursor-pointer border border-dashed outline-none ${
-            isDragActive && 'border-green-400'
-          } ${modalResult && 'border'}`}
-          // {...register('image', { required: true })}
-        >
-          <input {...getInputProps()} />
-          <div>
-            {modalResult.length ? (
-              <img className="object-contain p-1" src={modalResult} alt="preview" />
-            ) : (
-              <div className="flex flex-col items-center justify-center py-16">
-                <p className="text-gray-400">Upload your Image</p>
-                <CloudUploadIcon className="h-8 mt-4 text-gray-400" />
-              </div>
-            )}
-          </div>
+      <div
+        {...getRootProps()}
+        className={`bg-white border-gray-300 cursor-pointer border border-dashed outline-none ${
+          isDragActive && 'border-green-400'
+        } ${modalResult && 'border'}`}
+      >
+        <input {...getInputProps()} />
+        <div>
+          {modalResult.length ? (
+            <img
+              className="object-contain p-1"
+              src={modalResult}
+              alt="preview"
+              // {...register('image', { required: true })}
+            />
+          ) : (
+            <div className="flex flex-col items-center justify-center py-16">
+              <p className="text-gray-400">Upload your Image</p>
+              <CloudUploadIcon className="h-8 mt-4 text-gray-400" />
+            </div>
+          )}
         </div>
-        <input
-          type="text"
-          placeholder="Type your text here"
-          className="bg-gray-100 py-2 px-6 rounded-full focus:outline-none w-full box-border mt-4 mb-4 text-base"
-          {...register(`text${stepNumber}`, { required: false })}
-        />
-        {errors.caption?.type === 'required' && (
-          <span className="text-white bg-ai rounded-lg py-1 px-3">You must enter text least 8 character</span>
-        )}
-      </form>
+      </div>
+      {/* <input type="file" {...register(`image${stepNumber}`, { required: true })} /> */}
+      <input
+        type="text"
+        placeholder="Type your text here"
+        className="bg-gray-100 py-2 px-6 rounded-full focus:outline-none w-full box-border mt-4 mb-4 text-base"
+      />
 
       {/* Modal */}
       {modalVisible && (
@@ -130,6 +119,7 @@ export const InputBox = ({ stepNumber }) => {
           onProcess={({ dest }) => {
             setModalData(dest);
             setModalResult(URL.createObjectURL(dest));
+            console.log(modalData);
           }}
           imageCropAspectRatio={16 / 9}
         />
