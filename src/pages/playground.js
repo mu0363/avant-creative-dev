@@ -1,8 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { increment, decrement, incrementByAmount } from 'src/redux/counter';
+import { increment, decrement, incrementByAmount } from 'src/redux/stepper';
 
 export default function playground() {
-  const count = useSelector((state) => state.counter.count);
+  const count = useSelector((state) => state.stepper.count);
   const dispatch = useDispatch();
 
   return (
