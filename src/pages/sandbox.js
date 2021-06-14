@@ -17,6 +17,7 @@ export default function Sandbox() {
     });
     images.map(async (image, index) => {
       const file = image.value[0];
+      console.log(file);
       const filename = file.name;
       const step = index + 1;
 
@@ -33,18 +34,19 @@ export default function Sandbox() {
       Object.entries({ ...fields, file }).forEach(([key, value]) => {
         formData.append(key, value);
       });
+      console.log(...formData.entries());
 
-      //s3にアップロード
-      const upload = await fetch(url, {
-        method: 'POST',
-        body: formData,
-      });
-      if (upload.ok) {
-        console.log('Uploaded successfully!');
-      } else {
-        console.error('Upload failed.');
-      }
-      //この後イメージキャッシュをクリアするといいよ🥺
+      // //s3にアップロード
+      // const upload = await fetch(url, {
+      //   method: 'POST',
+      //   body: formData,
+      // });
+      // if (upload.ok) {
+      //   console.log('Uploaded successfully!');
+      // } else {
+      //   console.error('Upload failed.');
+      // }
+      // //この後イメージキャッシュをクリアするといいよ🥺
     });
     //////////////////////////////////////////////////////
     // ------------- this is working !!! ----------

@@ -2,7 +2,8 @@ import aws from 'aws-sdk';
 import { format } from 'date-fns';
 
 export default async function handler(req, res) {
-  const extension = req.query.file.match(/\.[0-9a-z]+$/i)[0];
+  // const extension = req.query.file.match(/\.[0-9a-z]+$/i)[0];
+  const extension = `.${req.query.extension}`;
   const avantName = req.query.avant;
   const step = `step${req.query.step}`;
   const id = req.query.id;
@@ -19,7 +20,7 @@ export default async function handler(req, res) {
   const post = await s3.createPresignedPost({
     Bucket: process.env.BUCKET_NAME,
     Fields: {
-      key: `${avantName}/${date}/${id}/${step}${extension}`,
+      key: `${avantName}/${date}/${id}/${id}_${step}${extension}`,
     },
     Expires: 60, // seconds
     Conditions: [

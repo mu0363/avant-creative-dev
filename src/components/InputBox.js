@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addStep } from 'src/redux/counter';
+import { useDispatch } from 'react-redux';
+import { addImage, addText } from 'src/redux/stepper';
 import { doka } from 'doka/doka.module.css';
 import { DokaImageEditorModal } from 'react-doka';
 import { useDropzone } from 'react-dropzone';
@@ -49,6 +49,8 @@ const editorDefaults = {
 };
 
 export const InputBox = ({ stepNumber }) => {
+  const inputEl = useRef(null);
+
   //redux
   const dispatch = useDispatch();
 
@@ -101,11 +103,13 @@ export const InputBox = ({ stepNumber }) => {
           )}
         </div>
       </div>
-      {/* <input type="file" {...register(`image${stepNumber}`, { required: true })} /> */}
+
       <input
         type="text"
         placeholder="Type your text here"
         className="bg-gray-100 py-2 px-6 rounded-full focus:outline-none w-full box-border mt-4 mb-4 text-base"
+        ref={inputEl}
+        onChange={() => dispatch(addText({ [`text${stepNumber}`]: inputEl.current.value }))}
       />
 
       {/* Modal */}
@@ -119,7 +123,8 @@ export const InputBox = ({ stepNumber }) => {
           onProcess={({ dest }) => {
             setModalData(dest);
             setModalResult(URL.createObjectURL(dest));
-            console.log(modalData);
+            const localImageUrl = window.URL.createObjectURL(dest);
+            dispatch(addImage({ [`image${stepNumber}`]: localImageUrl }));
           }}
           imageCropAspectRatio={16 / 9}
         />

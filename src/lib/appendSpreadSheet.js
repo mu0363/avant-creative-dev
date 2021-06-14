@@ -1,5 +1,24 @@
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 
+const SHEET_TITLE = 'streaming';
+const doc = new GoogleSpreadsheet(process.env.NEXT_PUBLIC_SPREADSHEET_ID);
+
+export const appendSpreadsheet = async (row) => {
+  try {
+    await doc.useServiceAccountAuth({
+      client_email: process.env.NEXT_PUBLIC_FIREBASE_CLIENT_EMAIL,
+      private_key: process.env.NEXT_PUBLIC_FIREBASE_PRIVATE_KEY,
+    });
+    // loads document properties and worksheets
+    await doc.loadInfo();
+    const sheet = doc.sheetsByTitle[SHEET_TITLE];
+    await sheet.addRow(row);
+    console.log('書き込んだよ');
+  } catch (e) {
+    console.error('Error: ', e);
+  }
+};
+
 //参考URL
 //https://github.com/theoephraim/node-google-spreadsheet
 //https://stackoverflow.com/questions/66720347/module-not-found-cant-resolve-child-process-google-spreadsheet
@@ -22,22 +41,3 @@ import { GoogleSpreadsheet } from 'google-spreadsheet';
 //     return config;
 //   },
 // };
-
-const SHEET_TITLE = 'streaming';
-const doc = new GoogleSpreadsheet(process.env.NEXT_PUBLIC_SPREADSHEET_ID);
-
-export const appendSpreadsheet = async (row) => {
-  try {
-    await doc.useServiceAccountAuth({
-      client_email: process.env.NEXT_PUBLIC_FIREBASE_CLIENT_EMAIL,
-      private_key: process.env.NEXT_PUBLIC_FIREBASE_PRIVATE_KEY,
-    });
-    // loads document properties and worksheets
-    await doc.loadInfo();
-    const sheet = doc.sheetsByTitle[SHEET_TITLE];
-    await sheet.addRow(row);
-    console.log('書き込んだよ');
-  } catch (e) {
-    console.error('Error: ', e);
-  }
-};
