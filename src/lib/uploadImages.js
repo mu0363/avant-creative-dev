@@ -19,7 +19,7 @@ const uploadImages = async (images, avantName) => {
       let filepath = '';
       const res = await fetch(`/api/upload-url?id=${id}&extension=${extension}&avant=${avantName}&step=${step}`);
       const { url, fields } = await res.json();
-      console.log(fields);
+
       filepath = `${process.env.NEXT_PUBLIC_CLOUDFRONT_URL}${fields.key}`;
       cloudfrontUrls.push({ [`image${step}`]: filepath });
       const formData = new FormData();
