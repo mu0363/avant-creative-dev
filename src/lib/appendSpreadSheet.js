@@ -13,7 +13,7 @@ export const appendSpreadsheet = async (row) => {
     await doc.loadInfo();
     const sheet = doc.sheetsByTitle[SHEET_TITLE];
     await sheet.addRow(row);
-    console.log('書き込んだよ');
+    console.log('書き込んだぜ');
   } catch (e) {
     console.error('Error: ', e);
   }
