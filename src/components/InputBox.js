@@ -1,10 +1,12 @@
 import React, { useCallback, useState, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { addImage, addText } from 'src/redux/stepper';
 import { doka } from 'doka/doka.module.css';
 import { DokaImageEditorModal } from 'react-doka';
 import { useDropzone } from 'react-dropzone';
 import { CloudUploadIcon } from '@heroicons/react/outline';
 
-// doka
+//dokaのNext.jsサンプルから持ってきたやーつ
 import {
   // editor
   locale_en_gb,
@@ -27,13 +29,12 @@ import {
   markup_editor_defaults,
   markup_editor_locale_en_gb,
 } from 'doka';
-
 setPlugins(plugin_crop, plugin_finetune, plugin_filter, plugin_annotate);
-
 const editorDefaults = {
   imageReader: createDefaultImageReader(),
   imageWriter: createDefaultImageWriter(),
-  ...plugin_crop_defaults,
+  // ↓crop縦横比を変更できる機能を無効化
+  // ...plugin_crop_defaults,
   ...plugin_finetune_defaults,
   ...plugin_filter_defaults,
   ...markup_editor_defaults,
@@ -47,12 +48,19 @@ const editorDefaults = {
   },
 };
 
-export const InputBox = () => {
-  const inputRef = useRef(null);
-  // modal
+export const InputBox = ({ stepNumber }) => {
+  const inputEl = useRef(null);
+
+  //redux
+  const dispatch = useDispatch();
+
+  //doka modal
   const [modalVisible, setModalVisible] = useState(false);
   const [modalResult, setModalResult] = useState('');
+  // 騙されないで！！modalDataが本体よ！！
+  const [modalData, setModalData] = useState('');
   const [preview, setPreview] = useState(null);
+  //ファイルがD&Dされたら発動! 画像表示するよ
   const onDrop = useCallback((acceptedFiles) => {
     const file = acceptedFiles[0];
     const reader = new FileReader();
@@ -61,8 +69,9 @@ export const InputBox = () => {
     };
     reader.readAsDataURL(file);
     setModalVisible(true);
-    // Do something with the files
   }, []);
+
+  //react dropzone
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: 'image/*',
@@ -70,10 +79,9 @@ export const InputBox = () => {
   });
 
   return (
-    <div className="m-2">
+    <div className="m-3">
       <div
         {...getRootProps()}
-        style={{ width: '330px', height: '193px' }}
         className={`bg-white border-gray-300 cursor-pointer border border-dashed outline-none ${
           isDragActive && 'border-green-400'
         } ${modalResult && 'border'}`}
@@ -81,27 +89,27 @@ export const InputBox = () => {
         <input {...getInputProps()} />
         <div>
           {modalResult.length ? (
-            <div>
-              <img
-                style={{ width: '330px', height: '193px' }}
-                className="object-contain p-1"
-                src={modalResult}
-                alt="preview"
-              />
-            </div>
+            <img
+              className="object-contain p-1"
+              src={modalResult}
+              alt="preview"
+              // {...register('image', { required: true })}
+            />
           ) : (
-            <div style={{ width: '330px', height: '193px' }} className="flex flex-col items-center justify-center">
-              <p className="text-gray-400">Drag and Drop a Image here</p>
+            <div className="flex flex-col items-center justify-center py-16">
+              <p className="text-gray-400">Upload your Image</p>
               <CloudUploadIcon className="h-8 mt-4 text-gray-400" />
             </div>
           )}
         </div>
       </div>
+
       <input
         type="text"
         placeholder="Type your text here"
-        className="bg-gray-100 py-2 px-6 rounded-full focus:outline-none w-full box-border mt-4 mb-2 text-base"
-        ref={inputRef}
+        className="bg-gray-100 py-2 px-6 rounded-full focus:outline-none w-full box-border mt-4 mb-4 text-base"
+        ref={inputEl}
+        onChange={() => dispatch(addText({ [`text${stepNumber}`]: inputEl.current.value }))}
       />
 
       {/* Modal */}
@@ -110,9 +118,14 @@ export const InputBox = () => {
           {...editorDefaults}
           className={doka}
           src={preview}
-          onLoad={(res) => console.log('load modal image', res)}
+          // onLoad={(res) => console.log('load modal image', res)}
           onHide={() => setModalVisible(false)}
-          onProcess={({ dest }) => setModalResult(URL.createObjectURL(dest))}
+          onProcess={({ dest }) => {
+            setModalData(dest);
+            setModalResult(URL.createObjectURL(dest));
+            const localImageUrl = window.URL.createObjectURL(dest);
+            dispatch(addImage({ [`image${stepNumber}`]: localImageUrl }));
+          }}
           imageCropAspectRatio={16 / 9}
         />
       )}

@@ -1,35 +1,45 @@
 {
-    "name": "nextjs",
-    "version": "0.1.0",
-    "private": true,
-    "scripts": {
-        "dev": "next dev",
-        "build": "next build",
-        "start": "next start"
-    },
-    "dependencies": {
-        "@headlessui/react": "^1.2.0-d0e27ff",
-        "@heroicons/react": "^1.0.1",
-        "date-fns": "^2.21.3",
-        "doka": "./local_modules/doka",
-        "eslint-config-prettier": "^8.3.0",
-        "firebase": "^8.6.2",
-        "hamburger-react": "^2.4.1",
-        "next": "10.x",
-        "next-transpile-modules": "^7.2.0",
-        "react": "17.x",
-        "react-doka": "./local_modules/react-doka",
-        "react-dom": "17.x",
-        "react-dropzone": "^11.3.2",
-        "react-icons": "^4.2.0",
-        "react-image-crop": "^8.6.9",
-        "react-swipeable-views": "^0.14.0"
-    },
-    "devDependencies": {
-        "autoprefixer": "^10.2.5",
-        "eslint": "^7.28.0",
-        "eslint-plugin-react": "^7.24.0",
-        "postcss": "^8.3.0",
-        "tailwindcss": "^2.1.2"
-    }
+  "name": "nextjs",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@headlessui/react": "^1.2.0-d0e27ff",
+    "@heroicons/react": "^1.0.1",
+    "@reduxjs/toolkit": "^1.6.0",
+    "add": "^2.0.6",
+    "aws-sdk": "^2.923.0",
+    "date-fns": "^2.21.3",
+    "doka": "./local_modules/doka",
+    "eslint-config-prettier": "^8.3.0",
+    "firebase": "^8.6.2",
+    "google-spreadsheet": "^3.1.15",
+    "hamburger-react": "^2.4.1",
+    "next": "10.x",
+    "next-transpile-modules": "^7.2.0",
+    "react": "17.x",
+    "react-doka": "./local_modules/react-doka",
+    "react-dom": "17.x",
+    "react-dropzone": "^11.3.2",
+    "react-hook-form": "^7.8.1",
+    "react-icons": "^4.2.0",
+    "react-image-crop": "^8.6.9",
+    "react-redux": "^7.2.4",
+    "react-swipeable-views": "^0.14.0",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.26.1",
+    "@typescript-eslint/parser": "^4.26.1",
+    "autoprefixer": "^10.2.5",
+    "eslint": "^7.28.0",
+    "eslint-plugin-react": "^7.24.0",
+    "postcss": "^8.3.0",
+    "prettier": "^2.3.1",
+    "tailwindcss": "^2.1.2"
+  }
 }
