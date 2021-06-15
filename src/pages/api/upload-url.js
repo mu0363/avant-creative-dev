@@ -7,7 +7,8 @@ export default async function handler(req, res) {
   const avantName = req.query.avant;
   const step = `step${req.query.step}`;
   const id = req.query.id;
-  const date = format(new Date(), 'yyyyMMdd');
+  const date = format(new Date(), 'MMdd');
+  const year = format(new Date(), 'yyyy');
 
   aws.config.update({
     accessKeyId: process.env.ACCESS_KEY,
@@ -20,7 +21,7 @@ export default async function handler(req, res) {
   const post = await s3.createPresignedPost({
     Bucket: process.env.BUCKET_NAME,
     Fields: {
-      key: `${avantName}/${date}/${id}/${id}_${step}${extension}`,
+      key: `${year}/${date}/${avantName}/${id}/${id}_${step}${extension}`,
     },
     Expires: 60, // seconds
     Conditions: [
