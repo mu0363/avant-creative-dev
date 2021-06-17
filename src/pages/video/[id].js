@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Head from 'next/head';
+import Image from 'next/image';
 import { useSelector, useDispatch } from 'react-redux';
 import SwipeableViews from 'react-swipeable-views';
 import { format } from 'date-fns';
@@ -87,7 +88,8 @@ export default function Video({ previewVideo }) {
                   <div className="flex flex-col sm:flex-row">
                     <img
                       src={step.referenceImage}
-                      className="rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none flex-1 max-w-lg"
+                      alt={step.name}
+                      className="rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none flex-1 max-w-lg object-contain"
                     />
                     <div className="flex-1">
                       <InputBox stepNumber={index + 1} />
