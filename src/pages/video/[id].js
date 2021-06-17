@@ -69,7 +69,7 @@ export default function Video({ previewVideo }) {
   return (
     <div>
       <Head>
-        <title>Create Video</title>
+        <title>Create here</title>
         <link rel="icon" href="/avant_creative_favicon.svg" />
       </Head>
 
