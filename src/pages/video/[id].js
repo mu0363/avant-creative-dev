@@ -89,7 +89,7 @@ export default function Video({ previewVideo }) {
                     <img
                       src={step.referenceImage}
                       alt={step.name}
-                      className="rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none flex-1 max-w-lg object-contain"
+                      className="rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none flex-1 max-w-lg object-cover"
                     />
                     <div className="flex-1">
                       <InputBox stepNumber={index + 1} />
