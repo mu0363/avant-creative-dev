@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Head from 'next/head';
-import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import SwipeableViews from 'react-swipeable-views';
 import { format } from 'date-fns';
@@ -12,11 +12,14 @@ import { Stepper } from 'src/components/Stepper';
 import { appendSpreadsheet } from 'src/lib/appendSpreadSheet';
 import { generateFilename } from 'src/lib/generateFilename';
 import { uploadImages } from 'src/lib/uploadImages';
+import { deleteAllState } from 'src/redux/stepper';
 
 export default function Video({ previewVideo }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { previewSteps } = previewVideo;
+  const router = useRouter();
   const { images, texts } = useSelector((state) => state.stepper);
+  const dispatch = useDispatch();
   const avantName = previewVideo.templateName;
   const aepPath = previewVideo.aepPath;
   const username = 'JohnDoe';
@@ -63,6 +66,8 @@ export default function Video({ previewVideo }) {
 
       // スプレッドシートに書き込む！！
       appendSpreadsheet(newRow);
+      dispatch(deleteAllState());
+      router.push('/');
     });
   };
 
@@ -84,18 +89,29 @@ export default function Video({ previewVideo }) {
 
             <SwipeableViews enableMouseEvents index={currentIndex}>
               {previewSteps.map((step, index) => (
-                <div key={index} className="max-w-4xl m-auto bg-white shadow-lg rounded-lg mt-3 sm:mt-10">
-                  <div className="grid sm:grid-cols-2">
+                <div
+                  key={index}
+                  className={`${
+                    step.checkImage
+                      ? 'max-w-4xl m-auto bg-white shadow-lg rounded-lg mt-3 sm:mt-10'
+                      : 'max-w-md m-auto bg-white shadow-lg rounded-lg mt-3 sm:mt-10'
+                  }`}
+                >
+                  <div className={`${step.checkImage ? 'grid sm:grid-cols-2' : 'grid'}`}>
                     <div>
                       <img
                         src={step.referenceImage}
                         alt={step.name}
-                        className="rounded-t-lg sm:rounded-lt-lg sm:rounded-tr-none max-w-auto object-cover"
+                        className={`${
+                          step.checkImage
+                            ? 'rounded-t-lg sm:rounded-lt-lg sm:rounded-tr-none max-w-auto object-cover'
+                            : 'rounded-t-lg max-w-auto object-cover'
+                        }`}
                       />
                       <p className="p-3">{step.description}</p>
                     </div>
                     <div>
-                      <InputBox stepNumber={index + 1} />
+                      <InputBox step={step} stepNumber={index + 1} />
                     </div>
                   </div>
                 </div>

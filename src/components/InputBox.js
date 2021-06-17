@@ -48,8 +48,9 @@ const editorDefaults = {
   },
 };
 
-export const InputBox = ({ stepNumber }) => {
+export const InputBox = ({ step, stepNumber }) => {
   const inputEl = useRef(null);
+  console.log(step.checkImage);
 
   //redux
   const dispatch = useDispatch();
@@ -80,29 +81,26 @@ export const InputBox = ({ stepNumber }) => {
 
   return (
     <div className="m-2">
-      <div
-        {...getRootProps()}
-        className={`bg-white border-gray-300 cursor-pointer border border-dashed outline-none ${
-          isDragActive && 'border-green-400'
-        } ${modalResult && 'border'}`}
-      >
-        <input {...getInputProps()} />
-        <div>
-          {modalResult.length ? (
-            <img
-              className="object-contain p-1"
-              src={modalResult}
-              alt="preview"
-              // {...register('image', { required: true })}
-            />
-          ) : (
-            <div className="flex flex-col items-center justify-center py-20">
-              <p className="text-gray-400">Upload your Image</p>
-              <CloudUploadIcon className="h-8 mt-4 text-gray-400" />
-            </div>
-          )}
+      {step.checkImage && (
+        <div
+          {...getRootProps()}
+          className={`bg-white border-gray-300 cursor-pointer border border-dashed outline-none ${
+            isDragActive && 'border-green-400'
+          } ${modalResult && 'border'}`}
+        >
+          <input {...getInputProps()} />
+          <div>
+            {modalResult.length ? (
+              <img className="object-contain p-1" src={modalResult} alt="preview" />
+            ) : (
+              <div className="flex flex-col items-center justify-center py-20">
+                <p className="text-gray-400">Upload your Image</p>
+                <CloudUploadIcon className="h-8 mt-4 text-gray-400" />
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      )}
 
       <input
         type="text"
@@ -111,7 +109,6 @@ export const InputBox = ({ stepNumber }) => {
         ref={inputEl}
         onChange={() => dispatch(addText({ [`text${stepNumber}`]: inputEl.current.value }))}
       />
-
       {/* Modal */}
       {modalVisible && (
         <DokaImageEditorModal
