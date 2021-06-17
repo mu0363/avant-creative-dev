@@ -86,12 +86,15 @@ export default function Video({ previewVideo }) {
               {previewSteps.map((step, index) => (
                 <div key={index} className="max-w-4xl m-auto bg-white shadow-lg rounded-lg mt-3 sm:mt-10">
                   <div className="grid sm:grid-cols-2">
-                    <img
-                      src={step.referenceImage}
-                      alt={step.name}
-                      className="rounded-t-lg sm:rounded-l-lg sm:rounded-tr-none max-w-auto object-cover"
-                    />
-                    <div className="">
+                    <div>
+                      <img
+                        src={step.referenceImage}
+                        alt={step.name}
+                        className="rounded-t-lg sm:rounded-lt-lg sm:rounded-tr-none max-w-auto object-cover"
+                      />
+                      <p className="p-3">{step.description}</p>
+                    </div>
+                    <div>
                       <InputBox stepNumber={index + 1} />
                     </div>
                   </div>

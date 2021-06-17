@@ -79,7 +79,7 @@ export const InputBox = ({ stepNumber }) => {
   });
 
   return (
-    <div className="m-3">
+    <div className="m-2">
       <div
         {...getRootProps()}
         className={`bg-white border-gray-300 cursor-pointer border border-dashed outline-none ${
@@ -96,7 +96,7 @@ export const InputBox = ({ stepNumber }) => {
               // {...register('image', { required: true })}
             />
           ) : (
-            <div className="flex flex-col items-center justify-center py-16">
+            <div className="flex flex-col items-center justify-center py-20">
               <p className="text-gray-400">Upload your Image</p>
               <CloudUploadIcon className="h-8 mt-4 text-gray-400" />
             </div>
