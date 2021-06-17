@@ -1,18 +1,11 @@
 import { db } from 'src/lib/firebase';
-import { format } from 'date-fns';
-
 export const getAllPreviewVideos = async () => {
   const previewVideos = [];
   const snapshot = await db.collection('preview-videos').get();
   snapshot.forEach((doc) => {
     previewVideos.push({
       id: doc.id,
-      createdAt: format(doc.data().createdAt.toDate(), 'yyyy/MM/dd'),
-      name: doc.data().name,
-      videoSrc: doc.data().videoSrc,
-      thumbnail: doc.data().thumbnail,
-      length: doc.data().length,
-      resolution: doc.data().resolution,
+      ...doc.data(),
     });
   });
 
@@ -24,18 +17,23 @@ export const getPreviewVideo = async (id) => {
   const snapshot = await db.collection('preview-videos').where('previewId', '==', id).get();
   snapshot.forEach((doc) => {
     previewVideo.push({
-      createdAt: format(doc.data().createdAt.toDate(), 'yyyy/MM/dd'),
       id: doc.id,
-      name: doc.data().name,
-      videoSrc: doc.data().videoSrc,
-      thumbnail: doc.data().thumbnail,
-      length: doc.data().length,
-      resolution: doc.data().resolution,
-      templateName: doc.data().templateName,
-      aepPath: doc.data().aepPath,
-      previewSteps: doc.data().previewSteps,
+      ...doc.data(),
     });
   });
 
   return previewVideo;
+};
+
+export const getAllVideos = async () => {
+  const allVideos = [];
+  const snapshot = await db.collection('videos').get();
+  snapshot.forEach((doc) => {
+    allVideos.push({
+      id: doc.id,
+      ...doc.data(),
+    });
+  });
+
+  return allVideos;
 };

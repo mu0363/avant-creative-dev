@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply text-sm text-[#3e3a39] bg-gray-100;
+    @apply text-sm text-[#3e3a39] bg-gray-100 h-screen flex flex-col;
   }
 }
 

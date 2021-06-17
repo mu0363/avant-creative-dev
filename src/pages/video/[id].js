@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import SwipeableViews from 'react-swipeable-views';
 import { format } from 'date-fns';
 
-import { getPreviewVideo } from 'src/lib/db';
+import { getPreviewVideo, getAllPreviewVideos } from 'src/lib/db';
 import { InputBox } from 'src/components/InputBox';
 import { Layout } from 'src/components/Layout';
 import { Stepper } from 'src/components/Stepper';
@@ -52,6 +52,8 @@ export default function Video({ previewVideo }) {
         output: outputName,
         'render-status': 'ready',
         aep: aepPath,
+        id: id,
+        avantName: avantName,
         bot: 'HAL',
         target: 'FINAL1080p',
         ...texts,
@@ -71,7 +73,7 @@ export default function Video({ previewVideo }) {
       </Head>
 
       <Layout>
-        <div className="m-2">
+        <div className="m-2 flex-1">
           <div className="mt-3 sm:mt-10">
             {previewSteps.length > 1 && (
               <div>
@@ -132,8 +134,14 @@ export default function Video({ previewVideo }) {
   );
 }
 
-export const getServerSideProps = async (ctx) => {
-  const data = await getPreviewVideo(ctx.query.id);
+export async function getStaticPaths() {
+  const previewVideos = await getAllPreviewVideos();
+  const paths = previewVideos.map((video) => `/video/${video.id}`);
+  return { paths, fallback: false };
+}
+
+export const getStaticProps = async ({ params }) => {
+  const data = await getPreviewVideo(params.id);
   const previewVideo = data[0];
 
   return {
