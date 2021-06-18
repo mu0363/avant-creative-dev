@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
@@ -13,9 +13,12 @@ import { appendSpreadsheet } from 'src/lib/appendSpreadSheet';
 import { generateFilename } from 'src/lib/generateFilename';
 import { uploadImages } from 'src/lib/uploadImages';
 import { deleteAllState } from 'src/redux/stepper';
+import { ConfirmModal } from 'src/components/ConfirmModal';
 
 export default function Video({ previewVideo }) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  let [isOpen, setIsOpen] = useState(false);
+  let cancelButtonRef = useRef(null);
   const { previewSteps } = previewVideo;
   const router = useRouter();
   const { images, texts } = useSelector((state) => state.stepper);
@@ -23,6 +26,11 @@ export default function Video({ previewVideo }) {
   const avantName = previewVideo.templateName;
   const aepPath = previewVideo.aepPath;
   const username = 'JohnDoe';
+
+  const openModal = () => {
+    setIsOpen(true);
+    Object.values(images).map((blob) => console.log(blob));
+  };
 
   //前にすすむボタン
   const forwardSwipe = () => {
@@ -130,10 +138,10 @@ export default function Video({ previewVideo }) {
 
               {currentIndex === previewSteps.length - 1 ? (
                 <button
-                  onClick={onSubmit}
+                  // onClick={onSubmit}
+                  onClick={openModal}
                   className={`w-32 focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center font-medium border text-white bg-ai hover:bg-ai-dark
                   }`}
-                  // className='w-32 focus:outline-none border border-transparent py-2 px-5 rounded-lg shadow-sm text-center text-white bg-ai hover:bg-ai-dark font-medium'
                 >
                   Confirm
                 </button>
@@ -142,7 +150,6 @@ export default function Video({ previewVideo }) {
                   type="button"
                   onClick={forwardSwipe}
                   className={`w-32 focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center bg-white hover:bg-gray-100 font-medium border`}
-                  // className='w-32 focus:outline-none border border-transparent py-2 px-5 rounded-lg shadow-sm text-center text-white bg-ai hover:bg-ai-dark font-medium'
                 >
                   Next
                 </button>
@@ -151,6 +158,17 @@ export default function Video({ previewVideo }) {
           </div>
         </div>
       </Layout>
+
+      {/* こっからモーダルだぜ */}
+      <ConfirmModal cancelButtonRef={cancelButtonRef} isOpen={isOpen} setIsOpen={setIsOpen}>
+        <div className="bg-gray-100 rounded-t-lg p-3">
+          {Object.values(images).map((blob, index) => (
+            <div key={index} className="grid grid-cols-2">
+              <img src={blob} alt={blob} />
+            </div>
+          ))}
+        </div>
+      </ConfirmModal>
     </div>
   );
 }

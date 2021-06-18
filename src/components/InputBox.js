@@ -50,7 +50,6 @@ const editorDefaults = {
 
 export const InputBox = ({ step, stepNumber }) => {
   const inputEl = useRef(null);
-  console.log(step.checkImage);
 
   //redux
   const dispatch = useDispatch();
