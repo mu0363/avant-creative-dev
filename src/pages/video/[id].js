@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Head from 'next/head';
-import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import SwipeableViews from 'react-swipeable-views';
 import { format } from 'date-fns';
@@ -12,14 +12,25 @@ import { Stepper } from 'src/components/Stepper';
 import { appendSpreadsheet } from 'src/lib/appendSpreadSheet';
 import { generateFilename } from 'src/lib/generateFilename';
 import { uploadImages } from 'src/lib/uploadImages';
+import { deleteAllState } from 'src/redux/stepper';
+import { ConfirmModal } from 'src/components/ConfirmModal';
 
 export default function Video({ previewVideo }) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  let [isOpen, setIsOpen] = useState(false);
+  let cancelButtonRef = useRef(null);
   const { previewSteps } = previewVideo;
+  const router = useRouter();
   const { images, texts } = useSelector((state) => state.stepper);
+  const dispatch = useDispatch();
   const avantName = previewVideo.templateName;
   const aepPath = previewVideo.aepPath;
   const username = 'JohnDoe';
+
+  const openModal = () => {
+    setIsOpen(true);
+    Object.values(images).map((blob) => console.log(blob));
+  };
 
   //前にすすむボタン
   const forwardSwipe = () => {
@@ -63,6 +74,8 @@ export default function Video({ previewVideo }) {
 
       // スプレッドシートに書き込む！！
       appendSpreadsheet(newRow);
+      dispatch(deleteAllState());
+      router.push('/');
     });
   };
 
@@ -84,18 +97,29 @@ export default function Video({ previewVideo }) {
 
             <SwipeableViews enableMouseEvents index={currentIndex}>
               {previewSteps.map((step, index) => (
-                <div key={index} className="max-w-4xl m-auto bg-white shadow-lg rounded-lg mt-3 sm:mt-10">
-                  <div className="grid sm:grid-cols-2">
+                <div
+                  key={index}
+                  className={`${
+                    step.checkImage
+                      ? 'max-w-4xl m-auto bg-white shadow-lg rounded-lg mt-3 sm:mt-10'
+                      : 'max-w-md m-auto bg-white shadow-lg rounded-lg mt-3 sm:mt-10'
+                  }`}
+                >
+                  <div className={`${step.checkImage ? 'grid sm:grid-cols-2' : 'grid'}`}>
                     <div>
                       <img
                         src={step.referenceImage}
                         alt={step.name}
-                        className="rounded-t-lg sm:rounded-lt-lg sm:rounded-tr-none max-w-auto object-cover"
+                        className={`${
+                          step.checkImage
+                            ? 'rounded-t-lg sm:rounded-lt-lg sm:rounded-tr-none max-w-auto object-cover'
+                            : 'rounded-t-lg max-w-auto object-cover'
+                        }`}
                       />
                       <p className="p-3">{step.description}</p>
                     </div>
                     <div>
-                      <InputBox stepNumber={index + 1} />
+                      <InputBox step={step} stepNumber={index + 1} />
                     </div>
                   </div>
                 </div>
@@ -114,10 +138,10 @@ export default function Video({ previewVideo }) {
 
               {currentIndex === previewSteps.length - 1 ? (
                 <button
-                  onClick={onSubmit}
+                  // onClick={onSubmit}
+                  onClick={openModal}
                   className={`w-32 focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center font-medium border text-white bg-ai hover:bg-ai-dark
                   }`}
-                  // className='w-32 focus:outline-none border border-transparent py-2 px-5 rounded-lg shadow-sm text-center text-white bg-ai hover:bg-ai-dark font-medium'
                 >
                   Confirm
                 </button>
@@ -126,7 +150,6 @@ export default function Video({ previewVideo }) {
                   type="button"
                   onClick={forwardSwipe}
                   className={`w-32 focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center bg-white hover:bg-gray-100 font-medium border`}
-                  // className='w-32 focus:outline-none border border-transparent py-2 px-5 rounded-lg shadow-sm text-center text-white bg-ai hover:bg-ai-dark font-medium'
                 >
                   Next
                 </button>
@@ -135,6 +158,17 @@ export default function Video({ previewVideo }) {
           </div>
         </div>
       </Layout>
+
+      {/* こっからモーダルだぜ */}
+      <ConfirmModal cancelButtonRef={cancelButtonRef} isOpen={isOpen} setIsOpen={setIsOpen}>
+        <div className="bg-gray-100 rounded-t-lg p-3">
+          {Object.values(images).map((blob, index) => (
+            <div key={index} className="grid grid-cols-2">
+              <img src={blob} alt={blob} />
+            </div>
+          ))}
+        </div>
+      </ConfirmModal>
     </div>
   );
 }

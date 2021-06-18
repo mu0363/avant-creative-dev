@@ -4,7 +4,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { FilmIcon } from '@heroicons/react/outline';
 import { AiFillCloseCircle, AiFillYoutube } from 'react-icons/ai';
 
-export const PreviewVideoModal = ({ children, cancelButtonRef, setIsOpen, isOpen, id }) => {
+export const ConfirmModal = ({ children, cancelButtonRef, setIsOpen, isOpen }) => {
   return (
     <div>
       <Transition.Root show={isOpen} as={Fragment}>
@@ -45,7 +45,7 @@ export const PreviewVideoModal = ({ children, cancelButtonRef, setIsOpen, isOpen
               <div className="static inline-block align-bottom text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full p-3 bg-transparent">
                 {children}
                 <div className="bg-gray-100 rounded-b-lg px-4 py-3 sm:px-3 sm:flex sm:flex-row-reverse">
-                  <Link href={`/video/[id]`} as={`/video/${id}`} passHref>
+                  <Link href="#" passHref>
                     <div
                       onClick={() => setIsOpen(false)}
                       className="flex items-center w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-ai text-base font-medium text-white space-x-2 hover:bg-ai-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 cursor-pointer"

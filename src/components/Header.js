@@ -1,12 +1,15 @@
 import { useState, useCallback } from 'react';
 import Link from 'next/link';
+import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { ViewGridIcon, ChatIcon, BellIcon, ChevronDownIcon } from '@heroicons/react/solid';
 import { HeaderRightIcon } from './HeaderRightIcon';
 import { Sling as Hamburger } from 'hamburger-react';
+import { deleteAllState } from 'src/redux/stepper';
 
 export const Header = () => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [isOpen, setOpen] = useState(false);
 
   const toggleBurger = useCallback(() => setOpen((prevState) => !prevState), []);
@@ -15,7 +18,12 @@ export const Header = () => {
     <header className="flex items-center justify-between py-1 px-4 md:p-4 sticky top-0 z-10 bg-white shadow-md">
       <Link href="/" className="flex items-center cursor-pointer">
         <a>
-          <img src="/avant_creative_orange_logo.svg" alt="logo" className="h-4 md:h-5 mr-2" />
+          <img
+            src="/avant_creative_orange_logo.svg"
+            alt="logo"
+            className="h-4 md:h-5 mr-2"
+            onClick={() => dispatch(deleteAllState())}
+          />
         </a>
       </Link>
       <div className="flex items-center">

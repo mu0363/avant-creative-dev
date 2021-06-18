@@ -18,10 +18,14 @@ export const stepperSlice = createSlice({
       const payload = action.payload;
       state.texts = { ...state.texts, ...payload };
     },
+    deleteAllState: (state) => {
+      state.images = {};
+      state.texts = {};
+    },
   },
 });
 
-export const { addImage, addText } = stepperSlice.actions;
+export const { addImage, addText, deleteAllState } = stepperSlice.actions;
 
 //ここでreducerをエクスポートしてstoreに登録する
 export default stepperSlice.reducer;
