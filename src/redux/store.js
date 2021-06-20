@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import stepperReducer from 'src/redux/stepper';
+import scenesReducer from 'src/redux/scenes';
 
 export default configureStore({
   reducer: {
-    stepper: stepperReducer,
+    stepper: scenesReducer,
   },
 });

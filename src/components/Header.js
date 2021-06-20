@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { ViewGridIcon, ChatIcon, BellIcon, ChevronDownIcon } from '@heroicons/react/solid';
 import { HeaderRightIcon } from './HeaderRightIcon';
 import { Sling as Hamburger } from 'hamburger-react';
-import { deleteAllState } from 'src/redux/stepper';
+import { deleteAllState } from 'src/redux/scenes';
 
 export const Header = () => {
   const router = useRouter();

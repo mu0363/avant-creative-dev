@@ -12,7 +12,7 @@ import { Stepper } from 'src/components/Stepper';
 import { appendSpreadsheet } from 'src/lib/appendSpreadSheet';
 import { generateFilename } from 'src/lib/generateFilename';
 import { uploadImages } from 'src/lib/uploadImages';
-import { deleteAllState } from 'src/redux/stepper';
+import { deleteAllState } from 'src/redux/scenes';
 import { ConfirmModal } from 'src/components/ConfirmModal';
 
 export default function Video({ previewVideo }) {
@@ -85,7 +85,6 @@ export default function Video({ previewVideo }) {
         <title>Create here</title>
         <link rel="icon" href="/avant_creative_favicon.svg" />
       </Head>
-
       <Layout>
         <div className="m-2 flex-1">
           <div className="mt-3 sm:mt-10">
@@ -119,7 +118,7 @@ export default function Video({ previewVideo }) {
                       <p className="p-3">{step.description}</p>
                     </div>
                     <div>
-                      <InputBox step={step} stepNumber={index + 1} />
+                      <InputBox step={step} stepNumber={index + 1} currentIndex={currentIndex} />
                     </div>
                   </div>
                 </div>
@@ -158,16 +157,16 @@ export default function Video({ previewVideo }) {
           </div>
         </div>
       </Layout>
-
       {/* こっからモーダルだぜ */}
       <ConfirmModal cancelButtonRef={cancelButtonRef} isOpen={isOpen} setIsOpen={setIsOpen}>
-        <div className="bg-gray-100 rounded-t-lg p-3">
+        {/* <div className="bg-gray-100 rounded-t-lg p-3">
           {Object.values(images).map((blob, index) => (
             <div key={index} className="grid grid-cols-2">
               <img src={blob} alt={blob} />
             </div>
           ))}
-        </div>
+        </div> */}
+        <h1 className="text-white">test</h1>
       </ConfirmModal>
     </div>
   );
