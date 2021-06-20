@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 //Thanks
 //https://stackoverflow.com/questions/62845793/how-can-i-upload-file-to-s3-using-next-js-with-zeit-now-and-formidable-serverles
-export default function Sandbox() {
+export default function Sandbox1() {
   const { register, handleSubmit } = useForm();
   const avantName = 'avant001';
   const id = uuidv4();

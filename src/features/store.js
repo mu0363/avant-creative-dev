@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import scenesReducer from 'src/redux/scenes';
+import scenesReducer from 'src/features/scenes/scenesSlice';
 
 export default configureStore({
   reducer: {

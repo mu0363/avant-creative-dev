@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { ViewGridIcon, ChatIcon, BellIcon, ChevronDownIcon } from '@heroicons/react/solid';
 import { HeaderRightIcon } from './HeaderRightIcon';
 import { Sling as Hamburger } from 'hamburger-react';
-import { deleteAllState } from 'src/redux/scenes';
+import { deleteAllScene } from 'src/features/scenes/scenesSlice';
 
 export const Header = () => {
   const router = useRouter();
@@ -22,7 +22,7 @@ export const Header = () => {
             src="/avant_creative_orange_logo.svg"
             alt="logo"
             className="h-4 md:h-5 mr-2"
-            onClick={() => dispatch(deleteAllState())}
+            onClick={() => dispatch(deleteAllScene())}
           />
         </a>
       </Link>

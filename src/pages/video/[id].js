@@ -12,7 +12,7 @@ import { Stepper } from 'src/components/Stepper';
 import { appendSpreadsheet } from 'src/lib/appendSpreadSheet';
 import { generateFilename } from 'src/lib/generateFilename';
 import { uploadImages } from 'src/lib/uploadImages';
-import { deleteAllState } from 'src/redux/scenes';
+import { deleteAllScene } from 'src/features/scenes/scenesSlice';
 import { ConfirmModal } from 'src/components/ConfirmModal';
 
 export default function Video({ previewVideo }) {
@@ -74,7 +74,7 @@ export default function Video({ previewVideo }) {
 
       // スプレッドシートに書き込む！！
       appendSpreadsheet(newRow);
-      dispatch(deleteAllState());
+      dispatch(deleteAllScene());
       router.push('/');
     });
   };
