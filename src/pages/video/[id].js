@@ -33,7 +33,7 @@ export default function Video({ previewVideo }) {
   };
 
   //前にすすむボタン
-  const forwardSwipe = () => {
+  const forwardButton = () => {
     if (currentIndex === previewSteps.length - 1) {
       setCurrentIndex(previewSteps.length - 1);
     } else {
@@ -42,7 +42,7 @@ export default function Video({ previewVideo }) {
   };
 
   //後ろに戻るボタン
-  const backwardSwipe = () => {
+  const backwardButton = () => {
     if (currentIndex > 0) {
       setCurrentIndex((currentIndex) => currentIndex - 1);
     } else {
@@ -93,8 +93,7 @@ export default function Video({ previewVideo }) {
                 <Stepper steps={previewSteps} currentStepNumber={currentIndex + 1} />
               </div>
             )}
-
-            <SwipeableViews enableMouseEvents index={currentIndex}>
+            <SwipeableViews enableMouseEvents onChangeIndex={(index) => setCurrentIndex(index)} index={currentIndex}>
               {previewSteps.map((step, index) => (
                 <div
                   key={index}
@@ -127,7 +126,7 @@ export default function Video({ previewVideo }) {
             <div className="flex justify-center my-2 sm:my-8 space-x-4">
               <button
                 type="button"
-                onClick={backwardSwipe}
+                onClick={backwardButton}
                 className={`w-32 focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center bg-white hover:bg-gray-100 font-medium border ${
                   currentIndex === 0 && 'text-gray-300'
                 }`}
@@ -147,7 +146,7 @@ export default function Video({ previewVideo }) {
               ) : (
                 <button
                   type="button"
-                  onClick={forwardSwipe}
+                  onClick={forwardButton}
                   className={`w-32 focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center bg-white hover:bg-gray-100 font-medium border`}
                 >
                   Next
@@ -156,6 +155,7 @@ export default function Video({ previewVideo }) {
             </div>
           </div>
         </div>
+        <p>{currentIndex}</p>
       </Layout>
       {/* こっからモーダルだぜ */}
       <ConfirmModal cancelButtonRef={cancelButtonRef} isOpen={isOpen} setIsOpen={setIsOpen}>
