@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { format } from 'date-fns';
-import { Layout } from 'src/components/Layout';
-import { appendSpreadsheet } from 'src/lib/appendSpreadSheet';
-import { generateFilename } from 'src/lib/generateFilename';
-import { firestoreData } from 'src/data/firestoreData';
+import React, { useState } from "react";
+import { format } from "date-fns";
+import { Layout } from "src/components/Layout";
+import { appendSpreadsheet } from "src/lib/appendSpreadSheet";
+import { generateFilename } from "src/lib/generateFilename";
+import { firestoreData } from "src/data/firestoreData";
 
 // <div>
 // <label>Caption1</label>
@@ -17,13 +17,13 @@ import { firestoreData } from 'src/data/firestoreData';
 export default function Sandbox2() {
   const textArray = [];
   firestoreData.previewSteps.forEach((data, index) => {
-    textArray.push({ [`text${index + 1}`]: '' });
+    textArray.push({ [`text${index + 1}`]: "" });
   });
   const textObj = textArray.reduce((l, r) => Object.assign(l, r), {});
 
   const [texts, setTexts] = useState(textObj);
 
-  const username = 'JohnDoe';
+  const username = "JohnDoe";
   const templateName = firestoreData.templateName;
 
   const onSubmit = async (e) => {
@@ -32,13 +32,13 @@ export default function Sandbox2() {
 
     //スプレッドシートに書き込むデータのオブジェクト
     const newRow = {
-      date: format(new Date(), 'yyyy-MM-dd HH:mm:ss'),
+      date: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
       username: username,
       output: outputName,
-      'render-status': 'ready',
+      "render-status": "ready",
       aep: firestoreData.aepPath,
-      bot: 'HAL',
-      target: 'FINAL1080p',
+      bot: "HAL",
+      target: "FINAL1080p",
       ...texts,
     };
 

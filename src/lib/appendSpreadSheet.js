@@ -1,6 +1,6 @@
-import { GoogleSpreadsheet } from 'google-spreadsheet';
+import { GoogleSpreadsheet } from "google-spreadsheet";
 
-const SHEET_TITLE = 'streaming';
+const SHEET_TITLE = "streaming";
 const doc = new GoogleSpreadsheet(process.env.NEXT_PUBLIC_SPREADSHEET_ID);
 
 export const appendSpreadsheet = async (row) => {
@@ -13,9 +13,9 @@ export const appendSpreadsheet = async (row) => {
     await doc.loadInfo();
     const sheet = doc.sheetsByTitle[SHEET_TITLE];
     await sheet.addRow(row);
-    console.log('書き込んだよ');
+    console.log("Added data to spreadsheet successfully!!");
   } catch (e) {
-    console.error('Error: ', e);
+    console.error("Error: ", e);
   }
 };
 

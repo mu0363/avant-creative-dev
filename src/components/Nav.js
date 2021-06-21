@@ -1,6 +1,6 @@
-import { useRouter } from 'next/router';
-import { SearchIcon } from '@heroicons/react/outline';
-import requests from 'src/data/requests';
+import { useRouter } from "next/router";
+import { SearchIcon } from "@heroicons/react/outline";
+import requests from "src/data/requests";
 
 export const Nav = () => {
   const router = useRouter();

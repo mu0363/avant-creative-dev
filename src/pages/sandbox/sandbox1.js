@@ -1,12 +1,12 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
-import { v4 as uuidv4 } from 'uuid';
+import React from "react";
+import { useForm } from "react-hook-form";
+import { v4 as uuidv4 } from "uuid";
 
 //Thanks
 //https://stackoverflow.com/questions/62845793/how-can-i-upload-file-to-s3-using-next-js-with-zeit-now-and-formidable-serverles
 export default function Sandbox1() {
   const { register, handleSubmit } = useForm();
-  const avantName = 'avant001';
+  const avantName = "avant001";
   const id = uuidv4();
   let cloudfrontUrls = [];
 
@@ -22,7 +22,7 @@ export default function Sandbox1() {
       const step = index + 1;
 
       //Cloud frontのファイパスをapiフェッチしたfieldsからゲットするぞ
-      let filepath = '';
+      let filepath = "";
       const res = await fetch(`/api/upload-url?id=${id}&file=${filename}&avant=${avantName}&step=${step}`);
       const { url, fields } = await res.json();
       filepath = `${process.env.NEXT_PUBLIC_CLOUDFRONT_URL}${fields.key}`;
@@ -78,15 +78,15 @@ export default function Sandbox1() {
         <div className="flex flex-col space-y-2">
           <div>
             <label>picture1</label>
-            <input type="file" {...register('step1')} />
+            <input type="file" {...register("step1")} />
           </div>
           <div>
             <label>picture2</label>
-            <input type="file" {...register('step2')} />
+            <input type="file" {...register("step2")} />
           </div>
           <div>
             <label>picture3</label>
-            <input type="file" {...register('step3')} />
+            <input type="file" {...register("step3")} />
           </div>
         </div>
         <button className="bg-red-400 text-white rounded-md py-2 px-4 mt-5">Submit</button>

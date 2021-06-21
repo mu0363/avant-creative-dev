@@ -1,4 +1,4 @@
-import { Stepper } from 'src/components/Stepper';
+import { Stepper } from "src/components/Stepper";
 
 export const Wizard = (props) => {
   const { children, forwardSwipe, backwardSwipe, currentIndex, previewSteps } = props;
@@ -16,7 +16,7 @@ export const Wizard = (props) => {
         <button
           onClick={backwardSwipe}
           className={`w-32 focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center bg-white hover:bg-gray-100 font-medium border ${
-            currentIndex === 0 && 'text-gray-300'
+            currentIndex === 0 && "text-gray-300"
           }`}
         >
           Previous
@@ -25,11 +25,11 @@ export const Wizard = (props) => {
         <button
           onClick={forwardSwipe}
           className={`w-32 focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center bg-white hover:bg-gray-100 font-medium border ${
-            currentIndex === previewSteps.length - 1 && 'text-white bg-ai hover:bg-ai-dark'
+            currentIndex === previewSteps.length - 1 && "text-white bg-ai hover:bg-ai-dark"
           }`}
           // className='w-32 focus:outline-none border border-transparent py-2 px-5 rounded-lg shadow-sm text-center text-white bg-ai hover:bg-ai-dark font-medium'
         >
-          {currentIndex === previewSteps.length - 1 ? 'Render' : 'Next'}
+          {currentIndex === previewSteps.length - 1 ? "Render" : "Next"}
         </button>
       </div>
     </>

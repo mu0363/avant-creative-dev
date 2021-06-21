@@ -1,10 +1,10 @@
-import React, { useCallback, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addScene } from 'src/features/scenes/scenesSlice';
-import { doka } from 'doka/doka.module.css';
-import { DokaImageEditorModal } from 'react-doka';
-import { useDropzone } from 'react-dropzone';
-import { CloudUploadIcon } from '@heroicons/react/outline';
+import React, { useCallback, useState } from "react";
+import { useDispatch } from "react-redux";
+import { addImages, addTexts } from "src/features/scenes/scenesSlice";
+import { doka } from "doka/doka.module.css";
+import { DokaImageEditorModal } from "react-doka";
+import { useDropzone } from "react-dropzone";
+import { CloudUploadIcon } from "@heroicons/react/outline";
 
 //dokaのNext.jsサンプルから持ってきたやーつ
 import {
@@ -28,7 +28,7 @@ import {
   plugin_annotate_locale_en_gb,
   markup_editor_defaults,
   markup_editor_locale_en_gb,
-} from 'doka';
+} from "doka";
 setPlugins(plugin_crop, plugin_finetune, plugin_filter, plugin_annotate);
 const editorDefaults = {
   imageReader: createDefaultImageReader(),
@@ -49,9 +49,9 @@ const editorDefaults = {
 };
 
 export const InputBox = ({ step, stepNumber, currentIndex }) => {
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
   const dispatchForward = (e) => {
-    dispatch(addScene({ id: currentIndex + 1, [`text${currentIndex + 1}`]: e.target.value }));
+    dispatch(addTexts({ id: currentIndex + 1, [`text${currentIndex + 1}`]: e.target.value }));
   };
 
   //redux
@@ -59,9 +59,9 @@ export const InputBox = ({ step, stepNumber, currentIndex }) => {
 
   //doka modal
   const [modalVisible, setModalVisible] = useState(false);
-  const [modalResult, setModalResult] = useState('');
+  const [modalResult, setModalResult] = useState("");
   // 騙されないで！！modalDataが本体よ！！
-  const [modalData, setModalData] = useState('');
+  const [modalData, setModalData] = useState("");
   const [preview, setPreview] = useState(null);
   //ファイルがD&Dされたら発動! 画像表示するよ
   const onDrop = useCallback((acceptedFiles) => {
@@ -77,7 +77,7 @@ export const InputBox = ({ step, stepNumber, currentIndex }) => {
   //react dropzone
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: 'image/*',
+    accept: "image/*",
     multiple: false,
   });
 
@@ -87,8 +87,8 @@ export const InputBox = ({ step, stepNumber, currentIndex }) => {
         <div
           {...getRootProps()}
           className={`bg-white border-gray-300 cursor-pointer border border-dashed outline-none ${
-            isDragActive && 'border-green-400'
-          } ${modalResult && 'border'}`}
+            isDragActive && "border-green-400"
+          } ${modalResult && "border"}`}
         >
           <input {...getInputProps()} />
           <div>
@@ -123,7 +123,7 @@ export const InputBox = ({ step, stepNumber, currentIndex }) => {
             setModalData(dest);
             setModalResult(URL.createObjectURL(dest));
             const localImageUrl = window.URL.createObjectURL(dest);
-            dispatch(addScene({ id: currentIndex + 1, [`image${stepNumber}`]: localImageUrl }));
+            dispatch(addImages({ id: currentIndex + 1, [`image${stepNumber}`]: localImageUrl }));
           }}
           imageCropAspectRatio={16 / 9}
         />

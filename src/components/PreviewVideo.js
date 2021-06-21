@@ -1,5 +1,5 @@
-import { useState, useRef } from 'react';
-import { PreviewVideoModal } from './PreviewVideoModal';
+import { useState, useRef } from "react";
+import { PreviewVideoModal } from "./PreviewVideoModal";
 
 export const PreviewVideo = ({ video }) => {
   const { id, name, videoSrc, thumbnail, length, resolution, createdAt } = video;

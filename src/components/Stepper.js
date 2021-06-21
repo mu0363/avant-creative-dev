@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 
 export const Stepper = ({ steps, currentStepNumber }) => {
   const [stepperSteps, setStep] = useState([]);
@@ -66,11 +66,11 @@ export const Stepper = ({ steps, currentStepNumber }) => {
 
   const stepsDisplay = stepperSteps.map((step, index) => {
     return (
-      <div key={index} className={index !== stepperSteps.length - 1 ? 'w-full flex items-center' : 'flex items-center'}>
+      <div key={index} className={index !== stepperSteps.length - 1 ? "w-full flex items-center" : "flex items-center"}>
         <div className="relative flex flex-col items-center text-teal-600">
           <div
             className={`rounded-full transition duration-500 ease-in-out border-2 bg-white h-8 w-8 sm:h-9 sm:w-9 flex items-center justify-center ${
-              step.selected ? 'bg-red-200 text-white font-bold' : ''
+              step.selected ? "bg-red-200 text-white font-bold" : ""
             }`}
           >
             {step.completed ? <span className="text-white font-bold text-xl">&#10003;</span> : index + 1}

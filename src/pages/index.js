@@ -1,9 +1,9 @@
-import Head from 'next/head';
-import { getAllPreviewVideos } from 'src/lib/db';
-import { Layout } from 'src/components/Layout';
-import { PreviewVideo } from 'src/components/PreviewVideo';
-import { Nav } from 'src/components/Nav';
-import { Footer } from 'src/components/Footer';
+import Head from "next/head";
+import { getAllPreviewVideos } from "src/lib/db";
+import { Layout } from "src/components/Layout";
+import { PreviewVideo } from "src/components/PreviewVideo";
+import { Nav } from "src/components/Nav";
+import { Footer } from "src/components/Footer";
 
 export default function Home({ previewVideos }) {
   return (
