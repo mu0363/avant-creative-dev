@@ -1,5 +1,5 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
-import ReactCrop from 'react-image-crop';
+import React, { useState, useCallback, useRef, useEffect } from "react";
+import ReactCrop from "react-image-crop";
 
 export default function App() {
   return (

@@ -1,7 +1,7 @@
-import { db } from 'src/lib/firebase';
+import { db } from "src/lib/firebase";
 export const getAllPreviewVideos = async () => {
   const previewVideos = [];
-  const snapshot = await db.collection('preview-videos').get();
+  const snapshot = await db.collection("preview-videos").get();
   snapshot.forEach((doc) => {
     previewVideos.push({
       id: doc.id,
@@ -14,7 +14,7 @@ export const getAllPreviewVideos = async () => {
 
 export const getPreviewVideo = async (id) => {
   const previewVideo = [];
-  const snapshot = await db.collection('preview-videos').where('previewId', '==', id).get();
+  const snapshot = await db.collection("preview-videos").where("previewId", "==", id).get();
   snapshot.forEach((doc) => {
     previewVideo.push({
       id: doc.id,
@@ -27,7 +27,7 @@ export const getPreviewVideo = async (id) => {
 
 export const getAllVideos = async () => {
   const allVideos = [];
-  const snapshot = await db.collection('videos').get();
+  const snapshot = await db.collection("videos").get();
   snapshot.forEach((doc) => {
     allVideos.push({
       id: doc.id,

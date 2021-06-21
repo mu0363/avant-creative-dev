@@ -1,8 +1,8 @@
-import Link from 'next/link';
-import { Fragment } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
-import { FilmIcon } from '@heroicons/react/outline';
-import { AiFillCloseCircle, AiFillYoutube } from 'react-icons/ai';
+import Link from "next/link";
+import { Fragment } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { FilmIcon } from "@heroicons/react/outline";
+import { AiFillCloseCircle, AiFillYoutube } from "react-icons/ai";
 
 export const ConfirmModal = ({ children, cancelButtonRef, setIsOpen, isOpen }) => {
   return (

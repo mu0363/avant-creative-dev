@@ -1,8 +1,8 @@
-import { configureStore } from '@reduxjs/toolkit';
-import scenesReducer from 'src/features/scenes/scenesSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import scenesReducer from "src/features/scenes/scenesSlice";
 
 export default configureStore({
   reducer: {
-    stepper: scenesReducer,
+    scenes: scenesReducer,
   },
 });

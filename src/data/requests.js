@@ -2,31 +2,31 @@ const API_KEY = process.env.API_KEY;
 
 export default {
   fetchPromo: {
-    title: 'Promo',
+    title: "Promo",
     url: `/trending/all/week?api_key=${API_KEY}&language=es-US`,
   },
   fetchOpeners: {
-    title: 'Openers',
+    title: "Openers",
     url: `/movie/top_rated?api_key=${API_KEY}&language=es-US`,
   },
   fetchDisplays: {
-    title: 'Displays',
+    title: "Displays",
     url: `/discover/movie?api_key=${API_KEY}&with_genres=28`,
   },
   fetchLogos: {
-    title: 'Logos',
+    title: "Logos",
     url: `/discover/movie?api_key=${API_KEY}&with_genres=35`,
   },
   fetchTitles: {
-    title: 'Titles',
+    title: "Titles",
     url: `/discover/movie?api_key=${API_KEY}&with_genres=27`,
   },
   fetchInfoGraphics: {
-    title: 'InfoGraphics',
+    title: "InfoGraphics",
     url: `/discover/movie?api_key=${API_KEY}&with_genres=10749`,
   },
   fetchElements: {
-    title: 'Elements',
+    title: "Elements",
     url: `/discover/movie?api_key=${API_KEY}&with_genres=9648`,
   },
   // fetchSciFi: {

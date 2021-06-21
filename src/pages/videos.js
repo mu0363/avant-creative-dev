@@ -1,8 +1,8 @@
-import Head from 'next/head';
-import { getAllVideos } from 'src/lib/db';
-import { Layout } from 'src/components/Layout';
-import { Nav } from 'src/components/Nav';
-import { Footer } from 'src/components/Footer';
+import Head from "next/head";
+import { getAllVideos } from "src/lib/db";
+import { Layout } from "src/components/Layout";
+import { Nav } from "src/components/Nav";
+import { Footer } from "src/components/Footer";
 
 export default function Videos({ allVideos }) {
   return (

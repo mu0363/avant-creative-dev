@@ -1,5 +1,5 @@
-import aws from 'aws-sdk';
-import { format } from 'date-fns';
+import aws from "aws-sdk";
+import { format } from "date-fns";
 
 export default async function handler(req, res) {
   // const extension = req.query.file.match(/\.[0-9a-z]+$/i)[0];
@@ -7,14 +7,14 @@ export default async function handler(req, res) {
   const avantName = req.query.avant;
   const step = `step${req.query.step}`;
   const id = req.query.id;
-  const date = format(new Date(), 'MMdd');
-  const year = format(new Date(), 'yyyy');
+  const date = format(new Date(), "MMdd");
+  const year = format(new Date(), "yyyy");
 
   aws.config.update({
     accessKeyId: process.env.ACCESS_KEY,
     secretAccessKey: process.env.SECRET_KEY,
     region: process.env.REGION,
-    signatureVersion: 'v4',
+    signatureVersion: "v4",
   });
 
   const s3 = new aws.S3();
@@ -25,7 +25,7 @@ export default async function handler(req, res) {
     },
     Expires: 60, // seconds
     Conditions: [
-      ['content-length-range', 0, 1048576], // up to 1 MB
+      ["content-length-range", 0, 1048576], // up to 1 MB
     ],
   });
 
