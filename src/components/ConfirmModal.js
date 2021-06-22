@@ -1,10 +1,93 @@
 import Link from "next/link";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
+import { format } from "date-fns";
 import { Dialog, Transition } from "@headlessui/react";
+import { useRouter } from "next/router";
+import { useSelector, useDispatch } from "react-redux";
 import { FilmIcon } from "@heroicons/react/outline";
 import { AiFillCloseCircle, AiFillYoutube } from "react-icons/ai";
+import { ReceiptRefundIcon } from "@heroicons/react/solid";
 
-export const ConfirmModal = ({ children, cancelButtonRef, setIsOpen, isOpen }) => {
+import { sortArray } from "src/lib/sortArray";
+import { uploadImages } from "src/lib/uploadImages";
+import { appendSpreadsheet } from "src/lib/appendSpreadSheet";
+import { generateFilename } from "src/lib/generateFilename";
+import { generateId } from "src/lib/generateId";
+import { confirmAllData } from "src/lib/confirmAllData";
+import { deleteAllScenes } from "src/features/scenes/scenesSlice";
+
+export const ConfirmModal = (props) => {
+  const { children, cancelButtonRef, setIsOpen, isOpen, avantName, aepPath, setIsLoading } = props;
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const { texts, images } = useSelector((state) => state.scenes);
+  const username = "JohnDoe";
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    // 順番をid順にsortして
+    setIsLoading(true);
+    const sortedTexts = sortArray(texts);
+    //idをobjectから外す！
+    const textsArray = sortedTexts.map((text, index) => {
+      const value = Object.values(text);
+      return { [`text${index + 1}`]: value[1] };
+    });
+    //objectに変換
+    const textsObject = textsArray.reduce((l, r) => Object.assign(l, r), {});
+
+    if (images.length > 0) {
+      uploadImages(images, avantName).then((result) => {
+        const { urls, id } = result;
+        //objectに変換
+        const urlsObject = urls[0].reduce((l, r) => Object.assign(l, r), {});
+        const { outputName } = generateFilename(username, avantName, id);
+
+        // スプレッドシートに書き込むデータのオブジェクト;
+        const newRow = {
+          date: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
+          username: username,
+          output: outputName,
+          "render-status": "ready",
+          aep: aepPath,
+          id: id,
+          avantName: avantName,
+          bot: "HAL",
+          target: "FINAL1080p",
+          ...textsObject,
+          ...urlsObject,
+        };
+        // スプレッドシートに書き込む！！
+        appendSpreadsheet(newRow);
+        setIsOpen(false);
+        router.push("/confirm-complete");
+        dispatch(deleteAllScenes());
+        setIsLoading(false);
+      });
+    } else {
+      const id = generateId();
+      const { outputName } = generateFilename(username, avantName, id);
+      // スプレッドシートに書き込むデータのオブジェクト;
+      const newRow = {
+        date: format(new Date(), "yyyy-MM-dd HH:mm:ss"),
+        username: username,
+        output: outputName,
+        "render-status": "ready",
+        aep: aepPath,
+        id: id,
+        avantName: avantName,
+        bot: "HAL",
+        target: "FINAL1080p",
+        ...textsObject,
+      };
+      // スプレッドシートに書き込む！！
+      appendSpreadsheet(newRow);
+      setIsOpen(false);
+      router.push("/confirm-complete");
+      dispatch(deleteAllScenes());
+      setIsLoading(false);
+    }
+  };
   return (
     <div>
       <Transition.Root show={isOpen} as={Fragment}>
@@ -47,11 +130,11 @@ export const ConfirmModal = ({ children, cancelButtonRef, setIsOpen, isOpen }) =
                 <div className="bg-gray-100 rounded-b-lg px-4 py-3 sm:px-3 sm:flex sm:flex-row-reverse">
                   <Link href="#" passHref>
                     <div
-                      onClick={() => setIsOpen(false)}
+                      onClick={onSubmit}
                       className="flex items-center w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-ai text-base font-medium text-white space-x-2 hover:bg-ai-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 cursor-pointer"
                     >
                       <FilmIcon className="h-5" />
-                      <p>Create Video</p>
+                      <p>Render Video</p>
                     </div>
                   </Link>
                   <div

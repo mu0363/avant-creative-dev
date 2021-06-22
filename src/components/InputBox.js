@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addImages, addTexts } from "src/features/scenes/scenesSlice";
+import { addImages, addTexts, addPreview } from "src/features/scenes/scenesSlice";
 import { doka } from "doka/doka.module.css";
 import { DokaImageEditorModal } from "react-doka";
 import { useDropzone } from "react-dropzone";
@@ -52,6 +52,7 @@ export const InputBox = ({ step, stepNumber, currentIndex }) => {
   const [text, setText] = useState("");
   const dispatchForward = (e) => {
     dispatch(addTexts({ id: currentIndex + 1, [`text${currentIndex + 1}`]: e.target.value }));
+    dispatch(addPreview({ id: currentIndex + 1, [`text${currentIndex + 1}`]: e.target.value }));
   };
 
   //redux
@@ -124,6 +125,7 @@ export const InputBox = ({ step, stepNumber, currentIndex }) => {
             setModalResult(URL.createObjectURL(dest));
             const localImageUrl = window.URL.createObjectURL(dest);
             dispatch(addImages({ id: currentIndex + 1, [`image${stepNumber}`]: localImageUrl }));
+            dispatch(addPreview({ id: currentIndex + 1, [`image${stepNumber}`]: localImageUrl }));
           }}
           imageCropAspectRatio={16 / 9}
         />

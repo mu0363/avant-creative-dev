@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 export const scenesSlice = createSlice({
   //スライスの名前
@@ -6,6 +6,7 @@ export const scenesSlice = createSlice({
   initialState: {
     images: [],
     texts: [],
+    scenes: [],
   },
   reducers: {
     addTexts: (state, action) => {
@@ -35,34 +36,37 @@ export const scenesSlice = createSlice({
         });
         //なければそのまま追加
       } else {
-        state.images = [action.payload, ...state.images];
+        state.images = [...state.images, action.payload];
       }
     },
 
     // ----- テキストとイメージを一緒にする場合はこちら
-    // addScene: (state, action) => {
-    //   //idが惣菜するかどうかをまずは判定
-    //   const id = state.scenes.find((scene) => scene.id === action.payload.id);
-    //   //あればabject同士を結合して追加処理
-    //   if (id) {
-    //     state.scenes.map((scene) => {
-    //       if (scene.id === action.payload.id) {
-    //         Object.assign(scene, action.payload);
-    //       }
-    //     });
-    //     //なければそのまま追加
-    //   } else {
-    //     state.scenes = [action.payload, ...state.scenes];
-    //   }
-    // },
+    addPreview: (state, action) => {
+      //idが惣菜するかどうかをまずは判定
+      const id = state.scenes.find((scene) => scene.id === action.payload.id);
+      //あればabject同士を結合して追加処理
+      if (id) {
+        state.scenes.map((scene) => {
+          if (scene.id === action.payload.id) {
+            Object.assign(scene, action.payload);
+          }
+        });
+
+        //なければそのまま追加
+      } else {
+        state.scenes = [...state.scenes, action.payload];
+      }
+    },
+
     deleteAllScenes: (state) => {
       state.images = [];
       state.texts = [];
+      state.scenes = [];
     },
   },
 });
 
-export const { addImages, addTexts, deleteAllScenes } = scenesSlice.actions;
+export const { addImages, addTexts, addPreview, deleteAllScenes } = scenesSlice.actions;
 
 //ここでreducerをエクスポートしてstoreに登録する
 export default scenesSlice.reducer;
