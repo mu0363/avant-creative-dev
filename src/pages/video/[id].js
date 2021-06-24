@@ -49,21 +49,16 @@ export default function Video({ previewVideo }) {
         <link rel="icon" href="/avant_creative_favicon.svg" />
       </Head>
       <Layout>
-        <div className="m-2 flex-1">
-          <div className="mt-3 sm:mt-10">
-            {previewSteps.length > 1 && (
-              <div>
-                <Stepper steps={previewSteps} currentStepNumber={currentIndex + 1} />
-              </div>
-            )}
+        <div className="m-2">
+          <div className="mt-3">
             <SwipeableViews enableMouseEvents onChangeIndex={(index) => setCurrentIndex(index)} index={currentIndex}>
               {previewSteps.map((step, index) => (
                 <div
                   key={index}
                   className={`${
                     step.checkImage
-                      ? "max-w-4xl m-auto bg-white shadow-lg rounded-lg mt-3 sm:mt-10"
-                      : "max-w-md m-auto bg-white shadow-lg rounded-lg mt-3 sm:mt-10"
+                      ? "max-w-4xl m-auto bg-white shadow-lg rounded-lg mt-3 sm:mt-5"
+                      : "max-w-md m-auto bg-white shadow-lg rounded-lg mt-3 sm:mt-5"
                   }`}
                 >
                   <div className={`${step.checkImage ? "grid sm:grid-cols-2" : "grid"}`}>
@@ -86,7 +81,7 @@ export default function Video({ previewVideo }) {
                 </div>
               ))}
             </SwipeableViews>
-            <div className="flex justify-center my-2 sm:my-8 space-x-4">
+            <div className="flex justify-center my-4 sm:my-8 space-x-4">
               <button
                 type="button"
                 onClick={backwardButton}
@@ -117,6 +112,13 @@ export default function Video({ previewVideo }) {
                 </button>
               )}
             </div>
+            <div className="flex justify-center">
+              {previewSteps.length > 1 && (
+                <div>
+                  <Stepper steps={previewSteps} currentStepNumber={currentIndex + 1} />
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </Layout>
@@ -130,7 +132,7 @@ export default function Video({ previewVideo }) {
       >
         <div className="bg-gray-100 rounded-t-lg p-3">
           {scenes.map((scene, index) => (
-            <div key={index} className="bg-gray-200 mt-3 rounded-md">
+            <div key={index} className="bg-gray-200 mt-5 rounded-md">
               <p className="bg-ai-light text-white py-1 px-2 rounded-t-md">{`Scene${index + 1}`}</p>
               <div className="grid sm:grid-cols-2">
                 {scene[`image${index + 1}`] && (

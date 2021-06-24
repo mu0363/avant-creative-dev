@@ -7,17 +7,19 @@ export const Layout = ({ children }) => {
   const { isLoading } = useSelector((state) => state.loading);
   return (
     <div>
+      <Header />
       {isLoading ? (
-        <div className="flex h-screen">
+        <div className="flex min-h-screen">
           <div className="m-auto">
             <Spinner />
           </div>
         </div>
       ) : (
-        <div>
-          <Header />
-          {children}
-          <Footer />
+        <div className="flex flex-col min-h-screen">
+          <main className="flex-grow">{children}</main>
+          <div className="text-center mb-5 sm:m-10">
+            <Footer />
+          </div>
         </div>
       )}
     </div>
