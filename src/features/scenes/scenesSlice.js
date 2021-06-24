@@ -10,19 +10,20 @@ export const scenesSlice = createSlice({
   },
   reducers: {
     addTexts: (state, action) => {
+      state.texts = action.payload;
       //idが惣菜するかどうかをまずは判定
-      const id = state.texts.find((text) => text.id === action.payload.id);
-      //あればabject同士を結合して追加処理
-      if (id) {
-        state.texts.map((text) => {
-          if (text.id === action.payload.id) {
-            Object.assign(text, action.payload);
-          }
-        });
-        //なければそのまま追加
-      } else {
-        state.texts = [action.payload, ...state.texts];
-      }
+      //   const id = state.texts.find((text) => text.id === action.payload.id);
+      //   //あればabject同士を結合して追加処理
+      //   if (id) {
+      //     state.texts.map((text) => {
+      //       if (text.id === action.payload.id) {
+      //         Object.assign(text, action.payload);
+      //       }
+      //     });
+      //     //なければそのまま追加
+      //   } else {
+      //     state.texts = [action.payload, ...state.texts];
+      //   }
     },
     addImages: (state, action) => {
       //idが惣菜するかどうかをまずは判定

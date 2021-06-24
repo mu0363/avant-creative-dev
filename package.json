@@ -10,6 +10,7 @@
   "dependencies": {
     "@headlessui/react": "^1.2.0-d0e27ff",
     "@heroicons/react": "^1.0.1",
+    "@hookform/error-message": "^2.0.0",
     "@reduxjs/toolkit": "^1.6.0",
     "add": "^2.0.6",
     "aws-sdk": "^2.923.0",

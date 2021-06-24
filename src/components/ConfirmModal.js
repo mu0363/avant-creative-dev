@@ -13,7 +13,7 @@ import { appendSpreadsheet } from "src/lib/appendSpreadSheet";
 import { generateFilename } from "src/lib/generateFilename";
 import { generateId } from "src/lib/generateId";
 import { deleteAllScenes } from "src/features/scenes/scenesSlice";
-import { setLoading } from "src/features/scenes/loadingSlice";
+import { setLoading } from "src/features/loading/loadingSlice";
 
 export const ConfirmModal = (props) => {
   const { children, cancelButtonRef, setIsOpen, isOpen, avantName, aepPath } = props;

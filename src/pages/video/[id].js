@@ -1,22 +1,29 @@
 import { useState, useRef } from "react";
 import Head from "next/head";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import SwipeableViews from "react-swipeable-views";
 import { useForm } from "react-hook-form";
+import { ErrorMessage } from "@hookform/error-message";
 
 import { getPreviewVideo, getAllPreviewVideos } from "src/lib/db";
 import { InputBox } from "src/components/InputBox";
 import { Layout } from "src/components/Layout";
 import { Stepper } from "src/components/Stepper";
 import { ConfirmModal } from "src/components/ConfirmModal";
+import { addTexts } from "src/features/scenes/scenesSlice";
 
 export default function Video({ previewVideo }) {
-  const { register, handleSubmit, errors, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ mode: "onChange" });
 
   const [currentIndex, setCurrentIndex] = useState(0);
   let [isOpen, setIsOpen] = useState(false);
   let cancelButtonRef = useRef(null);
   const { previewSteps } = previewVideo;
+  const dispatch = useDispatch();
   const { scenes } = useSelector((state) => state.scenes);
   const avantName = previewVideo.templateName;
   const aepPath = previewVideo.aepPath;
@@ -41,7 +48,8 @@ export default function Video({ previewVideo }) {
 
   const onSubmit = (data) => {
     console.log(data);
-    // setIsOpen(true);
+    dispatch(addTexts(data));
+    setIsOpen(true);
   };
 
   return (
@@ -60,7 +68,7 @@ export default function Video({ previewVideo }) {
                 </div>
               )}
             </div>
-            <form onSubmit={onSubmit}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <SwipeableViews enableMouseEvents onChangeIndex={(index) => setCurrentIndex(index)} index={currentIndex}>
                 {previewSteps.map((step, index) => (
                   <div
@@ -82,10 +90,17 @@ export default function Video({ previewVideo }) {
                               : "rounded-t-lg max-w-auto object-cover"
                           }`}
                         />
-                        {/* <p className="p-3">{step.description}</p> */}
+                        <p className="p-3">{step.description}</p>
                       </div>
                       <div>
-                        <InputBox step={step} stepNumber={index + 1} currentIndex={currentIndex} register={register} />
+                        <InputBox
+                          step={step}
+                          stepNumber={index + 1}
+                          currentIndex={currentIndex}
+                          register={register}
+                          ErrorMessage={ErrorMessage}
+                          errors={errors}
+                        />
                       </div>
                     </div>
                   </div>
@@ -102,15 +117,7 @@ export default function Video({ previewVideo }) {
                   Previous
                 </button>
 
-                {currentIndex === previewSteps.length - 1 ? (
-                  <button
-                    className={
-                      "w-32 focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center font-medium border text-white bg-ai hover:bg-ai-dark}"
-                    }
-                  >
-                    Confirm
-                  </button>
-                ) : (
+                {currentIndex !== previewSteps.length - 1 && (
                   <button
                     type="button"
                     onClick={forwardButton}
@@ -119,6 +126,15 @@ export default function Video({ previewVideo }) {
                     }
                   >
                     Next
+                  </button>
+                )}
+                {currentIndex === previewSteps.length - 1 && (
+                  <button
+                    className={
+                      "w-32 focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center font-medium border text-white bg-ai hover:bg-ai-dark"
+                    }
+                  >
+                    Submit
                   </button>
                 )}
               </div>

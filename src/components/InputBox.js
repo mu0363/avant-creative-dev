@@ -48,8 +48,8 @@ const editorDefaults = {
   },
 };
 
-export const InputBox = ({ step, stepNumber, currentIndex, register }) => {
-  const [text, setText] = useState("");
+export const InputBox = (props) => {
+  const { step, stepNumber, currentIndex, register, ErrorMessage, errors } = props;
   const dispatchForward = (e) => {
     dispatch(addTexts({ id: currentIndex + 1, [`text${currentIndex + 1}`]: e.target.value }));
     dispatch(addPreview({ id: currentIndex + 1, [`text${currentIndex + 1}`]: e.target.value }));
@@ -108,10 +108,20 @@ export const InputBox = ({ step, stepNumber, currentIndex, register }) => {
       <input
         type="text"
         placeholder="Type your text here"
-        className="bg-gray-100 py-2 px-6 rounded-full focus:outline-none w-full box-border mt-4 mb-4 text-base"
-        {...register(`text${stepNumber}`, { required: true })}
+        className="bg-gray-100 py-2 px-3 rounded-md focus:outline-none w-full box-border mt-4 mb-2 text-base"
+        maxLength="15"
+        {...register(`text${stepNumber}`, {
+          required: "必須項目です",
+          minLength: { value: 4, message: "4文字以上でお願いね" },
+          maxLength: { value: 10, message: "10文字以上はダメよ" },
+        })}
         // onChange={(e) => dispatchForward(e)}
       />
+      {errors[`text${stepNumber}`] ? (
+        <p className="pl-3 text-ai">{errors[`text${stepNumber}`].message}</p>
+      ) : (
+        <div className="h-5"></div>
+      )}
       {/* Modal */}
       {modalVisible && (
         <DokaImageEditorModal
