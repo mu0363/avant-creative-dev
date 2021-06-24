@@ -5,19 +5,18 @@ import { Dialog, Transition } from "@headlessui/react";
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 import { FilmIcon } from "@heroicons/react/outline";
-import { AiFillCloseCircle, AiFillYoutube } from "react-icons/ai";
-import { ReceiptRefundIcon } from "@heroicons/react/solid";
+import { AiFillCloseCircle } from "react-icons/ai";
 
 import { sortArray } from "src/lib/sortArray";
 import { uploadImages } from "src/lib/uploadImages";
 import { appendSpreadsheet } from "src/lib/appendSpreadSheet";
 import { generateFilename } from "src/lib/generateFilename";
 import { generateId } from "src/lib/generateId";
-import { confirmAllData } from "src/lib/confirmAllData";
 import { deleteAllScenes } from "src/features/scenes/scenesSlice";
+import { setLoading } from "src/features/scenes/loadingSlice";
 
 export const ConfirmModal = (props) => {
-  const { children, cancelButtonRef, setIsOpen, isOpen, avantName, aepPath, setIsLoading } = props;
+  const { children, cancelButtonRef, setIsOpen, isOpen, avantName, aepPath } = props;
   const router = useRouter();
   const dispatch = useDispatch();
   const { texts, images } = useSelector((state) => state.scenes);
@@ -25,8 +24,9 @@ export const ConfirmModal = (props) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+    setIsOpen(false);
+    dispatch(setLoading(true));
     // 順番をid順にsortして
-    setIsLoading(true);
     const sortedTexts = sortArray(texts);
     //idをobjectから外す！
     const textsArray = sortedTexts.map((text, index) => {
@@ -59,10 +59,8 @@ export const ConfirmModal = (props) => {
         };
         // スプレッドシートに書き込む！！
         appendSpreadsheet(newRow);
-        setIsOpen(false);
         router.push("/confirm-complete");
         dispatch(deleteAllScenes());
-        setIsLoading(false);
       });
     } else {
       const id = generateId();
@@ -85,7 +83,6 @@ export const ConfirmModal = (props) => {
       setIsOpen(false);
       router.push("/confirm-complete");
       dispatch(deleteAllScenes());
-      setIsLoading(false);
     }
   };
   return (
