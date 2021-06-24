@@ -14,8 +14,8 @@ export const appendSpreadsheet = async (row) => {
     const sheet = doc.sheetsByTitle[SHEET_TITLE];
     await sheet.addRow(row);
     console.log("Added data to spreadsheet successfully!!");
-  } catch (e) {
-    console.error("Error: ", e);
+  } catch (error) {
+    console.error("Error: ", error);
   }
 };
 
