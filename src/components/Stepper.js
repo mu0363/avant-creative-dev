@@ -64,22 +64,20 @@ export const Stepper = ({ steps, currentStepNumber }) => {
     return newSteps;
   }
 
-  const stepsDisplay = stepperSteps.map((step, index) => {
-    return (
-      <div key={index} className={index !== stepperSteps.length - 1 ? "w-full flex items-center" : "flex items-center"}>
-        <div className="relative flex flex-col items-center text-teal-600">
+  return (
+    <div className="flex items-center space-x-2">
+      <p className="text-gray-400">
+        Step {currentStepNumber} / {steps.length}
+      </p>
+      {stepperSteps.map((step, index) => (
+        <div key={index}>
           <div
-            className={`rounded-full transition duration-500 ease-in-out border-2 bg-white h-8 w-8 sm:h-9 sm:w-9 flex items-center justify-center ${
-              step.selected ? "bg-red-200 text-white font-bold" : ""
+            className={`rounded-full bg-white h-3 w-3 sm:h-3 sm:w-3 flex items-center justify-center ${
+              step.selected ? "bg-red-200" : ""
             }`}
-          >
-            {step.completed ? <span className="text-white font-bold text-xl">&#10003;</span> : index + 1}
-          </div>
+          />
         </div>
-        <div className="flex-auto border-t-2 transition duration-500 ease-in-out border-gray-300 "> </div>
-      </div>
-    );
-  });
-
-  return <div className="flex justify-between items-center sm:max-w-2xl max-w-sm m-auto">{stepsDisplay}</div>;
+      ))}
+    </div>
+  );
 };
