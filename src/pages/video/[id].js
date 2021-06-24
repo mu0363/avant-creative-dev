@@ -2,15 +2,17 @@ import { useState, useRef } from "react";
 import Head from "next/head";
 import { useSelector } from "react-redux";
 import SwipeableViews from "react-swipeable-views";
+import { useForm } from "react-hook-form";
 
 import { getPreviewVideo, getAllPreviewVideos } from "src/lib/db";
 import { InputBox } from "src/components/InputBox";
 import { Layout } from "src/components/Layout";
 import { Stepper } from "src/components/Stepper";
-
 import { ConfirmModal } from "src/components/ConfirmModal";
 
 export default function Video({ previewVideo }) {
+  const { register, handleSubmit, errors, reset } = useForm();
+
   const [currentIndex, setCurrentIndex] = useState(0);
   let [isOpen, setIsOpen] = useState(false);
   let cancelButtonRef = useRef(null);
@@ -37,9 +39,9 @@ export default function Video({ previewVideo }) {
     }
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    setIsOpen(true);
+  const onSubmit = (data) => {
+    console.log(data);
+    // setIsOpen(true);
   };
 
   return (
@@ -50,68 +52,7 @@ export default function Video({ previewVideo }) {
       </Head>
       <Layout>
         <div className="m-2">
-          <div className="mt-3">
-            <SwipeableViews enableMouseEvents onChangeIndex={(index) => setCurrentIndex(index)} index={currentIndex}>
-              {previewSteps.map((step, index) => (
-                <div
-                  key={index}
-                  className={`${
-                    step.checkImage
-                      ? "max-w-4xl m-auto bg-white shadow-lg rounded-lg mt-3 sm:mt-5"
-                      : "max-w-md m-auto bg-white shadow-lg rounded-lg mt-3 sm:mt-5"
-                  }`}
-                >
-                  <div className={`${step.checkImage ? "grid sm:grid-cols-2" : "grid"}`}>
-                    <div>
-                      <img
-                        src={step.referenceImage}
-                        alt={step.name}
-                        className={`${
-                          step.checkImage
-                            ? "rounded-t-lg sm:rounded-lt-lg sm:rounded-tr-none max-w-auto object-cover"
-                            : "rounded-t-lg max-w-auto object-cover"
-                        }`}
-                      />
-                      {/* <p className="p-3">{step.description}</p> */}
-                    </div>
-                    <div>
-                      <InputBox step={step} stepNumber={index + 1} currentIndex={currentIndex} />
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </SwipeableViews>
-            <div className="flex justify-center my-4 sm:my-8 space-x-4">
-              <button
-                type="button"
-                onClick={backwardButton}
-                className={`w-32 focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center bg-white hover:bg-gray-100 font-medium border ${
-                  currentIndex === 0 && "text-gray-300"
-                }`}
-              >
-                Previous
-              </button>
-
-              {currentIndex === previewSteps.length - 1 ? (
-                <button
-                  onClick={onSubmit}
-                  className={`w-32 focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center font-medium border text-white bg-ai hover:bg-ai-dark
-                         }`}
-                >
-                  Confirm
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={forwardButton}
-                  className={
-                    "w-32 focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center bg-white hover:bg-gray-100 font-medium border"
-                  }
-                >
-                  Next
-                </button>
-              )}
-            </div>
+          <div className="mt-4">
             <div className="flex justify-center">
               {previewSteps.length > 1 && (
                 <div>
@@ -119,6 +60,69 @@ export default function Video({ previewVideo }) {
                 </div>
               )}
             </div>
+            <form onSubmit={onSubmit}>
+              <SwipeableViews enableMouseEvents onChangeIndex={(index) => setCurrentIndex(index)} index={currentIndex}>
+                {previewSteps.map((step, index) => (
+                  <div
+                    key={index}
+                    className={`${
+                      step.checkImage
+                        ? "max-w-4xl m-auto bg-white shadow-lg rounded-lg mt-3 sm:mt-5"
+                        : "max-w-md m-auto bg-white shadow-lg rounded-lg mt-3 sm:mt-5"
+                    }`}
+                  >
+                    <div className={`${step.checkImage ? "grid sm:grid-cols-2" : "grid"}`}>
+                      <div>
+                        <img
+                          src={step.referenceImage}
+                          alt={step.name}
+                          className={`${
+                            step.checkImage
+                              ? "rounded-t-lg sm:rounded-lt-lg sm:rounded-tr-none max-w-auto object-cover"
+                              : "rounded-t-lg max-w-auto object-cover"
+                          }`}
+                        />
+                        {/* <p className="p-3">{step.description}</p> */}
+                      </div>
+                      <div>
+                        <InputBox step={step} stepNumber={index + 1} currentIndex={currentIndex} register={register} />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </SwipeableViews>
+              <div className="flex justify-center my-4 sm:my-8 space-x-4">
+                <button
+                  type="button"
+                  onClick={backwardButton}
+                  className={`w-32 focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center bg-white hover:bg-gray-100 font-medium border ${
+                    currentIndex === 0 && "text-gray-300"
+                  }`}
+                >
+                  Previous
+                </button>
+
+                {currentIndex === previewSteps.length - 1 ? (
+                  <button
+                    className={
+                      "w-32 focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center font-medium border text-white bg-ai hover:bg-ai-dark}"
+                    }
+                  >
+                    Confirm
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={forwardButton}
+                    className={
+                      "bg-white hover:bg-gray-100 font-medium border w-32 focus:outline-none py-2 px-5 rounded-lg shadow-sm text-center"
+                    }
+                  >
+                    Next
+                  </button>
+                )}
+              </div>
+            </form>
           </div>
         </div>
       </Layout>

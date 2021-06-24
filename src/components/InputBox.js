@@ -48,7 +48,7 @@ const editorDefaults = {
   },
 };
 
-export const InputBox = ({ step, stepNumber, currentIndex }) => {
+export const InputBox = ({ step, stepNumber, currentIndex, register }) => {
   const [text, setText] = useState("");
   const dispatchForward = (e) => {
     dispatch(addTexts({ id: currentIndex + 1, [`text${currentIndex + 1}`]: e.target.value }));
@@ -109,8 +109,8 @@ export const InputBox = ({ step, stepNumber, currentIndex }) => {
         type="text"
         placeholder="Type your text here"
         className="bg-gray-100 py-2 px-6 rounded-full focus:outline-none w-full box-border mt-4 mb-4 text-base"
-        // value={text}
-        onChange={(e) => dispatchForward(e)}
+        {...register(`text${stepNumber}`, { required: true })}
+        // onChange={(e) => dispatchForward(e)}
       />
       {/* Modal */}
       {modalVisible && (
