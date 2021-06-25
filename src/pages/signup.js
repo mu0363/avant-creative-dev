@@ -1,12 +1,68 @@
-// import React from "react";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { useAuth } from "src/lib/auth";
+import { LoginButton } from "src/components/LoginButton";
+import { InputText } from "src/components/InputText";
 
-export default function SignUn() {
+export default function SignUp() {
+  const auth = useAuth();
+  const loginWithGitHub = () => {
+    auth.signInWithGithub();
+  };
+  const loginWithGoogle = () => {
+    auth.signInWithGoogle();
+  };
+
   return (
-    <div>
-      <p>Sign Upププ</p>
-      <p>ここも作ってるところなの！もうちょい待っててね🥺</p>
+    <div className="flex min-h-screen">
+      <div className="m-auto">
+        <div className="bg-white rounded-md p-10 shadow-lg">
+          <div>
+            <h3 className="text-2xl font-semibold pb-5">Get started with Avant</h3>
+            <div className="space-y-4">
+              <LoginButton src="/google.svg" authMethod={loginWithGoogle}>
+                Sign up with Google
+              </LoginButton>
+              <LoginButton src="/github.svg" authMethod={loginWithGitHub}>
+                Sign up with GitHub
+              </LoginButton>
+
+              <div className="bg-ai text-white text-center mt-4 py-3 px-6 rounded-md hover:bg-ai-light">
+                <button>Sign up with email</button>
+              </div>
+              <div className="mt-2 text-xs text-gray-500">
+                <span>Already signed up?</span>
+                <Link href="/login">
+                  <a>
+                    <span className="underline text-ai ml-1">Login</span>
+                  </a>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+    //   <div className="mt-8">
+    //   <div className="mt-10">
+    //     <InputText name="email" placeholder="you@example.com" />
+    //   </div>
+    //   <div className="mt-4">
+    //     <InputText name="password" placeholder="･･････････" />
+    //   </div>
+    //   <div className="bg-ai text-white text-center mt-4 py-3 px-6 rounded-md hover:bg-ai-light">
+    //     <button>Log in</button>
+    //   </div>
+    //   <div className="mt-5">
+    //     <span className="text-xs text-gray-500 underline hover:text-ai cursor-pointer">Forget Password?</span>
+    //   </div>
+    //   <div className="mt-2 text-xs text-gray-500">
+    //     <span>New to Avant Creative?</span>
+    //     <Link href="/signup">
+    //       <a>
+    //         <span className="underline text-ai ml-1">Sign up</span>
+    //       </a>
+    //     </Link>
+    //   </div>
+    // </div>
   );
 }
