@@ -7,7 +7,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { FilmIcon } from "@heroicons/react/outline";
 import { AiFillCloseCircle } from "react-icons/ai";
 
-import { sortArray } from "src/lib/sortArray";
 import { uploadImages } from "src/lib/uploadImages";
 import { appendSpreadsheet } from "src/lib/appendSpreadSheet";
 import { generateFilename } from "src/lib/generateFilename";
@@ -26,10 +25,9 @@ export const ConfirmModal = (props) => {
     e.preventDefault();
     setIsOpen(false);
     dispatch(setLoading(true));
-    // 順番をid順にsortして
-    const sortedTexts = sortArray(texts);
+
     //idをobjectから外す！
-    const textsArray = sortedTexts.map((text, index) => {
+    const textsArray = texts.map((text, index) => {
       const value = Object.values(text);
       return { [`text${index + 1}`]: value[1] };
     });

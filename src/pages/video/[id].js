@@ -22,7 +22,7 @@ export default function Video({ previewVideo }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   let [isOpen, setIsOpen] = useState(false);
   let cancelButtonRef = useRef(null);
-  const { previewSteps } = previewVideo;
+  const { previewSteps, imageRequired } = previewVideo;
   const dispatch = useDispatch();
   const { scenes, images } = useSelector((state) => state.scenes);
   const avantName = previewVideo.templateName;
@@ -47,7 +47,7 @@ export default function Video({ previewVideo }) {
   };
 
   const onSubmit = (data) => {
-    if (previewSteps.length === images.length) {
+    if (previewSteps.length === images.length || imageRequired === false) {
       dispatch(addTexts(data));
       dispatch(addPreviewTexts(data));
       setIsOpen(true);
@@ -160,8 +160,9 @@ export default function Video({ previewVideo }) {
         aepPath={aepPath}
       >
         <div className="bg-gray-100 rounded-t-lg p-3">
+          <p className="font-semibold text-center text-2xl">Are you sure to send the info?</p>
           {scenes.map((scene, index) => (
-            <div key={index} className="bg-gray-200 mt-5 rounded-md">
+            <div key={index} className="bg-gray-200 mt-5 rounded-md shadow-md">
               <p className="bg-ai-light text-white py-1 px-2 rounded-t-md">{`Scene${index + 1}`}</p>
               <div className="grid sm:grid-cols-2">
                 {scene[`image${index + 1}`] && (

@@ -59,11 +59,14 @@ export const scenesSlice = createSlice({
     addPreviewTexts: (state, action) => {
       //オブジェクトにidをつけて配列に変換
       const texts = Object.entries(action.payload).map(([key, value], index) => ({ id: index + 1, [key]: value }));
-
-      //配列の合成 idが一緒なものはまとめる
-      //https://stackoverflow.com/questions/19480008/javascript-merging-objects-by-id
-      const data = state.scenes.map((scene) => ({ ...scene, ...texts.find((text) => text.id === scene.id) }));
-      state.scenes = data;
+      if (state.scenes.length === 0) {
+        state.scenes = [...texts];
+      } else {
+        //配列の合成 idが一緒なものはまとめる
+        //https://stackoverflow.com/questions/19480008/javascript-merging-objects-by-id
+        const data = state.scenes.map((scene) => ({ ...scene, ...texts.find((text) => text.id === scene.id) }));
+        state.scenes = data;
+      }
     },
 
     deleteAllScenes: (state) => {
