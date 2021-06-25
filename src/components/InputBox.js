@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addImages, addTexts, addPreview } from "src/features/scenes/scenesSlice";
+import { addImages, addTexts, addPreviewImage } from "src/features/scenes/scenesSlice";
 import { doka } from "doka/doka.module.css";
 import { DokaImageEditorModal } from "react-doka";
 import { useDropzone } from "react-dropzone";
@@ -49,11 +49,7 @@ const editorDefaults = {
 };
 
 export const InputBox = (props) => {
-  const { step, stepNumber, currentIndex, register, ErrorMessage, errors } = props;
-  const dispatchForward = (e) => {
-    dispatch(addTexts({ id: currentIndex + 1, [`text${currentIndex + 1}`]: e.target.value }));
-    dispatch(addPreview({ id: currentIndex + 1, [`text${currentIndex + 1}`]: e.target.value }));
-  };
+  const { step, stepNumber, currentIndex, register, errors } = props;
 
   //redux
   const dispatch = useDispatch();
@@ -104,21 +100,19 @@ export const InputBox = (props) => {
           </div>
         </div>
       )}
-
       <input
         type="text"
         placeholder="Type your text here"
         className="bg-gray-100 py-2 px-3 rounded-md focus:outline-none w-full box-border mt-4 mb-2 text-base"
         maxLength="15"
         {...register(`text${stepNumber}`, {
-          required: "必須項目です",
-          minLength: { value: 4, message: "4文字以上でお願いね" },
-          maxLength: { value: 10, message: "10文字以上はダメよ" },
+          required: "This is required",
+          minLength: { value: step.minLength, message: "This need to be at least 4 characters " },
+          maxLength: { value: step.maxLength, message: "Max length exceeded" },
         })}
-        // onChange={(e) => dispatchForward(e)}
       />
       {errors[`text${stepNumber}`] ? (
-        <p className="pl-3 text-ai">{errors[`text${stepNumber}`].message}</p>
+        <p className="pl-3 text-ai font-semibold">{errors[`text${stepNumber}`].message}</p>
       ) : (
         <div className="h-5"></div>
       )}
@@ -135,7 +129,7 @@ export const InputBox = (props) => {
             setModalResult(URL.createObjectURL(dest));
             const localImageUrl = window.URL.createObjectURL(dest);
             dispatch(addImages({ id: currentIndex + 1, [`image${stepNumber}`]: localImageUrl }));
-            dispatch(addPreview({ id: currentIndex + 1, [`image${stepNumber}`]: localImageUrl }));
+            dispatch(addPreviewImage({ id: currentIndex + 1, [`image${stepNumber}`]: localImageUrl }));
           }}
           imageCropAspectRatio={16 / 9}
         />

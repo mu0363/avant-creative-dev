@@ -3,14 +3,14 @@ import Head from "next/head";
 import { useSelector, useDispatch } from "react-redux";
 import SwipeableViews from "react-swipeable-views";
 import { useForm } from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
+import toast, { Toaster } from "react-hot-toast";
 
 import { getPreviewVideo, getAllPreviewVideos } from "src/lib/db";
 import { InputBox } from "src/components/InputBox";
 import { Layout } from "src/components/Layout";
 import { Stepper } from "src/components/Stepper";
 import { ConfirmModal } from "src/components/ConfirmModal";
-import { addTexts } from "src/features/scenes/scenesSlice";
+import { addTexts, addPreviewTexts } from "src/features/scenes/scenesSlice";
 
 export default function Video({ previewVideo }) {
   const {
@@ -24,7 +24,7 @@ export default function Video({ previewVideo }) {
   let cancelButtonRef = useRef(null);
   const { previewSteps } = previewVideo;
   const dispatch = useDispatch();
-  const { scenes } = useSelector((state) => state.scenes);
+  const { scenes, images } = useSelector((state) => state.scenes);
   const avantName = previewVideo.templateName;
   const aepPath = previewVideo.aepPath;
 
@@ -47,9 +47,18 @@ export default function Video({ previewVideo }) {
   };
 
   const onSubmit = (data) => {
-    console.log(data);
-    dispatch(addTexts(data));
-    setIsOpen(true);
+    if (previewSteps.length === images.length) {
+      dispatch(addTexts(data));
+      dispatch(addPreviewTexts(data));
+      setIsOpen(true);
+    } else {
+      toast.error("You need to select all images.", {
+        style: {
+          background: "#333",
+          color: "#fff",
+        },
+      });
+    }
   };
 
   return (
@@ -98,7 +107,6 @@ export default function Video({ previewVideo }) {
                           stepNumber={index + 1}
                           currentIndex={currentIndex}
                           register={register}
-                          ErrorMessage={ErrorMessage}
                           errors={errors}
                         />
                       </div>
@@ -141,6 +149,7 @@ export default function Video({ previewVideo }) {
             </form>
           </div>
         </div>
+        <Toaster />
       </Layout>
       {/* こっからモーダルだぜ */}
       <ConfirmModal
