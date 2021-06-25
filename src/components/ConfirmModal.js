@@ -7,13 +7,12 @@ import { useSelector, useDispatch } from "react-redux";
 import { FilmIcon } from "@heroicons/react/outline";
 import { AiFillCloseCircle } from "react-icons/ai";
 
-import { sortArray } from "src/lib/sortArray";
 import { uploadImages } from "src/lib/uploadImages";
 import { appendSpreadsheet } from "src/lib/appendSpreadSheet";
 import { generateFilename } from "src/lib/generateFilename";
 import { generateId } from "src/lib/generateId";
 import { deleteAllScenes } from "src/features/scenes/scenesSlice";
-import { setLoading } from "src/features/scenes/loadingSlice";
+import { setLoading } from "src/features/loading/loadingSlice";
 
 export const ConfirmModal = (props) => {
   const { children, cancelButtonRef, setIsOpen, isOpen, avantName, aepPath } = props;
@@ -26,10 +25,9 @@ export const ConfirmModal = (props) => {
     e.preventDefault();
     setIsOpen(false);
     dispatch(setLoading(true));
-    // 順番をid順にsortして
-    const sortedTexts = sortArray(texts);
+
     //idをobjectから外す！
-    const textsArray = sortedTexts.map((text, index) => {
+    const textsArray = texts.map((text, index) => {
       const value = Object.values(text);
       return { [`text${index + 1}`]: value[1] };
     });
