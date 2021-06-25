@@ -1,4 +1,9 @@
 import { db } from "src/lib/firebase";
+
+export const createUser = (uid, user) => {
+  return db.collection("users").doc(uid).set(user, { merge: true });
+};
+
 export const getAllPreviewVideos = async () => {
   const previewVideos = [];
   const snapshot = await db.collection("preview-videos").get();
