@@ -4,15 +4,19 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "src/lib/auth";
 import { LoginButton } from "src/components/LoginButton";
 import { InputText } from "src/components/InputText";
+import { useRequiredLogin } from "src/lib/useRequiredLogin";
 
 export default function Login() {
   const auth = useAuth();
-  const loginWithGitHub = () => {
-    auth.signInWithGithub();
-  };
+
   const loginWithGoogle = () => {
     auth.signInWithGoogle();
   };
+  const loginWithGitHub = () => {
+    auth.signInWithGithub();
+  };
+
+  useRequiredLogin();
 
   //validation
   const {
@@ -27,16 +31,15 @@ export default function Login() {
 
   return (
     <div className="flex min-h-screen">
-      <div className="m-auto">
-        <div className="bg-white rounded-md p-10 shadow-lg">
+      <div className="m-auto flex-1 max-w-md">
+        <div className="bg-white rounded-md py-5 shadow-lg px-6 mx-5">
           <div className="divide-y divide-gray-200">
             <div>
               <Link href="/">
                 <a>
-                  <img src="avant_creative_orange_logo.svg" alt="avant-logo" className="mb-10" />
+                  <h3 className="text-2xl font-semibold text-center mb-5">Log in to your account</h3>
                 </a>
               </Link>
-              <h3 className="text-2xl font-semibold pb-5">Log in to your account</h3>
               <div className="space-y-4">
                 <LoginButton src="/google.svg" authMethod={loginWithGoogle}>
                   Log in with Google
@@ -44,8 +47,6 @@ export default function Login() {
                 <LoginButton src="/github.svg" authMethod={loginWithGitHub}>
                   Log in with GitHub
                 </LoginButton>
-
-                <p>{auth?.user?.email}</p>
               </div>
             </div>
             <div className="mt-8">
@@ -69,7 +70,7 @@ export default function Login() {
                     errors={errors}
                   />
                 </div>
-                <div className="bg-ai text-white text-center mt-6 py-3 px-6 rounded-md hover:bg-ai-light">
+                <div className="bg-ai text-white text-center mt-6 py-3 px-6 rounded-md hover:bg-ai-light cursor-pointer">
                   <button>Log in</button>
                 </div>
               </form>
