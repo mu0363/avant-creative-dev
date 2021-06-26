@@ -160,7 +160,7 @@ export default function Video({ previewVideo }) {
         aepPath={aepPath}
       >
         <div className="bg-gray-100 rounded-t-lg p-3">
-          <p className="font-semibold text-center text-2xl">Are you sure to send the info?</p>
+          <p className="font-semibold text-center text-2xl">Are you sure?</p>
           {scenes.map((scene, index) => (
             <div key={index} className="bg-gray-200 mt-5 rounded-md shadow-md">
               <p className="bg-ai-light text-white py-1 px-2 rounded-t-md">{`Scene${index + 1}`}</p>

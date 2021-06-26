@@ -24,7 +24,7 @@ const useProviderAuth = () => {
       email: user.email,
       provider: user.providerData[0].providerId,
       photoURL: user.photoURL,
-      token: user.ya,
+      token: user.za,
       // stripeRole: (await getStripeRole()) || "free",
     };
   };
@@ -52,8 +52,9 @@ const useProviderAuth = () => {
   };
 
   const signInWithGithub = () => {
+    console.log("start github");
     const provider = new firebase.auth.GithubAuthProvider();
-    auth.signInWithRedirect(provider).then((result) => {
+    auth.signInWithPopup(provider).then((result) => {
       handleUser(result.user);
       Cookies.set("avant-creative-auth", true);
       router.push("/");
@@ -62,7 +63,7 @@ const useProviderAuth = () => {
 
   const signInWithGoogle = () => {
     const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithRedirect(provider).then((result) => {
+    auth.signInWithPopup(provider).then((result) => {
       handleUser(result.user);
       Cookies.set("avant-creative-auth", true);
       router.push("/");

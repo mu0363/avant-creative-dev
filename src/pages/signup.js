@@ -2,9 +2,13 @@ import Link from "next/link";
 import { useAuth } from "src/lib/auth";
 import { LoginButton } from "src/components/LoginButton";
 import { InputText } from "src/components/InputText";
+import { useRequiredLogin } from "src/lib/useRequiredLogin";
 
 export default function SignUp() {
   const auth = useAuth();
+
+  useRequiredLogin();
+
   const loginWithGitHub = () => {
     auth.signInWithGithub();
   };
@@ -14,10 +18,10 @@ export default function SignUp() {
 
   return (
     <div className="flex min-h-screen">
-      <div className="m-auto">
-        <div className="bg-white rounded-md p-10 shadow-lg">
+      <div className="m-auto flex-1 max-w-md">
+        <div className="bg-white rounded-md py-10 shadow-lg px-6 mx-5">
           <div>
-            <h3 className="text-2xl font-semibold pb-5">Get started with Avant</h3>
+            <h3 className="text-2xl font-semibold pb-5 text-center">Get started with Avant</h3>
             <div className="space-y-4">
               <LoginButton src="/google.svg" authMethod={loginWithGoogle}>
                 Sign up with Google
