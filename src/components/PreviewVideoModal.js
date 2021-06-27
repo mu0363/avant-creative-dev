@@ -1,10 +1,28 @@
-import Link from "next/link";
+import { useRouter } from "next/router";
 import { Fragment } from "react";
+import { useAuth } from "src/lib/auth";
 import { Dialog, Transition } from "@headlessui/react";
 import { FilmIcon } from "@heroicons/react/outline";
-import { AiFillCloseCircle, AiFillYoutube } from "react-icons/ai";
+import { AiFillCloseCircle } from "react-icons/ai";
 
-export const PreviewVideoModal = ({ children, cancelButtonRef, setIsOpen, isOpen, id }) => {
+export const PreviewVideoModal = (props) => {
+  const { children, cancelButtonRef, setIsOpen, isOpen, id } = props;
+  const auth = useAuth();
+  const router = useRouter();
+
+  const routerHandler = () => {
+    if (!auth?.user) {
+      router.push({
+        pathname: "/login", //URL
+        query: { id: id }, //検索クエリ
+      });
+      setIsOpen(false);
+    } else {
+      router.push(`/video/${id}`);
+      setIsOpen(false);
+    }
+  };
+
   return (
     <div>
       <Transition.Root show={isOpen} as={Fragment}>
@@ -44,16 +62,21 @@ export const PreviewVideoModal = ({ children, cancelButtonRef, setIsOpen, isOpen
             >
               <div className="static inline-block align-bottom text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full p-3 bg-transparent">
                 {children}
-                <div className="bg-gray-100 rounded-b-lg px-4 py-3 sm:px-3 sm:flex sm:flex-row-reverse">
-                  <Link href={"/video/[id]"} as={`/video/${id}`} passHref>
-                    <div
-                      onClick={() => setIsOpen(false)}
-                      className="flex items-center w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-ai text-base font-medium text-white space-x-2 hover:bg-ai-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 cursor-pointer"
-                    >
-                      <FilmIcon className="h-5" />
-                      <p>Create Video</p>
-                    </div>
-                  </Link>
+                <div className="px-4 py-3 sm:px-3 bg-gray-100 rounded-b-lg">
+                  {/* <Link href={auth?.user ? `/video/${id}` : `/login?id=${id}`} className="sm:flex sm:flex-row-reverse"> */}
+                  <div className="sm:flex sm:flex-row-reverse" onClick={routerHandler}>
+                    {auth?.user ? (
+                      <div className="flex items-center w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-ai text-base font-medium text-white space-x-2 hover:bg-ai-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 cursor-pointer">
+                        <FilmIcon className="h-5" />
+                        <p>Create Video</p>
+                      </div>
+                    ) : (
+                      <div className="flex items-center w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-ai text-base font-medium text-white space-x-2 hover:bg-ai-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 cursor-pointer">
+                        {/* <FilmIcon className="h-5" /> */}
+                        <p>Log in</p>
+                      </div>
+                    )}
+                  </div>
                   <div
                     ref={cancelButtonRef}
                     className="absolute top-0 right-0 rounded-full bg-white cursor-pointer shadow-lg"

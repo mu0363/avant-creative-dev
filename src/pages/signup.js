@@ -1,13 +1,11 @@
-import Link from "next/link";
+import { useRouter } from "next/router";
 import { useAuth } from "src/lib/auth";
 import { LoginButton } from "src/components/LoginButton";
 import { InputText } from "src/components/InputText";
-import { useRequiredLogin } from "src/lib/useRequiredLogin";
 
 export default function SignUp() {
   const auth = useAuth();
-
-  useRequiredLogin();
+  const router = useRouter();
 
   const loginWithGitHub = () => {
     auth.signInWithGithub();
@@ -35,11 +33,9 @@ export default function SignUp() {
               </div>
               <div className="mt-2 text-xs text-gray-500">
                 <span>Already signed up?</span>
-                <Link href="/login">
-                  <a>
-                    <span className="underline text-ai ml-1">Login</span>
-                  </a>
-                </Link>
+                <span className="underline text-ai ml-1 cursor-pointer" onClick={() => router.push("/login")}>
+                  Login
+                </span>
               </div>
             </div>
           </div>
@@ -70,3 +66,17 @@ export default function SignUp() {
     // </div>
   );
 }
+
+export const getServerSideProps = async (context) => {
+  const isAuthenticated = context.req.cookies.auth;
+
+  if (isAuthenticated) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: "/",
+      },
+    };
+  }
+  return { props: {} };
+};

@@ -15,8 +15,9 @@ export const Layout = ({ children }) => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col min-h-screen">
-          <main className="flex-grow">{children}</main>
+        <div className="flex flex-col h-screen">
+          {/* className="flex-grow" */}
+          <main>{children}</main>
           <div className="text-center mb-5 sm:m-10">
             <Footer />
           </div>

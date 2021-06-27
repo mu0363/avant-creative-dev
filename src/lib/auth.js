@@ -46,7 +46,7 @@ const useProviderAuth = () => {
   const signInWithEmail = (email, password) => {
     auth.signInWithEmail(email, password).then((result) => {
       handleUser(result.user);
-      Cookies.set("avant-creative-auth", true);
+      Cookies.set("auth", true);
       router.push("/");
     });
   };
@@ -56,17 +56,21 @@ const useProviderAuth = () => {
     const provider = new firebase.auth.GithubAuthProvider();
     auth.signInWithPopup(provider).then((result) => {
       handleUser(result.user);
-      Cookies.set("avant-creative-auth", true);
+      Cookies.set("auth", true);
       router.push("/");
     });
   };
 
-  const signInWithGoogle = () => {
+  const signInWithGoogle = (id) => {
     const provider = new firebase.auth.GoogleAuthProvider();
     auth.signInWithPopup(provider).then((result) => {
       handleUser(result.user);
-      Cookies.set("avant-creative-auth", true);
-      router.push("/");
+      Cookies.set("auth", true);
+      if (id) {
+        router.push(`/video/${id}`);
+      } else {
+        router.push("/");
+      }
     });
   };
 
@@ -76,8 +80,8 @@ const useProviderAuth = () => {
       .signOut()
       .then(() => {
         handleUser(false);
-        Cookies.remove("avant-creative-auth");
-        router.push("/");
+        Cookies.remove("auth");
+        router.push("/login");
       });
   };
 

@@ -11,6 +11,7 @@ import { Layout } from "src/components/Layout";
 import { Stepper } from "src/components/Stepper";
 import { ConfirmModal } from "src/components/ConfirmModal";
 import { addTexts, addPreviewTexts } from "src/features/scenes/scenesSlice";
+import { useRequiredLogin } from "src/lib/useRequiredLogin";
 
 export default function Video({ previewVideo }) {
   const {
@@ -18,6 +19,8 @@ export default function Video({ previewVideo }) {
     handleSubmit,
     formState: { errors },
   } = useForm({ mode: "onChange" });
+
+  useRequiredLogin();
 
   const [currentIndex, setCurrentIndex] = useState(0);
   let [isOpen, setIsOpen] = useState(false);
@@ -194,3 +197,17 @@ export const getStaticProps = async ({ params }) => {
     },
   };
 };
+
+// export const getServerSideProps = async (context) => {
+//   const isAuthenticated = context.req.cookies.auth;
+
+//   if (!isAuthenticated) {
+//     return {
+//       redirect: {
+//         permanent: false,
+//         destination: "/",
+//       },
+//     };
+//   }
+//   return { props: {} };
+// };

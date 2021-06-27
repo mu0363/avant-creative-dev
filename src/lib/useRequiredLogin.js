@@ -4,10 +4,10 @@ import Cookies from "js-cookie";
 
 export const useRequiredLogin = () => {
   const router = useRouter();
-  const isSignedIn = Cookies.get("avant-creative-auth");
+  const isSignedIn = Cookies.get("auth");
 
   useEffect(() => {
-    if (isSignedIn) {
+    if (!isSignedIn) {
       router.push("/");
     }
   }, []);
