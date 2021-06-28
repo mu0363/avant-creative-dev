@@ -107,7 +107,7 @@ export const InputBox = (props) => {
         maxLength="15"
         {...register(`text${stepNumber}`, {
           required: "This is required",
-          minLength: { value: step.minLength, message: "This need to be at least 4 characters " },
+          minLength: { value: step.minLength, message: "This need to be at least 4 characters" },
           maxLength: { value: step.maxLength, message: "Max length exceeded" },
         })}
       />

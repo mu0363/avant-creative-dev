@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 
 import { useAuth } from "src/lib/auth";
 import { LoginButton } from "src/components/LoginButton";
-import { InputText } from "src/components/InputText";
+import { TextField } from "src/components/TextField";
 
 export default function Login() {
   const auth = useAuth();
@@ -54,10 +54,18 @@ export default function Login() {
             {/* Form */}
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mt-10">
-                <InputText name="email" placeholder="you@example.com" type="text" register={register} errors={errors} />
+                <TextField
+                  label="Email"
+                  name="email"
+                  placeholder="you@example.com"
+                  type="text"
+                  register={register}
+                  errors={errors}
+                />
               </div>
               <div className="mt-4">
-                <InputText
+                <TextField
+                  label="Password"
                   name="password"
                   placeholder="･･････････"
                   type="password"
@@ -88,7 +96,7 @@ export default function Login() {
 }
 
 export const getServerSideProps = async (context) => {
-  const isAuthenticated = context.req.cookies.auth;
+  const isAuthenticated = context.req.cookies["avant-creative-auth"];
 
   if (isAuthenticated) {
     return {
