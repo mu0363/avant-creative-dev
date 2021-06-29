@@ -4,6 +4,17 @@ export const createUser = (uid, user) => {
   return db.collection("users").doc(uid).set(user, { merge: true });
 };
 
+export const getUser = async (uid) => {
+  const data = await db
+    .collection("users")
+    .doc(uid)
+    .get()
+    .then((snapshot) => {
+      return snapshot.data();
+    });
+  return data;
+};
+
 export const getAllPreviewVideos = async () => {
   const previewVideos = [];
   const snapshot = await db.collection("preview-videos").get();

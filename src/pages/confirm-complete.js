@@ -9,19 +9,22 @@ export default function ConfirmComplete() {
 
   useEffect(() => {
     dispatch(setLoading(false));
-    setTimeout(() => {
-      router.push("/");
-    }, 3000);
+    // setTimeout(() => {
+    //   router.push("/");
+    // }, 5000);
   }, []);
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen font-Kiwi">
       <div className="m-auto text-center">
-        <Image src="/undraw_chilling_8tii.svg" alt="relax" height="300" width="400" />
-        <div className="mt-10">
-          <h1 className="text-3xl">Thank you!!</h1>
-          <p className="mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-          <p> Quia laudantium obcaecati non, quidem alias</p>
+        <Image src="/thanks.png" alt="relax" height="300" width="300" />
+        <div>
+          <h1 className="text-3xl font-medium">送信完了!!</h1>
+          <p className="mt-4 font-medium">書き出しが終わったらメールにお知らせします。</p>
+          <p className="font-medium">しばらくお待ちください。</p>
+          <p className="font-medium mt-10 underline cursor-pointer hover:text-ai" onClick={() => router.push("/")}>
+            ← トップページへ戻る
+          </p>
         </div>
       </div>
     </div>

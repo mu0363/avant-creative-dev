@@ -1,11 +1,15 @@
+import { useState } from "react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useAuth } from "src/lib/auth";
 import { LoginButton } from "src/components/LoginButton";
 import { TextField } from "src/components/TextField";
+import { loginSchema } from "src/lib/loginSchema";
 
 export default function Login() {
+  const [isLoading, setLoading] = useState(false);
   const auth = useAuth();
   const router = useRouter();
   const id = router.query.id ? router.query.id : null;
@@ -14,7 +18,15 @@ export default function Login() {
     auth.signInWithGoogle(id);
   };
   const loginWithGitHub = () => {
-    auth.signInWithGithub();
+    auth.signInWithGithub(id);
+  };
+  const loginWithGest = () => {
+    setLoading(true);
+    const data = {
+      email: "gest@example.com",
+      password: "123456Ab",
+    };
+    auth.signInWithEmail(data);
   };
 
   //validation
@@ -22,10 +34,10 @@ export default function Login() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({ resolver: yupResolver(loginSchema) });
 
-  const onSubmit = () => {
-    console.log("success");
+  const onSubmit = (data) => {
+    auth.signInWithEmail(data);
   };
 
   return (
@@ -37,10 +49,31 @@ export default function Login() {
               Log in to your account
             </h3>
             <div className="space-y-4">
-              <LoginButton src="/google.svg" authMethod={loginWithGoogle}>
+              <p className="text-xs text-center">↓ ゲスト用から簡単にログイン出来ます！</p>
+              <LoginButton
+                src=""
+                authMethod={loginWithGest}
+                isLoading={isLoading}
+                bgColor="bg-gray-100"
+                spinColor="text-gray-500"
+                hoverColor="bg-gray-200"
+              >
+                ゲストログイン
+              </LoginButton>
+              <LoginButton
+                src="/google.svg"
+                authMethod={loginWithGoogle}
+                bgColor="bg-gray-100"
+                hoverColor="bg-gray-200"
+              >
                 Log in with Google
               </LoginButton>
-              <LoginButton src="/github.svg" authMethod={loginWithGitHub}>
+              <LoginButton
+                src="/github.svg"
+                authMethod={loginWithGitHub}
+                bgColor="bg-gray-100"
+                hoverColor="bg-gray-200"
+              >
                 Log in with GitHub
               </LoginButton>
             </div>
@@ -59,8 +92,8 @@ export default function Login() {
                   name="email"
                   placeholder="you@example.com"
                   type="text"
-                  register={register}
-                  errors={errors}
+                  registers={register("email")}
+                  errorMessage={errors.email?.message}
                 />
               </div>
               <div className="mt-4">
@@ -69,12 +102,21 @@ export default function Login() {
                   name="password"
                   placeholder="･･････････"
                   type="password"
-                  register={register}
-                  errors={errors}
+                  registers={register("password")}
+                  errorMessage={errors.password?.message}
                 />
               </div>
-              <div className="bg-ai text-white text-center mt-6 py-3 px-6 rounded-md hover:bg-ai-light cursor-pointer">
-                <button>Log in</button>
+              <div className="mt-6">
+                <LoginButton
+                  authMethod={loginWithGest}
+                  isLoading={isLoading}
+                  bgColor="bg-ai"
+                  spinColor="text-gray-100"
+                  textColor="text-white"
+                  hoverColor="bg-ai-light"
+                >
+                  Log in
+                </LoginButton>
               </div>
             </form>
 
