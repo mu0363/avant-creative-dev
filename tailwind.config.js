@@ -3,6 +3,12 @@ module.exports = {
   purge: ["./src/**/*.{js,ts,jsx,tsx}"],
   darkMode: false, // or 'media' or 'class'
   theme: {
+    fontFamily: {
+      Kiwi: ["Kiwi Maru"],
+      Mplus: ["M PLUS Rounded 1c"],
+      Reggae: ["Reggae One"],
+      Kosugi: ["Kosugi Maru"],
+    },
     extend: {
       colors: {
         ai: {

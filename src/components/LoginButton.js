@@ -1,11 +1,24 @@
-export const LoginButton = ({ children, authMethod, src }) => {
+import { ButtonSpinner } from "src/components/ButtonSpinner";
+
+export const LoginButton = (props) => {
+  const { children, authMethod, src, isLoading, bgColor, spinColor, textColor, hoverColor } = props;
   return (
-    <div
-      className="flex items-center justify-center bg-gray-100 py-3 px-6 rounded-md hover:bg-gray-200 cursor-pointer"
+    <button
+      className={`${bgColor} py-3 px-6 rounded-md hover:${hoverColor} items-center justify-center flex w-full disabled:opacity-50`}
+      disabled={isLoading}
       onClick={authMethod}
     >
       <img src={src} alt={src} className="h-5 mr-2" />
-      <p className="font-semibold">{children}</p>
-    </div>
+      <div className="flex items-center">
+        {isLoading ? (
+          <div className="flex items-center">
+            <ButtonSpinner spinColor={spinColor} />
+            <span className={`${textColor}`}>Processing</span>
+          </div>
+        ) : (
+          <p className={`font-semibold ${textColor}`}>{children}</p>
+        )}
+      </div>
+    </button>
   );
 };

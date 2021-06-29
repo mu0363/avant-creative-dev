@@ -2,7 +2,8 @@ import { useRouter } from "next/router";
 import { useState, useEffect, createContext, useContext } from "react";
 import Cookies from "js-cookie";
 import { auth, firebase } from "src/lib/firebase";
-import { createUser } from "src/lib/db";
+import { createUser, getUser } from "src/lib/db";
+import { db } from "src/lib/firebase";
 
 const authContext = createContext();
 
@@ -33,8 +34,8 @@ const useProviderAuth = () => {
     if (rawUser) {
       const user = await formatUser(rawUser);
       const { token, ...withOutToken } = user;
-
       createUser(user.uid, withOutToken);
+
       setUser(user);
       return user;
     } else {
@@ -43,21 +44,40 @@ const useProviderAuth = () => {
     }
   };
 
-  const signInWithEmail = (email, password) => {
-    auth.signInWithEmail(email, password).then((result) => {
+  const signUpWithEmail = ({ name, email, password }) => {
+    let rawData = {};
+    auth.createUserWithEmailAndPassword(email, password).then((result) => {
+      rawData = result.user;
+      result.user
+        .updateProfile({
+          displayName: name,
+        })
+        .then(() => {
+          handleUser(rawData);
+          Cookies.set("avant-creative-auth", true);
+          router.push("/");
+        });
+    });
+  };
+
+  const signInWithEmail = ({ email, password }) => {
+    auth.signInWithEmailAndPassword(email, password).then((result) => {
       handleUser(result.user);
       Cookies.set("avant-creative-auth", true);
       router.push("/");
     });
   };
 
-  const signInWithGithub = () => {
-    console.log("start github");
+  const signInWithGithub = (id) => {
     const provider = new firebase.auth.GithubAuthProvider();
     auth.signInWithPopup(provider).then((result) => {
       handleUser(result.user);
       Cookies.set("avant-creative-auth", true);
-      router.push("/");
+      if (id) {
+        router.push(`/video/${id}`);
+      } else {
+        router.push("/");
+      }
     });
   };
 
@@ -95,6 +115,7 @@ const useProviderAuth = () => {
 
   return {
     user,
+    signUpWithEmail,
     signInWithEmail,
     signInWithGithub,
     signInWithGoogle,

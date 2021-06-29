@@ -44,7 +44,7 @@ export const PreviewVideoModal = (props) => {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Dialog.Overlay className="fixed inset-0 bg-gray-800 bg-opacity-75 transition-opacity" />
+              <Dialog.Overlay className="fixed inset-0 bg-gray-800 bg-opacity-75 transition-opacity backdrop-filter backdrop-blur-sm" />
             </Transition.Child>
 
             {/* This element is to trick the browser into centering the modal contents. */}
@@ -73,7 +73,7 @@ export const PreviewVideoModal = (props) => {
                     ) : (
                       <div className="flex items-center w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-ai text-base font-medium text-white space-x-2 hover:bg-ai-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 cursor-pointer">
                         {/* <FilmIcon className="h-5" /> */}
-                        <p>Log in</p>
+                        <p>ログインしてビデオを作る!</p>
                       </div>
                     )}
                   </div>

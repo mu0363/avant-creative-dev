@@ -1,21 +1,26 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useAuth } from "src/lib/auth";
 import { LoginButton } from "src/components/LoginButton";
 import { TextField } from "src/components/TextField";
+import { signupSchema } from "src/lib/signupSchema";
 
 export default function SignUp() {
   const [isEmail, setIsEmail] = useState(false);
   const auth = useAuth();
   const router = useRouter();
 
-  const loginWithGitHub = () => {
+  const signupWithGoogle = () => {
+    auth.signInWithGoogle();
+  };
+  const signupWithGitHub = () => {
     auth.signInWithGithub();
   };
-  const loginWithGoogle = () => {
-    auth.signInWithGoogle();
+  const signupWithEmail = () => {
+    setIsEmail(true);
   };
 
   //validation
@@ -23,10 +28,10 @@ export default function SignUp() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({ resolver: yupResolver(signupSchema) });
 
-  const onSubmit = () => {
-    console.log("success");
+  const onSubmit = (data) => {
+    auth.signUpWithEmail(data);
   };
 
   return (
@@ -37,19 +42,32 @@ export default function SignUp() {
             <h3 className="text-2xl font-semibold pb-5 text-center">Get started</h3>
             {!isEmail ? (
               <div className="space-y-4">
-                <LoginButton src="/google.svg" authMethod={loginWithGoogle}>
+                <LoginButton
+                  src="/google.svg"
+                  authMethod={signupWithGoogle}
+                  bgColor="bg-gray-100"
+                  hoverColor="bg-gray-200"
+                >
                   Sign up with Google
                 </LoginButton>
-                <LoginButton src="/github.svg" authMethod={loginWithGitHub}>
+                <LoginButton
+                  src="/github.svg"
+                  authMethod={signupWithGitHub}
+                  bgColor="bg-gray-100"
+                  hoverColor="bg-gray-200"
+                >
                   Sign up with GitHub
                 </LoginButton>
 
-                <div
-                  className="bg-ai text-white text-center mt-4 py-3 px-6 rounded-md hover:bg-ai-light"
-                  onClick={() => setIsEmail(true)}
+                <LoginButton
+                  authMethod={signupWithEmail}
+                  bgColor="bg-ai"
+                  spinColor="text-gray-100"
+                  textColor="text-white"
+                  hoverColor="bg-ai-light"
                 >
-                  <button>Sign up with email</button>
-                </div>
+                  Sign up with email
+                </LoginButton>
               </div>
             ) : (
               <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -58,10 +76,10 @@ export default function SignUp() {
                     <TextField
                       label="Name"
                       name="name"
-                      placeholder="Your name"
+                      placeholder="John"
                       type="text"
-                      register={register}
-                      errors={errors}
+                      registers={register("name")}
+                      errorMessage={errors.name?.message}
                     />
                   </div>
                   <div className="mt-4">
@@ -70,8 +88,8 @@ export default function SignUp() {
                       name="email"
                       placeholder="you@example.com"
                       type="text"
-                      register={register}
-                      errors={errors}
+                      registers={register("email")}
+                      errorMessage={errors.email?.message}
                     />
                   </div>
                   <div className="mt-4">
@@ -80,8 +98,8 @@ export default function SignUp() {
                       name="password"
                       placeholder="･･････････"
                       type="password"
-                      register={register}
-                      errors={errors}
+                      registers={register("password")}
+                      errorMessage={errors.password?.message}
                     />
                   </div>
                   <div className="mt-4">
@@ -90,13 +108,14 @@ export default function SignUp() {
                       name="confirmPassword"
                       placeholder="･･････････"
                       type="password"
-                      register={register}
-                      errors={errors}
+                      registers={register("confirmPassword")}
+                      errorMessage={errors.confirmPassword?.message}
                     />
                   </div>
-                  <div className="bg-ai text-white text-center mt-4 py-3 px-6 rounded-md hover:bg-ai-light">
-                    <button>Sign up</button>
-                  </div>
+
+                  <button className="bg-ai text-white text-center mt-4 py-3 px-6 rounded-md hover:bg-ai-light w-full">
+                    Sign up
+                  </button>
                 </div>
               </form>
             )}
