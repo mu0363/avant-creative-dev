@@ -5,7 +5,6 @@ module.exports = {
   theme: {
     fontFamily: {
       Kiwi: ["Kiwi Maru"],
-      Mplus: ["M PLUS Rounded 1c"],
       Reggae: ["Reggae One"],
       Kosugi: ["Kosugi Maru"],
     },

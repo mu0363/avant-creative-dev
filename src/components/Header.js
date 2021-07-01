@@ -78,60 +78,62 @@ export const Header = () => {
                           )}
                         </Menu.Item>
                       </div>
-                      <div className="px-1 py-1 ">
-                        <Menu.Item>
-                          {({ active }) => (
-                            <button
-                              className={`${
-                                active ? "bg-gray-200" : "text-gray-700"
-                              } group flex rounded-md items-center w-full px-2 py-2 text-sm transition duration-200 ease-in-out`}
-                              onClick={() => router.push("/videos")}
-                            >
-                              {active ? (
-                                <ViewGridIcon className="w-5 h-5 mr-2" aria-hidden="true" />
-                              ) : (
-                                <ViewGridIcon className="w-5 h-5 mr-2" aria-hidden="true" />
-                              )}
-                              映像一覧
-                            </button>
-                          )}
-                        </Menu.Item>
-                        <Menu.Item>
-                          {({ active }) => (
-                            <button
-                              className={`${
-                                active ? "bg-gray-200" : "text-gray-700"
-                              } group flex rounded-md items-center w-full px-2 py-2 text-sm transition duration-200 ease-in-out`}
-                              // onClick={() => router.push("/videos")}
-                            >
-                              {active ? (
-                                <CogIcon className="w-5 h-5 mr-2" aria-hidden="true" />
-                              ) : (
-                                <CogIcon className="w-5 h-5 mr-2" aria-hidden="true" />
-                              )}
-                              <span className="font-Kosugi">設定</span>
-                            </button>
-                          )}
-                        </Menu.Item>
-                      </div>
-                      <div className="px-1 py-1">
-                        <Menu.Item>
-                          {({ active }) => (
-                            <button
-                              className={`${
-                                active ? "bg-gray-200" : "text-gray-700"
-                              } group flex rounded-md items-center w-full px-2 py-2 text-sm transition duration-200 ease-in-out`}
-                              onClick={() => auth.signOut()}
-                            >
-                              {active ? (
-                                <LogoutIcon className="w-5 h-5 mr-2" aria-hidden="true" />
-                              ) : (
-                                <LogoutIcon className="w-5 h-5 mr-2" aria-hidden="true" />
-                              )}
-                              <span className="font-Reggae">ログアウト</span>
-                            </button>
-                          )}
-                        </Menu.Item>
+                      <div className="font-Kosugi">
+                        <div className="px-1 py-1 ">
+                          <Menu.Item>
+                            {({ active }) => (
+                              <button
+                                className={`${
+                                  active ? "bg-gray-200" : "text-gray-700"
+                                } group flex rounded-md items-center w-full px-2 py-2 text-sm transition duration-200 ease-in-out`}
+                                onClick={() => router.push("/videos")}
+                              >
+                                {active ? (
+                                  <ViewGridIcon className="w-5 h-5 mr-2" aria-hidden="true" />
+                                ) : (
+                                  <ViewGridIcon className="w-5 h-5 mr-2" aria-hidden="true" />
+                                )}
+                                映像一覧
+                              </button>
+                            )}
+                          </Menu.Item>
+                          <Menu.Item>
+                            {({ active }) => (
+                              <button
+                                className={`${
+                                  active ? "bg-gray-200" : "text-gray-700"
+                                } group flex rounded-md items-center w-full px-2 py-2 text-sm transition duration-200 ease-in-out`}
+                                // onClick={() => router.push("/videos")}
+                              >
+                                {active ? (
+                                  <CogIcon className="w-5 h-5 mr-2" aria-hidden="true" />
+                                ) : (
+                                  <CogIcon className="w-5 h-5 mr-2" aria-hidden="true" />
+                                )}
+                                <span>設定</span>
+                              </button>
+                            )}
+                          </Menu.Item>
+                        </div>
+                        <div className="px-1 py-1">
+                          <Menu.Item>
+                            {({ active }) => (
+                              <button
+                                className={`${
+                                  active ? "bg-gray-200" : "text-gray-700"
+                                } group flex rounded-md items-center w-full px-2 py-2 text-sm transition duration-200 ease-in-out`}
+                                onClick={() => auth.signOut()}
+                              >
+                                {active ? (
+                                  <LogoutIcon className="w-5 h-5 mr-2" aria-hidden="true" />
+                                ) : (
+                                  <LogoutIcon className="w-5 h-5 mr-2" aria-hidden="true" />
+                                )}
+                                <span>ログアウト</span>
+                              </button>
+                            )}
+                          </Menu.Item>
+                        </div>
                       </div>
                     </div>
                   </Menu.Items>

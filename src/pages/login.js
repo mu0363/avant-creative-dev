@@ -49,7 +49,7 @@ export default function Login() {
               Log in to your account
             </h3>
             <div className="space-y-4">
-              <p className="text-xs text-center">↓ ゲスト用から簡単にログイン出来ます！</p>
+              <p className="text-xs text-center font-Kosugi">↓ ゲスト用から簡単にログイン出来ます！</p>
               <LoginButton
                 src=""
                 authMethod={loginWithGest}
@@ -58,7 +58,7 @@ export default function Login() {
                 spinColor="text-gray-500"
                 hoverColor="bg-gray-200"
               >
-                ゲストログイン
+                <span className="font-Kosugi">ゲストログイン</span>
               </LoginButton>
               <LoginButton
                 src="/google.svg"
