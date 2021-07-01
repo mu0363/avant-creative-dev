@@ -21,6 +21,7 @@ export default function SignUp() {
   };
   const signupWithEmail = () => {
     setIsEmail(true);
+    //check the email if it exist
   };
 
   //validation
