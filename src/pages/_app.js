@@ -7,12 +7,12 @@ import { AuthProvider } from "src/lib/auth";
 
 function MyApp({ Component, pageProps }) {
   return (
-    <AuthProvider>
-      <Provider store={store}>
+    <Provider store={store}>
+      <AuthProvider>
         <NextNprogress color="#e47f5a" options={{ showSpinner: false }} />
         <Component {...pageProps} />
-      </Provider>
-    </AuthProvider>
+      </AuthProvider>
+    </Provider>
   );
 }
 
