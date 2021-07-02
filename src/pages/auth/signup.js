@@ -2,14 +2,16 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import toast, { Toaster } from "react-hot-toast";
 
 import { useAuth } from "src/lib/auth";
-import { LoginButton } from "src/components/LoginButton";
+import { LoadingButton } from "src/components/LoadingButton";
 import { TextField } from "src/components/TextField";
 import { signupSchema } from "src/lib/signupSchema";
 
 export default function SignUp() {
   const [isEmail, setIsEmail] = useState(false);
+  const [isLoading, setLoading] = useState(false);
   const auth = useAuth();
   const router = useRouter();
 
@@ -21,7 +23,6 @@ export default function SignUp() {
   };
   const signupWithEmail = () => {
     setIsEmail(true);
-    //check the email if it exist
   };
 
   //validation
@@ -31,8 +32,20 @@ export default function SignUp() {
     formState: { errors },
   } = useForm({ resolver: yupResolver(signupSchema) });
 
-  const onSubmit = (data) => {
-    auth.signUpWithEmail(data);
+  const onSubmit = async (data) => {
+    setLoading(true);
+    const providers = await auth.checkEmailExists(data);
+    if (providers.length === 0) {
+      auth.signUpWithEmail(data);
+    } else {
+      toast.error("登録済みのアドレスです。", {
+        style: {
+          background: "#333",
+          color: "#fff",
+        },
+      });
+      setLoading(false);
+    }
   };
 
   return (
@@ -43,24 +56,24 @@ export default function SignUp() {
             <h3 className="text-2xl font-semibold pb-5 text-center">Get started</h3>
             {!isEmail ? (
               <div className="space-y-4">
-                <LoginButton
+                <LoadingButton
                   src="/google.svg"
                   authMethod={signupWithGoogle}
                   bgColor="bg-gray-100"
                   hoverColor="bg-gray-200"
                 >
                   Sign up with Google
-                </LoginButton>
-                <LoginButton
+                </LoadingButton>
+                <LoadingButton
                   src="/github.svg"
                   authMethod={signupWithGitHub}
                   bgColor="bg-gray-100"
                   hoverColor="bg-gray-200"
                 >
                   Sign up with GitHub
-                </LoginButton>
+                </LoadingButton>
 
-                <LoginButton
+                <LoadingButton
                   authMethod={signupWithEmail}
                   bgColor="bg-ai"
                   spinColor="text-gray-100"
@@ -68,7 +81,7 @@ export default function SignUp() {
                   hoverColor="bg-ai-light"
                 >
                   Sign up with email
-                </LoginButton>
+                </LoadingButton>
               </div>
             ) : (
               <form onSubmit={handleSubmit(onSubmit)} noValidate>
@@ -113,22 +126,30 @@ export default function SignUp() {
                       errorMessage={errors.confirmPassword?.message}
                     />
                   </div>
-
-                  <button className="bg-ai text-white text-center mt-4 py-3 px-6 rounded-md hover:bg-ai-light w-full">
-                    Sign up
-                  </button>
+                  <div className="mt-6">
+                    <LoadingButton
+                      isLoading={isLoading}
+                      bgColor="bg-ai"
+                      spinColor="text-gray-100"
+                      textColor="text-white"
+                      hoverColor="bg-ai-light"
+                    >
+                      Sign up
+                    </LoadingButton>
+                  </div>
                 </div>
               </form>
             )}
             <div className="mt-5 text-xs text-gray-500">
               <span>Already signed up?</span>
-              <span className="underline text-ai ml-1 cursor-pointer" onClick={() => router.push("/login")}>
+              <span className="underline text-ai ml-1 cursor-pointer" onClick={() => router.push("/auth/login")}>
                 Login
               </span>
             </div>
           </div>
         </div>
       </div>
+      <Toaster />
     </div>
   );
 }

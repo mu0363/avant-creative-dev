@@ -2,14 +2,16 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import toast, { Toaster } from "react-hot-toast";
 
 import { useAuth } from "src/lib/auth";
-import { LoginButton } from "src/components/LoginButton";
+import { LoadingButton } from "src/components/LoadingButton";
 import { TextField } from "src/components/TextField";
 import { loginSchema } from "src/lib/loginSchema";
 
 export default function Login() {
   const [isLoading, setLoading] = useState(false);
+
   const auth = useAuth();
   const router = useRouter();
   const id = router.query.id ? router.query.id : null;
@@ -36,8 +38,21 @@ export default function Login() {
     formState: { errors },
   } = useForm({ resolver: yupResolver(loginSchema) });
 
-  const onSubmit = (data) => {
-    auth.signInWithEmail(data);
+  const onSubmit = async (data) => {
+    setLoading(true);
+    const providers = await auth.checkEmailExists(data);
+    if (providers.length === 0) {
+      toast.error("メールアドレスがありません。", {
+        style: {
+          background: "#333",
+          color: "#fff",
+        },
+      });
+      setLoading(false);
+    } else {
+      setLoading(true);
+      auth.signInWithEmail(data);
+    }
   };
 
   return (
@@ -50,7 +65,7 @@ export default function Login() {
             </h3>
             <div className="space-y-4">
               <p className="text-xs text-center font-Kosugi">↓ ゲスト用から簡単にログイン出来ます！</p>
-              <LoginButton
+              <LoadingButton
                 src=""
                 authMethod={loginWithGest}
                 isLoading={isLoading}
@@ -59,23 +74,23 @@ export default function Login() {
                 hoverColor="bg-gray-200"
               >
                 <span className="font-Kosugi">ゲストログイン</span>
-              </LoginButton>
-              <LoginButton
+              </LoadingButton>
+              <LoadingButton
                 src="/google.svg"
                 authMethod={loginWithGoogle}
                 bgColor="bg-gray-100"
                 hoverColor="bg-gray-200"
               >
                 Log in with Google
-              </LoginButton>
-              <LoginButton
+              </LoadingButton>
+              <LoadingButton
                 src="/github.svg"
                 authMethod={loginWithGitHub}
                 bgColor="bg-gray-100"
                 hoverColor="bg-gray-200"
               >
                 Log in with GitHub
-              </LoginButton>
+              </LoadingButton>
             </div>
             <div className="mt-10 flex items-center">
               <hr className="flex-1 ml-3" />
@@ -107,8 +122,7 @@ export default function Login() {
                 />
               </div>
               <div className="mt-6">
-                <LoginButton
-                  authMethod={loginWithGest}
+                <LoadingButton
                   isLoading={isLoading}
                   bgColor="bg-ai"
                   spinColor="text-gray-100"
@@ -116,23 +130,29 @@ export default function Login() {
                   hoverColor="bg-ai-light"
                 >
                   Log in
-                </LoginButton>
+                </LoadingButton>
               </div>
             </form>
 
             {/* 下部確認 */}
             <div className="mt-5">
-              <span className="text-xs text-gray-500 underline hover:text-ai cursor-pointer">Forget Password?</span>
+              <span
+                className="text-xs text-gray-500 underline hover:text-ai cursor-pointer"
+                onClick={() => router.push("/auth/reset-password")}
+              >
+                Forget Password?
+              </span>
             </div>
             <div className="mt-2 text-xs text-gray-500">
               <span>New to Avant Creative?</span>
-              <span className="underline text-ai ml-1 cursor-pointer" onClick={() => router.push("/signup")}>
+              <span className="underline text-ai ml-1 cursor-pointer" onClick={() => router.push("/auth/signup")}>
                 Sign up
               </span>
             </div>
           </div>
         </div>
       </div>
+      <Toaster />
     </div>
   );
 }

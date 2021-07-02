@@ -1,6 +1,6 @@
 import { ButtonSpinner } from "src/components/ButtonSpinner";
 
-export const LoginButton = (props) => {
+export const LoadingButton = (props) => {
   const { children, authMethod, src, isLoading, bgColor, spinColor, textColor, hoverColor } = props;
   return (
     <button

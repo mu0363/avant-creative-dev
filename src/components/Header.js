@@ -28,6 +28,7 @@ export const Header = () => {
       <div className="flex items-center">
         <div>
           {/* hidden md:inline-flex */}
+          {/* {auth.user?.emailVerified ? ( */}
           {auth?.user ? (
             <div className="text-right">
               <Menu as="div" className="relative inline-block text-left">
@@ -141,13 +142,12 @@ export const Header = () => {
               </Menu>
             </div>
           ) : (
-            <Link href="/login">
-              <a>
-                <p className="cursor-pointer font-medium border bg-white hover:bg-ai-light hover:text-white py-2 px-5 shadow-sm rounded-sm my-2 md:m-0">
-                  Login
-                </p>
-              </a>
-            </Link>
+            <p
+              className="cursor-pointer font-medium border bg-white hover:bg-ai-light hover:text-white py-2 px-5 shadow-sm rounded-sm my-2 md:m-0"
+              onClick={() => router.push("/auth/login")}
+            >
+              Login
+            </p>
           )}
         </div>
       </div>

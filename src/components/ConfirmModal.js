@@ -79,7 +79,7 @@ export const ConfirmModal = (props) => {
       // スプレッドシートに書き込む！！
       appendSpreadsheet(newRow);
       setIsOpen(false);
-      router.push("/confirm-complete");
+      router.push("/redirect/confirm-complete");
       dispatch(deleteAllScenes());
     }
   };

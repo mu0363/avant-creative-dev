@@ -26,6 +26,7 @@ const useProviderAuth = () => {
       provider: user.providerData[0].providerId,
       photoURL: user.photoURL,
       token: user.za,
+      emailVerified: user.emailVerified,
       // stripeRole: (await getStripeRole()) || "free",
     };
   };
@@ -33,7 +34,8 @@ const useProviderAuth = () => {
   const handleUser = async (rawUser) => {
     if (rawUser) {
       const user = await formatUser(rawUser);
-      const { token, ...withOutToken } = user;
+      const { token, emailVerified, ...withOutToken } = user;
+
       createUser(user.uid, withOutToken);
 
       setUser(user);
@@ -44,20 +46,25 @@ const useProviderAuth = () => {
     }
   };
 
-  const signUpWithEmail = ({ name, email, password }) => {
-    let rawData = {};
-    auth.createUserWithEmailAndPassword(email, password).then((result) => {
-      rawData = result.user;
-      result.user
-        .updateProfile({
-          displayName: name,
-        })
-        .then(() => {
-          handleUser(rawData);
-          Cookies.set("avant-creative-auth", true);
-          router.push("/");
-        });
-    });
+  const signUpWithEmail = async ({ name, email, password }) => {
+    const result = await auth.createUserWithEmailAndPassword(email, password);
+    if (result.user) {
+      const actionCodeSettings = {
+        url: "http://localhost:3000/redirect/email-verified",
+        handleCodeInApp: false,
+      };
+      await result.user.updateProfile({ displayName: name });
+      await auth.useDeviceLanguage();
+      await auth.currentUser.sendEmailVerification(actionCodeSettings);
+      await handleUser(result.user);
+      Cookies.set("avant-creative-auth", true);
+      router.push("/redirect/email-verification");
+    }
+  };
+
+  const checkEmailExists = async ({ email }) => {
+    const providers = await auth.fetchSignInMethodsForEmail(email);
+    return providers;
   };
 
   const signInWithEmail = ({ email, password }) => {
@@ -94,6 +101,15 @@ const useProviderAuth = () => {
     });
   };
 
+  const sendResetEmail = ({ email }) => {
+    firebase
+      .auth()
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        router.push("/redirect/send-reset-email");
+      });
+  };
+
   const signOut = () => {
     firebase
       .auth()
@@ -101,7 +117,7 @@ const useProviderAuth = () => {
       .then(() => {
         handleUser(false);
         Cookies.remove("avant-creative-auth");
-        router.push("/login");
+        router.push("/auth/login");
       });
   };
 
@@ -119,7 +135,9 @@ const useProviderAuth = () => {
     signInWithEmail,
     signInWithGithub,
     signInWithGoogle,
+    sendResetEmail,
     signOut,
+    checkEmailExists,
   };
 };
 
