@@ -34,6 +34,7 @@
     "react-hot-toast": "^2.0.0",
     "react-icons": "^4.2.0",
     "react-image-crop": "^8.6.9",
+    "react-image-file-resizer": "^0.4.7",
     "react-loader-spinner": "^4.0.0",
     "react-redux": "^7.2.4",
     "react-swipeable-views": "^0.14.0",

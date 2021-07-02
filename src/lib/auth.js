@@ -62,6 +62,12 @@ const useProviderAuth = () => {
     }
   };
 
+  const updatePhotoURL = async (url) => {
+    const user = await auth.currentUser;
+    await user.updateProfile({ photoURL: url });
+    await handleUser(user);
+  };
+
   const checkEmailExists = async ({ email }) => {
     const providers = await auth.fetchSignInMethodsForEmail(email);
     return providers;
@@ -138,6 +144,7 @@ const useProviderAuth = () => {
     sendResetEmail,
     signOut,
     checkEmailExists,
+    updatePhotoURL,
   };
 };
 

@@ -1,8 +1,7 @@
-import { Fragment } from "react";
-import Link from "next/link";
+import { Fragment, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
-import { ViewGridIcon, ChatIcon, BellIcon, ChevronDownIcon, UserIcon, CogIcon } from "@heroicons/react/solid";
+import { ViewGridIcon, UserIcon, CogIcon, CameraIcon } from "@heroicons/react/solid";
 import { LogoutIcon } from "@heroicons/react/outline";
 import { Sling as Hamburger } from "hamburger-react";
 import { Menu, Transition } from "@headlessui/react";
@@ -35,9 +34,9 @@ export const Header = () => {
                 <div>
                   <Menu.Button>
                     <div>
-                      {auth?.user.photoURL ? (
+                      {auth.user?.photoURL ? (
                         <img
-                          src={auth?.user.photoURL}
+                          src={auth.user?.photoURL}
                           alt="user-image"
                           className="h-9 rounded-full hidden md:inline-flex"
                         />
@@ -65,10 +64,10 @@ export const Header = () => {
                         <Menu.Item>
                           {({ active }) => (
                             <div className="flex items-center p-4">
-                              {auth?.user.photoURL ? (
+                              {auth.user?.photoURL ? (
                                 <img src={auth?.user.photoURL} alt="user-image" className="h-10 rounded-full mr-2" />
                               ) : (
-                                <UserIcon className="h-10 bg-gray-200 text-gray-400 rounded-full p-1 mr-2" />
+                                <UserIcon className="h-10 bg-gray-200 text-gray-400 rounded-full p-1 mr-2 relative" />
                               )}
 
                               <div className="bg-white">
@@ -104,7 +103,7 @@ export const Header = () => {
                                 className={`${
                                   active ? "bg-gray-200" : "text-gray-700"
                                 } group flex rounded-md items-center w-full px-2 py-2 text-sm transition duration-200 ease-in-out`}
-                                // onClick={() => router.push("/videos")}
+                                onClick={() => router.push("/settings/your-account")}
                               >
                                 {active ? (
                                   <CogIcon className="w-5 h-5 mr-2" aria-hidden="true" />

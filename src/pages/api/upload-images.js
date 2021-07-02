@@ -19,7 +19,7 @@ export default async function handler(req, res) {
 
   const s3 = new aws.S3();
   const post = await s3.createPresignedPost({
-    Bucket: process.env.BUCKET_NAME,
+    Bucket: process.env.BUCKET_NAME_1,
     Fields: {
       key: `${year}/${date}/${avantName}/${id}/${id}_${step}${extension}`,
     },

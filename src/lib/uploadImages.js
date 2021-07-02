@@ -29,10 +29,10 @@ const uploadImages = async (images, avantName) => {
       var file = new File([blobFile], "filename");
       const extension = blobFile.type.slice(6);
       let filepath = "";
-      const res = await fetch(`/api/upload-url?id=${id}&extension=${extension}&avant=${avantName}&step=${step}`);
+      const res = await fetch(`/api/upload-images?id=${id}&extension=${extension}&avant=${avantName}&step=${step}`);
       const { url, fields } = await res.json();
 
-      filepath = `${process.env.NEXT_PUBLIC_CLOUDFRONT_URL}${fields.key}`;
+      filepath = `${process.env.NEXT_PUBLIC_IMAGES_CLOUDFRONT_URL}${fields.key}`;
       cloudfrontUrls.push({ [`image${step}`]: filepath });
       const formData = new FormData();
       Object.entries({ ...fields, file }).forEach(([key, value]) => {
