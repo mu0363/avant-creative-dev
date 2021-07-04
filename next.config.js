@@ -5,6 +5,7 @@ module.exports = withTM({
   images: {
     domains: ["d2xa88l081gc75.cloudfront.net"],
     domains: ["images.unsplash.com"],
+    domains: ["vod-avatar-images.s3.ap-northeast-1.amazonaws.com"],
   },
 
   webpack: (config) => {
