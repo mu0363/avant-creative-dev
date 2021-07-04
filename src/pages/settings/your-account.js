@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Image from "next/image";
 
 import { doka } from "doka/doka.module.css";
 import { DokaImageEditorModal } from "react-doka";
@@ -95,7 +94,6 @@ export default function YourAccount() {
         </span>
         <p>{auth.user?.photoURL}</p>
         <p>https://vod-avatar-images.s3.ap-northeast-1.amazonaws.com/2iXCpiXxJaVzxOLoQa9NH7VpPOp2.jpeg</p>
-        {/* <Image src={auth.user?.photoURL} height={200} width={200} /> */}
       </div>
 
       {/* Modal */}
