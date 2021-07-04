@@ -1,9 +1,11 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
+import Image from "next/image";
+
 import { doka } from "doka/doka.module.css";
 import { DokaImageEditorModal } from "react-doka";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
-import { UserIcon } from "@heroicons/react/solid";
+import { UserIcon, CameraIcon } from "@heroicons/react/solid";
 
 import { useAuth } from "src/lib/auth";
 import { uploadAvatarImage } from "src/lib/uploadAvatarImage";
@@ -73,14 +75,27 @@ export default function YourAccount() {
   return (
     <div>
       <div>
-        <label className="cursor-pointer">
+        <label className="cursor-pointer inline-block">
           {auth.user?.photoURL ? (
-            <img src={auth.user?.photoURL} alt="user-image" className="h-10 rounded-full mr-2" />
+            <div>
+              <img
+                src="https://vod-avatar-images.s3.ap-northeast-1.amazonaws.com/2iXCpiXxJaVzxOLoQa9NH7VpPOp2.jpeg"
+                alt="user-image"
+                className="h-32 rounded-full mr-2"
+              />
+              <CameraIcon className="h-32 absolute opacity-0 hover:opacity-70 hover:bg-gray-200 text-gray-500 rounded-full p-8 top-0 left-0 transition duration-200 ease-in-out" />
+            </div>
           ) : (
-            <UserIcon className="h-10 bg-gray-200 text-gray-400 rounded-full p-1 mr-2 relative" />
+            <UserIcon className="h-32 bg-gray-200 text-gray-400 rounded-full p-1 mr-2 relative" />
           )}
           <input type="file" name="avatar-upload" accept="image/*" className="hidden" onChange={onChangeImageHandler} />
         </label>
+        <span className="text-xs text-gray-500 underline hover:text-ai cursor-pointer" onClick={() => router.push("/")}>
+          ← Back to Top
+        </span>
+        <p>{auth.user?.photoURL}</p>
+        <p>https://vod-avatar-images.s3.ap-northeast-1.amazonaws.com/2iXCpiXxJaVzxOLoQa9NH7VpPOp2.jpeg</p>
+        {/* <Image src={auth.user?.photoURL} height={200} width={200} /> */}
       </div>
 
       {/* Modal */}
