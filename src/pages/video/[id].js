@@ -162,11 +162,11 @@ export default function Video({ previewVideo }) {
         avantName={avantName}
         aepPath={aepPath}
       >
-        <div className="bg-gray-100 rounded-t-lg p-3">
-          <p className="font-semibold text-center text-2xl">Are you sure?</p>
+        <div className="p-3 bg-gray-100 rounded-t-lg">
+          <p className="text-2xl font-semibold text-center">Are you sure?</p>
           {scenes.map((scene, index) => (
-            <div key={index} className="bg-gray-200 mt-5 rounded-md shadow-md">
-              <p className="bg-ai-light text-white py-1 px-2 rounded-t-md">{`Scene${index + 1}`}</p>
+            <div key={index} className="mt-5 bg-gray-200 rounded-md shadow-md">
+              <p className="py-1 px-2 text-white bg-ai-light rounded-t-md">{`Scene${index + 1}`}</p>
               <div className="grid sm:grid-cols-2">
                 {scene[`image${index + 1}`] && (
                   <img src={scene[`image${index + 1}`]} alt={scene[`image${index + 1}`]} className="sm:rounded-bl-md" />
