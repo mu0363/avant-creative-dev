@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "@headlessui/react": "^1.2.0-d0e27ff",
@@ -46,9 +47,11 @@
     "@typescript-eslint/parser": "^4.26.1",
     "autoprefixer": "^10.2.5",
     "eslint": "^7.29.0",
+    "eslint-config-next": "^11.0.1",
     "eslint-plugin-react": "^7.24.0",
+    "eslint-plugin-tailwindcss": "^1.13.4",
     "postcss": "^8.3.0",
-    "prettier": "^2.3.1",
+    "prettier": "^2.3.2",
     "tailwindcss": "^2.1.2"
   }
 }
