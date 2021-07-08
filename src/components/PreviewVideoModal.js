@@ -13,7 +13,7 @@ export const PreviewVideoModal = (props) => {
   const routerHandler = () => {
     if (!auth?.user) {
       router.push({
-        pathname: "/login", //URL
+        pathname: "/auth/login", //URL
         query: { id: id }, //検索クエリ
       });
       setIsOpen(false);
