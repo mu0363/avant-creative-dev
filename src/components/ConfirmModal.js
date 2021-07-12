@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Fragment, useState } from "react";
+import { Fragment } from "react";
 import { format } from "date-fns";
 import { Dialog, Transition } from "@headlessui/react";
 import { useRouter } from "next/router";
@@ -89,12 +89,12 @@ export const ConfirmModal = (props) => {
         <Dialog
           as="div"
           static
-          className="fixed z-10 inset-0 overflow-y-auto"
+          className="overflow-y-auto fixed inset-0 z-10"
           initialFocus={cancelButtonRef}
           open={isOpen}
           onClose={setIsOpen}
         >
-          <div className="flex items-center justify-center min-h-screen px-4 text-center sm:block sm:p-0">
+          <div className="flex sm:block justify-center items-center sm:p-0 px-4 min-h-screen text-center">
             <Transition.Child
               as={Fragment}
               enter="ease-out duration-300"
@@ -104,11 +104,11 @@ export const ConfirmModal = (props) => {
               leaveFrom="opacity-100"
               leaveTo="opacity-0"
             >
-              <Dialog.Overlay className="fixed inset-0 bg-gray-800 bg-opacity-75 transition-opacity backdrop-filter backdrop-blur-sm" />
+              <Dialog.Overlay className="fixed inset-0 bg-gray-800 bg-opacity-75 backdrop-filter backdrop-blur-sm transition-opacity" />
             </Transition.Child>
 
             {/* This element is to trick the browser into centering the modal contents. */}
-            <span className="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">
+            <span className="hidden sm:inline-block sm:h-screen sm:align-middle" aria-hidden="true">
               &#8203;
             </span>
             <Transition.Child
@@ -120,13 +120,13 @@ export const ConfirmModal = (props) => {
               leaveFrom="opacity-100 translate-y-0 sm:scale-100"
               leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
             >
-              <div className="static inline-block align-bottom text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full p-3 bg-transparent">
+              <div className="inline-block overflow-hidden static p-3 sm:my-8 sm:w-full sm:max-w-lg text-left align-bottom sm:align-middle bg-transparent shadow-xl transition-all transform">
                 {children}
-                <div className="bg-gray-100 rounded-b-lg px-4 py-3 sm:px-3 sm:flex sm:flex-row-reverse">
+                <div className="sm:flex sm:flex-row-reverse py-3 px-4 sm:px-3 bg-gray-100 rounded-b-lg">
                   <Link href="#" passHref>
                     <div
                       onClick={onSubmit}
-                      className="flex items-center w-full justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-ai text-base font-medium text-white space-x-2 hover:bg-ai-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 cursor-pointer"
+                      className="flex justify-center items-center py-2 px-4 space-x-2 w-full text-base font-medium text-white bg-ai hover:bg-ai-dark rounded-md border border-transparent focus:ring-2 focus:ring-red-500 focus:ring-offset-2 shadow-sm cursor-pointer focus:outline-none"
                     >
                       <FilmIcon className="h-5" />
                       <p>Render Video</p>
@@ -134,12 +134,12 @@ export const ConfirmModal = (props) => {
                   </Link>
                   <div
                     ref={cancelButtonRef}
-                    className="absolute top-0 right-0 rounded-full bg-white cursor-pointer shadow-lg"
+                    className="absolute top-0 right-0 bg-white rounded-full shadow-lg cursor-pointer"
                   >
                     <AiFillCloseCircle
                       type="button"
                       onClick={() => setIsOpen(false)}
-                      className="sm:h-8 sm:w-8 h-7 w-7"
+                      className="w-7 sm:w-8 h-7 sm:h-8"
                     />
                   </div>
                 </div>

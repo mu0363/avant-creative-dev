@@ -4,7 +4,7 @@ module.exports = {
     es2021: true,
     node: true,
   },
-  extends: "plugin:react/recommended",
+  extends: ["eslint:recommended", "plugin:react/recommended", "plugin:tailwindcss/recommended", "prettier"],
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -12,7 +12,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: "module",
   },
-  plugins: ["react"],
+  plugins: ["react", "tailwindcss"],
   rules: {
     semi: ["error", "always"],
     quotes: ["error", "double"],
