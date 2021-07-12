@@ -4,13 +4,9 @@ module.exports = {
     es2021: true,
     node: true,
   },
-  extends: [
-    "plugin:react/recommended",
-    "plugin:tailwindcss/recommended",
-    "prettier",
-    "plugin:import/errors",
-    "plugin:import/warnings",
-  ],
+
+  extends: ["eslint:recommended", "plugin:react/recommended", "plugin:tailwindcss/recommended", "prettier"],
+
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
