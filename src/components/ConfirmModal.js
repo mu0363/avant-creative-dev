@@ -57,7 +57,7 @@ export const ConfirmModal = (props) => {
         };
         // スプレッドシートに書き込む！！
         appendSpreadsheet(newRow);
-        router.push("/confirm-complete");
+        router.push("/redirect/confirm-complete");
         dispatch(deleteAllScenes());
       });
     } else {

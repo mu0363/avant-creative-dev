@@ -1,0 +1,11 @@
+{
+    "AppSyncApiName": "avantcreativedevapi",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": false,
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authavantcreativedev927c2e93",
+            "Outputs.UserPoolId"
+        ]
+    }
+}
