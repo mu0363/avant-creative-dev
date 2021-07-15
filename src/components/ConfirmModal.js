@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { FilmIcon } from "@heroicons/react/outline";
 import { AiFillCloseCircle } from "react-icons/ai";
 
-import { uploadImages } from "src/lib/uploadImages";
+import { uploadImages } from "src/lib/storage";
 import { appendSpreadsheet } from "src/lib/appendSpreadSheet";
 import { generateFilename } from "src/lib/generateFilename";
 import { generateId } from "src/lib/generateId";

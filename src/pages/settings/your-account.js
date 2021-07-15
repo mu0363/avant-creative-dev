@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { UserIcon, CameraIcon } from "@heroicons/react/solid";
 
 import { useAuth } from "src/lib/auth";
-import { uploadAvatarImage } from "src/lib/uploadAvatarImage";
+import { uploadAvatarImage, deleteAvatarImage } from "src/lib/storage";
 
 //dokaのNext.jsサンプルから持ってきたやーつ
 import {
@@ -74,26 +74,21 @@ export default function YourAccount() {
   return (
     <div>
       <div>
-        <label className="cursor-pointer inline-block">
+        <label className="inline-block cursor-pointer">
           {auth.user?.photoURL ? (
             <div>
-              <img
-                src="https://vod-avatar-images.s3.ap-northeast-1.amazonaws.com/2iXCpiXxJaVzxOLoQa9NH7VpPOp2.jpeg"
-                alt="user-image"
-                className="h-32 rounded-full mr-2"
-              />
-              <CameraIcon className="h-32 absolute opacity-0 hover:opacity-70 hover:bg-gray-200 text-gray-500 rounded-full p-8 top-0 left-0 transition duration-200 ease-in-out" />
+              <img src={auth.user?.photoURL} alt="user-image" className="mr-2 h-32 rounded-full" />
+              <CameraIcon className="absolute top-0 left-0 p-8 h-32 text-gray-500 hover:bg-gray-200 rounded-full opacity-0 hover:opacity-70 transition duration-200 ease-in-out" />
             </div>
           ) : (
-            <UserIcon className="h-32 bg-gray-200 text-gray-400 rounded-full p-1 mr-2 relative" />
+            <UserIcon className="relative p-1 mr-2 h-32 text-gray-400 bg-gray-200 rounded-full" />
           )}
           <input type="file" name="avatar-upload" accept="image/*" className="hidden" onChange={onChangeImageHandler} />
         </label>
-        <span className="text-xs text-gray-500 underline hover:text-ai cursor-pointer" onClick={() => router.push("/")}>
+        <span className="text-xs text-gray-500 hover:text-ai underline cursor-pointer" onClick={() => router.push("/")}>
           ← Back to Top
         </span>
         <p>{auth.user?.photoURL}</p>
-        <p>https://vod-avatar-images.s3.ap-northeast-1.amazonaws.com/2iXCpiXxJaVzxOLoQa9NH7VpPOp2.jpeg</p>
       </div>
 
       {/* Modal */}
@@ -105,9 +100,11 @@ export default function YourAccount() {
           // onLoad={(res) => console.log('load modal image', res)}
           onHide={() => setModalVisible(false)}
           onProcess={async ({ dest }) => {
+            await deleteAvatarImage();
             const url = await uploadAvatarImage(dest);
             await auth.updatePhotoURL(url);
-            router.reload();
+
+            // router.reload();
           }}
           imageCropAspectRatio={1 / 1}
         />

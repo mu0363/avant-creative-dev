@@ -1,7 +1,9 @@
-import { CogIcon } from "@heroicons/react/outline";
+import { auth } from "src/lib/firebase";
+import { storage } from "src/lib/firebase";
+import { resizeFile } from "src/lib/resizeFile";
 import { generateId } from "src/lib/generateId";
 
-const uploadImages = async (images, avantName) => {
+export const uploadImages = async (images, avantName) => {
   const id = generateId();
   let cloudfrontUrls = [];
   //slice入れたらうまくsortされた...reduxの値を直接ソートしようとしてもfreezeしてるので新たな変数に入れてあげる
@@ -59,4 +61,23 @@ const uploadImages = async (images, avantName) => {
   return { urls, id };
 };
 
-export { uploadImages };
+export const uploadAvatarImage = async (image) => {
+  const file = await resizeFile(image);
+  const extension = file.name.match(/\.[0-9a-z]+$/i)[0];
+  const id = generateId();
+  const { uid } = await auth.currentUser;
+  const filename = `${uid}-${id}${extension}`;
+  const uploadTask = storage.ref("vod-avatar-images").child(filename);
+  await uploadTask.put(file);
+  const fileUrl = await uploadTask.getDownloadURL();
+  return fileUrl;
+};
+
+export const deleteAvatarImage = async () => {
+  const { photoURL } = await auth.currentUser;
+  const result = photoURL.split("%2F")[1].split("?")[0];
+  const filepath = `vod-avatar-images/${result}`;
+  let storageRef = storage.ref();
+  const desertRef = storageRef.child(filepath);
+  await desertRef.delete();
+};

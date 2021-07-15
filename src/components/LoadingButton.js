@@ -8,7 +8,7 @@ export const LoadingButton = (props) => {
       disabled={isLoading}
       onClick={authMethod}
     >
-      <img src={src} alt={src} className="h-5 mr-2" />
+      <img src={src} alt={src} className="mr-2 h-5" />
       <div className="flex items-center">
         {isLoading ? (
           <div className="flex items-center">
