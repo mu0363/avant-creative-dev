@@ -2,8 +2,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect, createContext, useContext } from "react";
 import Cookies from "js-cookie";
 import { auth, firebase } from "src/lib/firebase";
-import { createUser, getUser } from "src/lib/db";
-import { db } from "src/lib/firebase";
+import { createUser } from "src/lib/db";
 
 const authContext = createContext();
 

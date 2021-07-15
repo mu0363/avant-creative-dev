@@ -8,7 +8,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { useAuth } from "src/lib/auth";
 import { LoadingButton } from "src/components/LoadingButton";
 import { TextField } from "src/components/TextField";
-import { loginSchema } from "src/lib/loginSchema";
+import { loginSchema } from "src/lib/yupSchema/loginSchema";
 
 export default function Login() {
   const [isLoading, setLoading] = useState(false);
